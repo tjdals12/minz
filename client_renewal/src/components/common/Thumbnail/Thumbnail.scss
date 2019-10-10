@@ -1,0 +1,96 @@
+@import 'utils';
+
+.thumbnail {
+	&.post {
+		img {
+			width: 100%;
+			height: 20rem;
+		}
+	}
+
+	&.series {
+		img {
+			width: 15rem;
+			height: 18rem;
+
+			@include material-shadow(3, 2);
+		}
+	}
+
+	&.user {
+		position: absolute;
+		bottom: -20%;
+		right: 26%;
+		width: 150px;
+		height: 150px;
+		border: 1px solid $oc-gray-5;
+		border-radius: 50%;
+		overflow: hidden;
+
+		img {
+			width: 150px;
+			height: 150px;
+		}
+
+		@include media('<large') {
+			display: none;
+		}
+	}
+
+	&.header-logo {
+		position: absolute;
+		top: 15px;
+		left: -75px;
+		width: 150px;
+		height: 50px;
+		overflow: hidden;
+
+		img {
+			width: 150px;
+			height: 50px;
+		}
+
+		@include media('<medium') {
+			display: none;
+		}
+	}
+
+	&.side-user {
+		width: 150px;
+		height: 150px;
+		border: 1px solid $oc-gray-5;
+		border-radius: 50%;
+		overflow: hidden;
+
+		img {
+			width: 150px;
+			height: 150px;
+		}
+	}
+
+	&.side-logo {
+		width: 120px;
+		height: 120px;
+		border: 1px solid $oc-gray-5;
+		border-radius: 50%;
+		overflow: hidden;
+
+		img {
+			width: 120px;
+			height: 120px;
+		}
+	}
+
+	&.register-logo {
+		width: calc(100% - 1rem);
+		height: 21rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		img {
+			width: 80%;
+			height: 10rem;
+		}
+	}
+}

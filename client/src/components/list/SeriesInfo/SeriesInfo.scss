@@ -1,0 +1,49 @@
+@import 'utils';
+
+.series-information{
+    margin-top : 3rem;
+    border-bottom : 1px solid #ddd;
+    padding-bottom : 2rem;
+    position : relative;
+
+    .button-wrapper{
+        position : absolute;
+        display : flex;
+        align-items : center;
+        top : 0px;
+        right : 0px;
+    }
+
+    .series-summary{
+        display : flex;
+        align-items : center;
+        justify-content : flex-start;
+        margin-top : 2rem;
+
+        svg{
+            font-size : .5rem;
+        }
+
+        span{
+            color : $oc-gray-6;
+            font-family: 'Gothic A1', sans-serif;
+            font-size : .85rem;
+            margin-right : 0.8rem;
+        }
+    }
+
+    .bottom-wrapper{
+        margin-top : 1rem;
+        display : flex;
+        align-items : center;
+        justify-content : center;
+        
+        .date{
+            margin-left : auto;
+            font-family: 'Gothic A1', sans-serif;
+            font-size : .85rem;
+            font-style : italic;
+            color : $oc-gray-6;
+        }
+    }
+}

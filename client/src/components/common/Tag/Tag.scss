@@ -1,0 +1,19 @@
+@import 'utils';
+
+.tag{
+    padding-left : .5rem;
+    padding-right : .5rem;
+    padding-top : .3rem;
+    padding-bottom : .3rem;
+    color : $oc-gray-5;
+    font-size : .65rem;
+    font-weight : 300;
+    cursor : pointer;
+    user-select : none;
+    border : 1px solid $oc-gray-5;
+    border-radius : 10px 10px;
+
+    & + &{
+        margin-left : .5rem;
+    }
+}

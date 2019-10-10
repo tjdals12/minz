@@ -1,0 +1,78 @@
+@import 'utils';
+
+.info-wrapper{
+    width : 768px;
+    height : 20rem;
+    margin : 0 auto;
+    position : relative;
+    margin-top : 3rem;
+
+    .blog-info{
+        height : 5rem;
+        display : flex;
+        align-items : center;
+        margin-bottom : 5rem;
+
+        .button-wrapper{
+            margin-left : auto;
+        }
+    }
+
+    .menu{
+        display : flex;
+        align-items: center;
+        justify-content: center;
+
+        .search-result{
+            border-top : 1px solid black;
+            flex : 1;
+            text-align: center;
+            padding-top : 1rem;
+            font-weight : 300;
+            color : black;
+        }
+
+        .intro{
+            border-top : 1px solid $oc-gray-3;
+            flex : 1;
+            text-align: center;
+            padding-top : 1rem;
+            font-weight: 200;
+            color : $oc-gray-5;
+        }
+
+        .list{
+            border-top : 1px solid $oc-gray-3;
+            flex : 1;
+            text-align: center;
+            padding-top : 1rem;
+            font-weight: 200;
+            color : $oc-gray-5;
+        }
+
+        .series{
+            border-top : 1px solid $oc-gray-3;
+            flex : 1;
+            text-align: center;
+            padding-top : 1rem;
+            font-weight: 200;
+            color : $oc-gray-5;
+        }
+
+        .current{
+            border-top : 1px solid black;
+            font-weight : 300;
+            color : black;
+        }
+    }
+
+    @include media('<large'){
+        width : calc(100% - 4rem);
+    }
+
+    @include media('<medium'){
+        .button-wrapper{
+            display : none;
+        }
+    }
+}

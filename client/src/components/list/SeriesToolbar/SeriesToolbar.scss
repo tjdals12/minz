@@ -1,0 +1,12 @@
+@import 'utils';
+
+.series-toolbar{
+    margin-top : 1rem;
+    display : flex;
+    align-items : center;
+    justify-content : center;
+
+    .button-tool{
+        margin-left : auto;
+    }
+}

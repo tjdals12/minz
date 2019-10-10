@@ -1,0 +1,176 @@
+@import 'utils';
+
+.content{
+    &.introduction{
+        padding-top : 1rem;
+    
+        .title{
+            font-family: 'Gothic A1', sans-serif;
+            font-size : .85rem;
+            font-weight : 300;
+        }
+
+        p{
+            margin-top : 1.5rem;
+            color : $oc-gray-6;
+            font-family : 'Gothic A1', sans-serif;
+            font-size : 1rem;
+            font-weight : 400;
+        }
+    }
+
+    &.post{
+        .title{
+            font-family: 'Do Hyeon', sans-serif;
+            font-size : 1.25rem;
+            font-weight : 600;
+            margin-bottom : .25rem;
+        }
+
+        p{
+            color : $oc-gray-6;
+            font-family: 'Gothic A1', sans-serif;
+            font-size : 1.15em;
+            font-weight : 300;
+            height : 8rem;
+            overflow: hidden;
+            margin-top : 0;
+        }
+    }
+
+    &.post-info{
+        .title{
+            font-family: 'Black Han Sans', sans-serif;
+            font-size : 2rem;
+            margin-bottom : 3rem;
+            font-weight : 100;
+        }
+
+        p{
+            color : $oc-gray-6;
+            font-family: 'Gothic A1', sans-serif;
+            font-size : 1em;
+            font-weight : 200;
+        }
+
+        @include media('<large'){
+            .title{
+                font-size : 1.5rem;
+                margin-bottom : 1rem;
+            }
+
+            p{
+                font-size : 1rem;
+            }
+        }
+
+        @include media('<medium'){
+            .title{
+                font-size : 1.25rem;
+            }
+            
+            p{
+                font-size : .85rem;
+            }
+        }
+    }
+
+    &.series{
+        height : 8rem;
+        margin-bottom : 1.5rem;
+        
+        .title{
+            font-family: 'Do Hyeon', sans-serif;
+            font-size : 2rem;
+            font-weight : 600;
+            margin : 0 0 0.5rem 0;
+        }
+
+        p{
+            color : $oc-gray-6;
+            font-family: 'Gothic A1', sans-serif;
+            font-size : 1.15em;
+            font-weight : 300;
+            overflow: hidden;
+            margin-top : 0;
+        }
+
+        @include media('<large'){
+            .title{
+                font-size : 1.5rem;
+            }
+
+            p{
+                font-size : 1rem;
+            }
+        }
+
+        @include media('<medium'){
+            .title{
+                font-size : 1.25rem;
+            }
+
+            p{
+                font-size : .85rem;
+            }
+        }
+    }
+
+    &.series-info{
+        .title{
+            font-family: 'Do Hyeon', sans-serif;
+            font-size : 3.5;
+            font-weight : 600;
+            letter-spacing : .25rem;
+            margin : 0 0 0.5rem 0;
+        }
+
+        p{
+            color : $oc-gray-6;
+            font-family: 'Gothic A1', sans-serif;
+            font-size : 1rem;
+            font-weight : 300;
+            overflow: hidden;
+            margin-top : 1rem;
+        }
+    }
+
+    &.user{
+        margin-bottom : 2rem;
+
+        .title{
+            font-family: 'Gothic A1', sans-serif;
+            font-size : 2rem;
+            font-weight : 400;
+            margin : 0;
+        }
+
+        p{
+            font-family: 'Gothic A1', sans-serif;
+            font-size : .85rem;
+            font-weight : 200;
+            padding-top : .25rem;
+            margin : 0;
+            color : $oc-gray-6;
+        }
+    }
+
+    &.side-logo{
+        .title{
+            font-family: 'Dancing Script', cursive;
+            font-size : 1.7rem;
+            font-weight : 100;
+            margin-bottom : .5rem;
+            color : $oc-gray-7;
+        }
+
+        p{
+            font-family: 'Dancing Script', cursive;
+            font-size : .65rem;
+            font-weight : 100;
+            text-align : center;
+            margin : 0;
+            color : $oc-gray-6;
+        }
+    }
+}

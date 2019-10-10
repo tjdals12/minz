@@ -1,0 +1,12 @@
+@import 'utils';
+
+.post-wrapper{
+    width : 768px;
+    margin : 0 auto;
+    padding-top : 3rem;
+    padding-bottom : 6rem;
+
+    @include media('<large'){
+        width : 100%;
+    }
+}

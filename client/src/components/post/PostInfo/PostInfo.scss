@@ -1,0 +1,57 @@
+@import 'utils';
+
+.post-info-wrapper{
+    border-bottom : .1px solid #ddd;
+    padding-bottom : 1rem;
+
+    .post-writer{
+        margin : 0;
+        margin-bottom : 1rem;
+        font-family: 'Gothic A1', sans-serif;
+        font-weight : 600;
+        font-size : 0.85rem;
+        color : $oc-gray-6;
+        text-align : right;
+
+        b{
+            font-family: 'Do Hyeon', sans-serif;
+            font-weight : 1rem;
+            color : black;
+        }
+    }
+
+    .info-bottom{
+        display : flex;
+        align-items : center;
+
+        .count-info{
+            display : flex;
+            align-items : flex-end;
+        }
+
+        .button-wrapper{
+            margin-left : auto;
+            display : flex;
+            align-items : center;
+        }
+    }
+
+    @include media('<large'){
+        padding-left : 1rem;
+        padding-right : 1rem;
+
+        .info-bottom{
+            .button-wrapper{
+                display : none;
+            }
+        }
+    }
+
+    @include media('<medium'){
+        .info-bottom{
+            .count-info{
+                display : none;
+            }
+        }
+    }
+}

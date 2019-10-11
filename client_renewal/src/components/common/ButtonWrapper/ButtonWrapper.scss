@@ -1,0 +1,13 @@
+.button-wrapper {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	&.vertical {
+		flex-direction: column;
+	}
+
+	&.horizontal {
+		flex-direction: row;
+	}
+}

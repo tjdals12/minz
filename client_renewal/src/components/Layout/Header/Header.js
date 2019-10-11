@@ -1,27 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import classNames from 'classnames';
 import styles from './Header.scss';
-import { Link } from 'react-router-dom';
-import { FaSearch, FaBars } from 'react-icons/fa';
-import { CSSTransition } from 'react-transition-group';
-import Thumbnail from 'components/common/Thumbnail';
+import { Thumbnail } from 'components/common';
+import Brand from './Brand';
+import Search from './Search';
+import PropTypes from 'prop-types';
 
 // Temp
-import background from 'assets/img/header_background.jpg';
-import headerThumbnail from 'assets/img/header_thumbnail.png';
+import backgroundImg from 'assets/img/header_background.jpg';
+import thumbnailImg from 'assets/img/header_thumbnail.png';
 
 const cx = classNames.bind(styles);
-
-const Brand = () => (
-	<div className={cx('brand')}>
-		<span className={cx('side-menu-icon')}>
-			<FaBars />
-		</span>
-		<Link className={cx('home')} to="/">
-			Minz Log.<span>beta</span>
-		</Link>
-	</div>
-);
 
 const HeaderTitle = ({ title }) => (
 	<div className={cx('header-title')}>
@@ -29,36 +18,29 @@ const HeaderTitle = ({ title }) => (
 	</div>
 );
 
-const Search = () => {
-	const [ searchBar, setSearchBar ] = useState(false);
-
-	const onToggleSearchBar = () => {
-		setSearchBar(!searchBar);
-	};
-
-	return (
-		<div className={cx('search')}>
-			<CSSTransition in={searchBar} timeout={300} classNames="searchBar">
-				<input name="keyword" className={cx('keyword')} placeholder="포스트" />
-			</CSSTransition>
-			<span className={cx('search-icon')} onClick={onToggleSearchBar}>
-				<FaSearch size={25} />
-			</span>
-		</div>
-	);
-};
-
-const Header = () => {
+const Header = ({ background, thumbnail, title }) => {
 	return (
 		<header className={cx('header')} style={{ backgroundImage: `url(${background})` }}>
 			<div className={cx('header-content')}>
-				<Thumbnail url={headerThumbnail} type="user" />
+				<Thumbnail url={thumbnail} type="user" />
 				<Brand />
-				<HeaderTitle title="Minz Log" />
+				<HeaderTitle title={title} />
 				<Search />
 			</div>
 		</header>
 	);
+};
+
+Header.propTypes = {
+	background: PropTypes.string,
+	thumbnail: PropTypes.string,
+	title: PropTypes.string
+};
+
+Header.defaultProps = {
+	background: backgroundImg,
+	thumbnail: thumbnailImg,
+	title: 'Minz log.'
 };
 
 export default Header;

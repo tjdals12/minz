@@ -1,0 +1,43 @@
+@import 'utils';
+
+.brand {
+	position: absolute;
+	top: 20px;
+	left: 0;
+
+	display: flex;
+	align-items: center;
+
+	@include media('<wide') {
+		left: 20px;
+	}
+
+	.sidebar-icon {
+		transition: all .15s ease-in;
+		&:hover {
+			color: rgba(255, 255, 255, 0.5);
+			cursor: pointer;
+		}
+	}
+
+	.home {
+		margin-left: 1rem;
+		font-size: 1.5rem;
+		font-family: 'Dancing Script', cursive;
+		position: relative;
+		transition: all .15s ease-in;
+
+		span {
+			position: absolute;
+			top: 5px;
+			font-size: .75rem;
+			letter-spacing: .15rem;
+			color: $oc-cyan-4;
+		}
+
+		&:hover {
+			color: rgba(255, 255, 255, 0.5);
+			text-decoration: underline;
+		}
+	}
+}

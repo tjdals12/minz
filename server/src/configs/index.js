@@ -12,15 +12,9 @@ const configs = {
 		dbUser: process.env.DB_USER,
 		dbPass: process.env.DB_PASS
 	},
-	production: {
-		dbUri: 'mongodb://127.0.0.1:27017/blog'
-	},
-	development: {
-		dbUri: 'mongodb://127.0.0.1:27017/admin'
-	},
-	test: {
-		dbUri: 'mongodb://127.0.0.1:27017/admin'
-	}
+	production: {},
+	development: {},
+	test: {}
 };
 
 const config = Object.assign(configs.base, configs[env]);

@@ -8,7 +8,7 @@ const PostSchema = new Schema({
 	},
 	title: String,
 	body: String,
-	tags: [String],
+	tags: [ String ],
 	hit: {
 		type: Number,
 		default: 0
@@ -32,11 +32,11 @@ const PostSchema = new Schema({
 			default: 1
 		}
 	},
-	comments: [Schema.Types.ObjectId],
+	comments: [ Schema.Types.ObjectId ],
 	writer: String,
 	publishedDate: {
 		type: Date,
-		default: new Date()
+		default: () => Date.now()
 	}
 });
 
@@ -46,7 +46,7 @@ const PostSchema = new Schema({
  * @description 포스트 작성
  * @param       {Object} params
  */
-PostSchema.statics.savePost = async function (params) {
+PostSchema.statics.savePost = async function(params) {
 	let { username, title, body, tags } = params;
 
 	const userInfo = await Account.findByUsername(username);

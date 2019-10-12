@@ -17,7 +17,7 @@ export const connect = () => {
 	return new Promise((resolve, reject) => {
 		mongoose.Promise = global.Promise;
 
-		if (process.env.NODE_ENV === 'development') {
+		if (process.env.NODE_ENV === 'test') {
 			const mockgoose = new Mockgoose(mongoose);
 
 			mockgoose.prepareStorage().then(() => {

@@ -1,0 +1,39 @@
+@import 'utils';
+
+.count-box {
+	&.vertical {
+		margin-right: 2.5rem;
+		font-family: 'Gothic A1', sans-serif;
+		font-weight: 200;
+		color: $oc-gray-6;
+
+		.title {
+			font-size: 0.85rem;
+		}
+
+		.count {
+			font-size: 1.25rem;
+			padding-top: .2rem;
+		}
+	}
+
+	&.horizontal {
+		display: flex;
+		align-items: center;
+		margin-right: .5rem;
+		padding-top: .2rem;
+		font-family: 'Gothic A1', sans-serif;
+		font-weight: 200;
+		color: $oc-gray-6;
+
+		.title {
+			font-size: .75rem;
+		}
+
+		.count {
+			font-size: .75rem;
+			padding: 0;
+			margin-left: .2rem;
+		}
+	}
+}

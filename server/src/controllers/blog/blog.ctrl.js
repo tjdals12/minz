@@ -1,13 +1,30 @@
 import Blog from 'models/blog';
+import Post from 'models/post';
 
 export const getInfo = async (ctx) => {
 	const user = 'Minz-logger';
 
 	try {
-		const blog = await Blog.findOne({ user: user });
-		ctx.body = blog;
+		const { background, thumbnail, title, name, description, info, tags } = await Blog.findOne({ user: user });
+		const postCount = await Post.countDocuments();
+
+		ctx.res.ok({
+			data: {
+				background,
+				thumbnail,
+				title,
+				name,
+				description,
+				info,
+				tags,
+				postCount
+			},
+			message: 'Success'
+		});
 	} catch (e) {
-		ctx.throw(500, e);
+		ctx.res.internalServerError({
+			message: `Error: ${e.message}`
+		});
 	}
 };
 

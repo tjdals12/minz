@@ -1,5 +1,6 @@
 import { Schema, model } from 'mongoose';
 import Account from 'models/account';
+import DEFINE from 'models/common';
 
 const PostSchema = new Schema({
 	thumbnail: {
@@ -36,9 +37,12 @@ const PostSchema = new Schema({
 	writer: String,
 	publishedDate: {
 		type: Date,
-		default: () => Date.now()
+		default: DEFINE.dateNow,
+		get: DEFINE.dateConverter
 	}
 });
+
+PostSchema.set('toJSON', { getters: true });
 
 /**
  * @author      minz-logger
@@ -66,6 +70,21 @@ PostSchema.statics.savePost = async function(params) {
 	);
 
 	return Post;
+};
+
+/**
+ * @author 		minz-logger
+ * @date 		2019. 10. 13
+ * @description 오늘의 글
+ */
+PostSchema.statics.todayPostCount = async function() {
+	const today = DEFINE.dateNow().format('YYYY-MM-DD');
+
+	return this.find({}, { publishedDate: 1 }).then((data) => {
+		data = data.filter((item) => item.publishedDate.substr(0, 10) === today);
+
+		return data.length;
+	});
 };
 
 export default model('Post', PostSchema);

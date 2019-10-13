@@ -1,5 +1,6 @@
 import Blog from 'models/blog';
 import Post from 'models/post';
+import Series from 'models/series';
 
 export const getInfo = async (ctx) => {
 	const user = 'Minz-logger';
@@ -7,6 +8,8 @@ export const getInfo = async (ctx) => {
 	try {
 		const { background, thumbnail, title, name, description, info, tags } = await Blog.findOne({ user: user });
 		const postCount = await Post.countDocuments();
+		const todayPostCount = await Post.todayPostCount();
+		const seriesCount = await Series.countDocuments();
 
 		ctx.res.ok({
 			data: {
@@ -17,7 +20,9 @@ export const getInfo = async (ctx) => {
 				description,
 				info,
 				tags,
-				postCount
+				postCount,
+				todayPostCount,
+				seriesCount
 			},
 			message: 'Success'
 		});

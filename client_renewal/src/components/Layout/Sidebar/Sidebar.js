@@ -5,7 +5,6 @@ import { FaAngleLeft, FaCog } from 'react-icons/fa';
 import { Logo, Button } from 'components/common';
 import Profile from './Profile';
 import LoginForm from './LoginForm';
-import RegisterModal from 'components/Modal/RegisterModal';
 import PropTypes from 'prop-types';
 
 // Temp
@@ -31,6 +30,7 @@ const Sidebar = ({ isLogin, userInfo, errors, onChange, onSocialLogin, onLocalLo
 					onChange={onChange}
 					onSocialLogin={onSocialLogin}
 					onLocalLogin={onLocalLogin}
+					onOpen={onOpen}
 				/>
 			)}
 
@@ -41,8 +41,6 @@ const Sidebar = ({ isLogin, userInfo, errors, onChange, onSocialLogin, onLocalLo
 					</Button>
 				</div>
 			)}
-
-			<RegisterModal />
 		</div>
 	);
 };

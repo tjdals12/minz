@@ -1,0 +1,44 @@
+@import 'utils';
+
+.navigation {
+	height: 5rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	.search-result {
+		border-top: 1px solid black;
+		flex: 1;
+		text-align: center;
+		padding-top: 1rem;
+		font-weight: 300;
+		color: black;
+	}
+
+	.intro,
+	.list,
+	.series {
+		border-top: 1px solid $oc-gray-3;
+		flex: 1;
+		text-align: center;
+		padding-top: 1rem;
+		font-weight: 200;
+		color: $oc-gray-5;
+	}
+
+	.current {
+		border-top: 1px solid black;
+		font-weight: 300;
+		color: black;
+	}
+
+	@include media('<large') {
+		width: calc(100% - 4rem);
+	}
+
+	@include media('<medium') {
+		.button-wrapper {
+			display: none;
+		}
+	}
+}

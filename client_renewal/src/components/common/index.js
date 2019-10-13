@@ -5,4 +5,6 @@ export { default as Count } from './Count';
 export { default as InputError } from './InputError';
 export { default as LabelInput } from './LabelInput';
 export { default as Logo } from './Logo';
+export { default as Tag } from './Tag';
 export { default as Thumbnail } from './Thumbnail';
+export { default as Wrapper } from './Wrapper';

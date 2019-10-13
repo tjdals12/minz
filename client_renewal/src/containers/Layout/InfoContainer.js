@@ -3,9 +3,12 @@ import Info from 'components/Layout/Info';
 import { useSelector } from 'react-redux';
 
 const InfoContainer = () => {
-	const info = useSelector((state) => state.blog.get('info').toJS(), []);
+	const name = useSelector((state) => state.blog.getIn([ 'info', 'name' ]), []);
+	const description = useSelector((state) => state.blog.getIn([ 'info', 'description' ]), []);
+	const todayPostCount = useSelector((state) => state.blog.getIn([ 'info', 'todayPostCount' ]), []);
+	const postCount = useSelector((state) => state.blog.getIn([ 'info', 'postCount' ]), []);
 
-	return <Info {...info} />;
+	return <Info name={name} description={description} todayPostCount={todayPostCount} postCount={postCount} />;
 };
 
 export default InfoContainer;

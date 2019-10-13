@@ -4,7 +4,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getBlog } from 'store/modules/blog';
 
 const HeaderContainer = () => {
-	const info = useSelector((state) => state.blog.get('info').toJS(), []);
+	const background = useSelector((state) => state.blog.getIn([ 'info', 'background' ]), []);
+	const thumbnail = useSelector((state) => state.blog.getIn([ 'info', 'thumbnail' ]), []);
+	const title = useSelector((state) => state.blog.getIn([ 'info', 'title' ]), []);
+
 	const dispatch = useDispatch();
 
 	useEffect(
@@ -14,7 +17,7 @@ const HeaderContainer = () => {
 		[ dispatch ]
 	);
 
-	return <Header {...info} />;
+	return <Header background={background} thumbnail={thumbnail} title={title} />;
 };
 
 export default HeaderContainer;

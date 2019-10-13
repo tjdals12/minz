@@ -2,11 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import styles from './RegisterModal.scss';
 import ModalWrapper from 'components/Modal/ModalWrapper';
-import Thumbnail from 'components/common/Thumbnail';
-import LabelInput from 'components/common/LabelInput';
-import InputError from 'components/common/InputError';
-import ButtonWrapper from 'components/common/ButtonWrapper';
-import Button from 'components/common/Button';
+import { Thumbnail, LabelInput, InputError, ButtonWrapper, Button } from 'components/common';
 import PropTypes from 'prop-types';
 
 const cx = classNames.bind(styles);
@@ -59,7 +55,7 @@ const RegisterModal = ({ errors, visible, onClose, onChange, onRegister }) => {
 							<Button theme="register" onClick={onRegister}>
 								Register
 							</Button>
-							<Button theme="register" onClick={onClose}>
+							<Button theme="register" onClick={() => onClose('register')}>
 								Cancel
 							</Button>
 						</ButtonWrapper>
@@ -72,6 +68,7 @@ const RegisterModal = ({ errors, visible, onClose, onChange, onRegister }) => {
 
 RegisterModal.propTypes = {
 	errors: PropTypes.object,
+	visible: PropTypes.bool,
 	onClose: PropTypes.func,
 	onChange: PropTypes.func,
 	onRegister: PropTypes.func
@@ -84,6 +81,7 @@ RegisterModal.defaultProps = {
 		usernameError: '',
 		failError: ''
 	},
+	visible: false,
 	onClose: () => console.warn('Warning: onClose not defined'),
 	onChange: () => console.warn('Warning: onChange not defined'),
 	onRegister: () => console.warn('Warning: onRegister not defined')

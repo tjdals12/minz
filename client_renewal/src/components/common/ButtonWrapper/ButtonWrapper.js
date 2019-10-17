@@ -4,6 +4,8 @@ import styles from './ButtonWrapper.scss';
 
 const cx = classNames.bind(styles);
 
-const ButtonWrapper = ({ direction, children }) => <div className={cx(`button-wrapper ${direction}`)}>{children}</div>;
+const ButtonWrapper = ({ direction, children, className }) => (
+	<div className={cx(`button-wrapper ${direction} ${className}`)}>{children}</div>
+);
 
 export default ButtonWrapper;

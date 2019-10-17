@@ -1,0 +1,65 @@
+@import 'utils';
+
+.post-navigation {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 4rem;
+	border-top: 1px solid #ddd;
+	background: white;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	z-index: 10;
+
+	.direction {
+		width: 200px;
+		height: 100%;
+		padding-top: 1rem;
+		padding-bottom: 1rem;
+		color: $oc-gray-6;
+		opacity: .7;
+		transition: all .15s ease-in;
+
+		&.prev {
+			margin-right: auto;
+		}
+
+		&.next {
+			margin-left: auto;
+		}
+
+		&:hover {
+			cursor: pointer;
+			color: black;
+		}
+
+		&:active {
+			background: rgba($oc-gray-8, 0.1);
+		}
+	}
+
+	.preview {
+		width: 60%;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.navigation-enter {
+		transform: rotateX(0deg);
+		opacity: 0;
+	}
+
+	.navigation-enter-active {
+		transform: rotateX(360deg);
+		opacity: 1;
+		transition: all 300ms ease-in;
+	}
+
+	.navigation-enter-done {
+		transform: rotateX(0deg);
+		opacity: 1;
+	}
+}

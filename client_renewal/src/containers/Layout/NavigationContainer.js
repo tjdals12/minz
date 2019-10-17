@@ -1,13 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { withRouter } from 'react-router-dom';
 import Navigation from 'components/Layout/Navigation';
 import { useSelector } from 'react-redux';
 
-const NavigationContainer = () => {
+const NavigationContainer = ({ location }) => {
 	const postCount = useSelector((state) => state.blog.getIn([ 'info', 'postCount' ]));
 	const seriesCount = useSelector((state) => state.blog.getIn([ 'info', 'seriesCount' ]));
-	const [ current, setCurrent ] = useState('intro');
+	const [ current, setCurrent ] = useState('');
 
-	return <Navigation postCount={postCount} seriesCount={seriesCount} current={current} setCurrent={setCurrent} />;
+	useEffect(
+		() => {
+			const { pathname } = location;
+			setCurrent(pathname.replace('/', ''));
+		},
+		[ location, setCurrent ]
+	);
+
+	return <Navigation postCount={postCount} seriesCount={seriesCount} current={current} />;
 };
 
-export default NavigationContainer;
+export default withRouter(NavigationContainer);

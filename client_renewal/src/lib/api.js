@@ -5,3 +5,6 @@ export const localRegister = (param) => axios.post('/api/auth/register/local', {
 
 /** Blog */
 export const getBlog = () => axios.get('/api/blogs');
+
+/** Post */
+export const getPosts = (page) => axios.get(`/api/posts?page=${page}`);

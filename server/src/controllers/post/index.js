@@ -107,6 +107,12 @@ post.post('/', postCtrl.write);
  *      description: 포스트 목록 조회
  *      produces:
  *          - application/json
+ *      parameters:
+ *          - in: query
+ *            name: page
+ *            description: page number
+ *            type: string
+ *            example: 1
  *      responses:
  *          200:    
  *              description: Successful operation

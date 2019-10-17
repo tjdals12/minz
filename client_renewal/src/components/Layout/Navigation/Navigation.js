@@ -7,34 +7,19 @@ import PropTypes from 'prop-types';
 
 const cx = classNames.bind(styles);
 
-const Navigation = ({ postCount, seriesCount, current, setCurrent }) => (
+const Navigation = ({ postCount, seriesCount, current }) => (
 	<Wrapper className={cx('navigation')}>
 		{current === 'search' ? (
 			<div className={cx('search-result')}>검색결과</div>
 		) : (
 			[
-				<Link
-					to="/"
-					key="intro"
-					className={cx('intro', current === 'intro' && 'current')}
-					onClick={() => setCurrent('intro')}
-				>
+				<Link to="/" key="intro" className={cx('intro', current === '' && 'current')}>
 					블로그 소개
 				</Link>,
-				<Link
-					to="/list"
-					key="list"
-					className={cx('list', current === 'list' && 'current')}
-					onClick={() => setCurrent('list')}
-				>
+				<Link to="/list" key="list" className={cx('list', current === 'list' && 'current')}>
 					글 {postCount}
 				</Link>,
-				<Link
-					to="/series"
-					key="series"
-					className={cx('series', current === 'series' && 'current')}
-					onClick={() => setCurrent('series')}
-				>
+				<Link to="/series" key="series" className={cx('series', current === 'series' && 'current')}>
 					시리즈 {seriesCount}
 				</Link>
 			]
@@ -43,13 +28,11 @@ const Navigation = ({ postCount, seriesCount, current, setCurrent }) => (
 );
 
 Navigation.propTypes = {
-	current: PropTypes.string,
-	setCurrent: PropTypes.func
+	current: PropTypes.string
 };
 
 Navigation.defaultProps = {
-	current: 'intro',
-	setCurrent: () => console.warn('Warning: setCurrent is not defined')
+	current: 'intro'
 };
 
 export default Navigation;

@@ -19,9 +19,8 @@ const Info = ({ name, description, todayPostCount, postCount }) => (
 			</Count>
 
 			<div className={cx('button-wrapper')}>
-				<Button to="/">제안하기</Button>
 				<Button to="/" theme="green">
-					구독하기
+					E-mail
 				</Button>
 			</div>
 		</div>

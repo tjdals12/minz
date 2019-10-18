@@ -93,7 +93,7 @@ export const localLogin = async (ctx) => {
 			data: {
 				id: account._id,
 				profile: account.profile,
-				thoughCount: account.thoughCount
+				count: account.thoughCount
 			},
 			message: 'Success - authCtrl > localLogin'
 		});
@@ -136,9 +136,10 @@ export const check = (ctx) => {
 
 	if (!user) {
 		ctx.res.noContent({
-			data: { user: user },
+			data: user,
 			message: 'Success - authCtrl > check'
 		});
+
 		return;
 	}
 
@@ -147,7 +148,7 @@ export const check = (ctx) => {
 			data: {
 				id: user._id,
 				profile: user.profile,
-				thoughCount: user.thoughCount
+				count: user.thoughCount
 			},
 			message: 'Success - authCtrl > check'
 		});

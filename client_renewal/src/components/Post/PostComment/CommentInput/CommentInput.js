@@ -6,25 +6,31 @@ import PropTypes from 'prop-types';
 
 const cx = classNames.bind(styles);
 
-const CommentInput = ({ onChange, onComment }) => (
+const CommentInput = React.memo(({ comment, onChange, onInsert }) => (
 	<div className={cx('comment-input')}>
-		<textarea name="content" placeholder="궁금한 것이 있나요? 댓글을 달아주세요." onChange={onChange} />
+		<textarea
+			name="content"
+			placeholder="궁금한 것이 있나요? 댓글을 달아주세요."
+			onChange={(e) => onChange(e.target.value)}
+			value={comment}
+		/>
 		<div className={cx('comment-btn')}>
-			<Button theme="small" onClick={onComment}>
+			<Button theme="small" onClick={onInsert}>
 				확인
 			</Button>
 		</div>
 	</div>
-);
+));
 
 CommentInput.propTypes = {
+	comment: PropTypes.string,
 	onChange: PropTypes.func,
-	onComment: PropTypes.func
+	onInsert: PropTypes.func
 };
 
 CommentInput.defaultProps = {
 	onChange: () => console.warn('Warning onChnage is not defined'),
-	onComment: () => console.warn('Warning onComment is not defined')
+	onInsert: () => console.warn('Warning onInsert is not defined')
 };
 
 export default CommentInput;

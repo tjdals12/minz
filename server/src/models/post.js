@@ -33,7 +33,12 @@ const PostSchema = new Schema({
 			default: 1
 		}
 	},
-	comments: [ Schema.Types.ObjectId ],
+	comments: [
+		{
+			type: Schema.Types.ObjectId,
+			ref: 'Comment'
+		}
+	],
 	writer: String,
 	publishedDate: {
 		type: Date,

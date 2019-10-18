@@ -6,9 +6,9 @@ import PropTypes from 'prop-types';
 
 const cx = classNames.bind(styles);
 
-const CommentPagination = ({ onPrev, onNext, page, lastPage }) => (
+const CommentPagination = React.memo(({ page, lastPage, onPrev, onNext }) => (
 	<div className={cx('pagination')}>
-		<Button disabled={page === 1} theme="small" onClick={onPrev}>
+		<Button disabled={page === 1} theme="small" onClick={() => onPrev(page - 1)}>
 			Prev
 		</Button>
 		<div className={cx('number')}>
@@ -16,11 +16,11 @@ const CommentPagination = ({ onPrev, onNext, page, lastPage }) => (
 			<p>/</p>
 			<p>{lastPage}</p>
 		</div>
-		<Button disabled={page === lastPage} theme="small" onClick={onNext}>
+		<Button disabled={page === lastPage} theme="small" onClick={() => onNext(page + 1)}>
 			Next
 		</Button>
 	</div>
-);
+));
 
 CommentPagination.propTypes = {
 	page: PropTypes.number,

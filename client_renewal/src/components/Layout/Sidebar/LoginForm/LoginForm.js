@@ -33,9 +33,12 @@ const LoginForm = ({ errors, onChange, onSocialLogin, onLocalLogin, onOpen }) =>
 				<LabelInput
 					label="Password"
 					type="Password"
-					name="email"
+					name="password"
 					placeholder="Password"
 					onChange={onChange}
+					onKeyUp={(e) => {
+						if (e.keyCode === 13) onLocalLogin();
+					}}
 					error={errors.passwordError}
 				/>
 

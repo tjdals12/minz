@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 
 const cx = classNames.bind(styles);
 
-const Comment = ({ id, content, writer, isDelete, publishedDate }) => (
+const Comment = React.memo(({ id, content, writer, isDelete, publishedDate, onTarget, onOpen }) => (
 	<div className={cx('comment')}>
 		<p className={cx('writer')}>{writer}</p>
 		<div className={cx('content')}>
@@ -21,9 +21,21 @@ const Comment = ({ id, content, writer, isDelete, publishedDate }) => (
 		</div>
 
 		<div className={cx('date')}>{publishedDate}</div>
-		<div className={cx('remove-btn')}>{isDelete && <Button theme="line">삭제</Button>}</div>
+		<div className={cx('remove-btn')}>
+			{isDelete && (
+				<Button
+					theme="line"
+					onClick={() => {
+						onTarget(id);
+						onOpen('askRemove');
+					}}
+				>
+					삭제
+				</Button>
+			)}
+		</div>
 	</div>
-);
+));
 
 Comment.propTypes = {
 	id: PropTypes.string,

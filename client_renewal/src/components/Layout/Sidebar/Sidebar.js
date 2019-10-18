@@ -36,7 +36,7 @@ const Sidebar = ({ isLogin, userInfo, errors, onChange, onSocialLogin, onLocalLo
 
 			{isLogin && (
 				<div className={cx('config-wrapper')}>
-					<Button theme="icon" onClick={onOpen('blogConfig')}>
+					<Button theme="icon" onClick={() => onOpen('blogConfig')}>
 						<FaCog />
 					</Button>
 				</div>

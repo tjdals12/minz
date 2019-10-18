@@ -8,36 +8,23 @@ import Comment from './Comment';
 import CommentPagination from './CommentPagination';
 import PropTypes from 'prop-types';
 
-const demo = [
-	{
-		_id: '0',
-		writer: 'Seongmin',
-		content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-		publishedDate: 'Saturday, April 6, 2019 9:57 PM'
-	},
-	{
-		_id: '1',
-		writer: 'Jongoh',
-		content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-		publishedDate: 'Saturday, April 6, 2019 9:57 PM'
-	},
-	{
-		_id: '2',
-		writer: 'Seohyu',
-		content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-		publishedDate: 'Saturday, April 6, 2019 9:57 PM'
-	},
-	{
-		_id: '3',
-		writer: 'Chanhui',
-		content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-		publishedDate: 'Saturday, April 6, 2019 9:57 PM'
-	}
-];
-
 const cx = classNames.bind(styles);
 
-const PostComment = ({ commentCount, comments }) => {
+const PostComment = ({
+	user,
+	isLogin,
+	commentCount,
+	comment,
+	comments,
+	page,
+	lastPage,
+	onChange,
+	onInsert,
+	onPrev,
+	onNext,
+	onTarget,
+	onOpen
+}) => {
 	const commentList = comments.map((comment) => {
 		const { _id, content, writer, publishedDate } = comment;
 
@@ -47,8 +34,10 @@ const PostComment = ({ commentCount, comments }) => {
 				id={_id}
 				writer={writer}
 				content={content}
-				isDelete={false}
+				isDelete={user === writer}
 				publishedDate={publishedDate}
+				onTarget={onTarget}
+				onOpen={onOpen}
 			/>
 		);
 	});
@@ -60,23 +49,25 @@ const PostComment = ({ commentCount, comments }) => {
 				<h1>{commentCount}</h1>
 			</div>
 
-			<CommentInput />
+			{isLogin && <CommentInput comment={comment} onChange={onChange} onInsert={onInsert} />}
 
 			<div className={cx('comment-list')}>{commentList}</div>
 
-			<CommentPagination />
+			<CommentPagination page={page} lastPage={lastPage} onPrev={onPrev} onNext={onNext} />
 		</Wrapper>
 	);
 };
 
 PostComment.propTypes = {
+	isLogin: PropTypes.bool,
 	commentCount: PropTypes.number,
 	comments: PropTypes.array
 };
 
 PostComment.defaultProps = {
+	isLogin: false,
 	commentCount: 0,
-	comments: demo
+	comments: []
 };
 
 export default PostComment;

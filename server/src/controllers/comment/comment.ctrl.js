@@ -1,32 +1,50 @@
 import Comment from 'models/comment';
+import Post from 'models/post';
 import Joi from 'joi';
 import { Types } from 'mongoose';
 
-const Post = require('../../models/post');
-
+/**
+ * @author 		minz-logger
+ * @date 		2019. 09. 09
+ * @description ObjectId 검사
+ */
 export const checkObjectId = (ctx, next) => {
 	const { postId } = ctx.request.body;
 
 	if (!postId) {
-		ctx.status = 404;
+		ctx.res.notFound({
+			data: postId,
+			message: 'Fail - postid required'
+		});
 		return null;
 	}
 
 	if (!Types.ObjectId.isValid(postId)) {
-		ctx.status = 400;
+		ctx.res.badRequest({
+			data: postId,
+			message: 'Fail - Type error (id)'
+		});
 		return null;
 	}
 
 	return next();
 };
 
+/**
+ * @author 		minz-logger
+ * @date 		2019. 09. 09
+ * @description 댓글 작성
+ */
 export const writeComment = async (ctx) => {
-	const { content, postId } = ctx.request.body;
+	const { postId, content } = ctx.request.body;
 
 	const user = ctx.request.user;
 
 	if (!user) {
-		ctx.status = 400;
+		ctx.res.badRequest({
+			data: user,
+			message: 'Fail - commentCtrl > writeComment'
+		});
 		return;
 	}
 
@@ -40,8 +58,11 @@ export const writeComment = async (ctx) => {
 	const result = Joi.validate(ctx.request.body, schema);
 
 	if (result.error) {
-		ctx.status = 400;
-		ctx.body = result.error;
+		ctx.res.badRequest({
+			data: result.error,
+			message: 'Fail - commentCtrl > writeComment'
+		});
+
 		return;
 	}
 
@@ -52,40 +73,78 @@ export const writeComment = async (ctx) => {
 
 		await Post.findByIdAndUpdate({ _id: postId }, { $push: { comments: id } });
 
-		ctx.body = comment;
+		ctx.res.ok({
+			data: comment,
+			message: 'Success - commentCtrl > writeComment'
+		});
 	} catch (e) {
-		ctx.throw(ctx, 500);
+		ctx.res.internalServerError({
+			data: { postId, content },
+			message: `Error - commentCtrl > writeComment: ${e.message}`
+		});
 	}
 };
 
+/**
+ * @author 		minz-logger
+ * @date 		2019. 09. 09
+ * @description 댓글 목록 조회
+ */
 export const commentList = async (ctx) => {
 	const page = parseInt(ctx.query.page || 1, 10);
-	const { id } = ctx.query;
+	const { postId } = ctx.params;
 
 	try {
-		const comments = await Comment.find({ postId: id }).sort({ _id: -1 }).skip((page - 1) * 5).limit(5).exec();
-		const commentCount = await Comment.count({ postId: id }).exec();
+		const comments = await Comment.find({ postId: postId })
+			.sort({ publishedDate: -1 })
+			.skip((page - 1) * 5)
+			.limit(5)
+			.exec();
+		const commentCount = await Comment.countDocuments({ postId: postId }).exec();
 
 		ctx.set('Comment-Count', Math.ceil(commentCount));
 		ctx.set('Last-Page', Math.ceil(commentCount / 5));
-		ctx.body = comments;
+
+		ctx.res.ok({
+			data: comments,
+			message: 'Success - commentCtrl > commentList'
+		});
 	} catch (e) {
-		ctx.throw(e, 500);
+		ctx.res.internalServerError({
+			data: comments,
+			message: `Error - commentCtrl > commentList: ${e.message}`
+		});
 	}
 };
 
+/**
+ * @author 		minz-logger
+ * @date 		2019. 09. 09
+ * @description 댓글 조회
+ */
 export const readComment = async (ctx) => {
 	const { id } = ctx.params;
 
 	try {
 		const comment = await Comment.findById(id).exec();
 
-		ctx.body = comment;
+		ctx.res.ok({
+			data: comment,
+			message: 'Success - commentCtrl > readComment'
+		});
 	} catch (e) {
-		ctx.throw(e, 500);
+		ctx.res.internalServerError({
+			data: id,
+			message: `Error - commentCtrl > readComment: ${e.message}`
+		});
 	}
 };
 
+/**
+ * @author 		minz-logger
+ * @date 		2019. 09. 09
+ * @description 댓글 삭제
+ */
 export const deleteComment = async (ctx) => {
 	const { id } = ctx.params;
 	const postId = ctx.query.postId;
@@ -101,8 +160,14 @@ export const deleteComment = async (ctx) => {
 			}
 		);
 
-		ctx.body = post;
+		ctx.res.ok({
+			data: post,
+			message: 'Success - commentCtrl > deleteComment'
+		});
 	} catch (e) {
-		ctx.throw(e, 500);
+		ctx.res.internalServerError({
+			data: post,
+			message: `Error - commentCtrl > deleteComment`
+		});
 	}
 };

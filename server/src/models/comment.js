@@ -1,14 +1,17 @@
-const mongoose =  require('mongoose');
-const { Schema } = mongoose;
+import { Schema, model } from 'mongoose';
+import DEFINE from 'models/common';
 
-const Comment = Schema({
-    content : String,
-    postId : Schema.Types.ObjectId,
-    writer : String,
-    publishedDate : {
-        type : Date,
-        default : new Date()
-    }
-})
+const CommentSchema = Schema({
+	content: String,
+	postId: Schema.Types.ObjectId,
+	writer: String,
+	publishedDate: {
+		type: Date,
+		default: DEFINE.dateNow,
+		get: DEFINE.dateConverter
+	}
+});
 
-module.exports = mongoose.model('Comment', Comment);
+CommentSchema.set('toJSON', { getters: true });
+
+export default model('Comment', CommentSchema);

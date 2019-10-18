@@ -37,7 +37,7 @@ app.use(
 app.use(helmet());
 logSettings(app);
 swaggerSettings(app);
-// app.use(jwtMiddleware);
+app.use(jwtMiddleware);
 app.use(router.routes());
 app.use(router.allowedMethods());
 

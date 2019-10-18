@@ -3,13 +3,17 @@ import { createAction, handleActions } from 'redux-actions';
 
 const OPEN = 'modal/OPEN';
 const CLOSE = 'modal/CLOSE';
+const SET_TYPE = 'modal/SET_TYPE';
 
 export const open = createAction(OPEN);
 export const close = createAction(CLOSE);
+export const setType = createAction(SET_TYPE);
 
 const initialState = Map({
 	register: false,
-	welcome: false
+	welcome: false,
+	askRemove: false,
+	type: ''
 });
 
 export default handleActions(
@@ -23,6 +27,11 @@ export default handleActions(
 			const { payload: name } = action;
 
 			return state.set(name, false);
+		},
+		[SET_TYPE]: (state, action) => {
+			const { payload } = action;
+
+			return state.set('type', payload);
 		}
 	},
 	initialState

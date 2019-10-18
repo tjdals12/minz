@@ -66,25 +66,21 @@ export const list = async (ctx) => {
 
 	const query = tag
 		? {
-			tags: tag // tags 배열에 tag를 가진 포스트 찾기
-		}
+				tags: tag // tags 배열에 tag를 가진 포스트 찾기
+			}
 		: {};
 
 	if (page < 1) {
 		ctx.res.badRequest({
 			data: { page: page },
 			message: 'Fail - postCtrl > list'
-		})
+		});
 
 		return;
 	}
 
 	try {
-		const posts = await Post
-			.find(query)
-			.sort({ _id: -1 })
-			.limit(5 * page)
-			.lean();
+		const posts = await Post.find(query).sort({ _id: -1 }).limit(5 * page).lean();
 
 		const postCount = await Post.countDocuments(query);
 
@@ -100,12 +96,12 @@ export const list = async (ctx) => {
 		ctx.res.ok({
 			data: posts.map(limitBodyLength),
 			message: 'Success - postCtrl > list'
-		})
+		});
 	} catch (e) {
 		ctx.res.internalServerError({
 			data: [],
 			message: `Error - postCtrl > list: ${e.message}`
-		})
+		});
 	}
 };
 
@@ -117,7 +113,9 @@ export const list = async (ctx) => {
 export const count = async (ctx) => {
 	try {
 		const count = await Post.find({ dispGb: true }).countDocuments();
-		const todayCount = await Post.find({ publishedDate: { $gte: new Date().setHours(0, 0, 0, 0) } }).countDocuments();
+		const todayCount = await Post.find({
+			publishedDate: { $gte: new Date().setHours(0, 0, 0, 0) }
+		}).countDocuments();
 
 		ctx.res.ok({
 			data: {
@@ -131,7 +129,7 @@ export const count = async (ctx) => {
 			data: null,
 			message: 'Error - postCtrl > list'
 		});
-	};
+	}
 };
 
 /**
@@ -149,18 +147,20 @@ export const read = async (ctx) => {
 			{
 				new: true
 			}
-		);
-		const commentCount = await Comment.countDocuments({ postId: id })
+		).populate({ path: 'comments', options: { sort: { publishedDate: -1 }, limit: 5 } });
+
+		const commentCount = await Comment.countDocuments({ postId: id });
 
 		if (!post) {
 			ctx.res.notFound({
 				data: { id: id },
 				message: 'Fail - postCtrl > read'
-			})
+			});
 			return;
 		}
 
 		ctx.set('Comment-Count', Math.ceil(commentCount));
+		ctx.set('Last-Page', Math.ceil(commentCount / 5));
 
 		ctx.res.ok({
 			data: post,
@@ -171,7 +171,7 @@ export const read = async (ctx) => {
 			data: { id: id },
 			message: `Error - postCtrl > read: ${e.message}`
 		});
-	};
+	}
 };
 
 /**
@@ -188,25 +188,21 @@ export const update = async (ctx) => {
 		ctx.res.unauthorized({
 			data: { user: user },
 			message: 'Fail - postCtrl > update'
-		})
+		});
 		return;
 	}
 
 	try {
 		const { username: writer } = user.profile;
-		const post = await Post.findOneAndUpdate(
-			{ _id: id, writer: writer },
-			ctx.request.body,
-			{
-				new: true
-			}
-		);
+		const post = await Post.findOneAndUpdate({ _id: id, writer: writer }, ctx.request.body, {
+			new: true
+		});
 
 		if (!post) {
 			ctx.res.notFound({
 				data: {},
 				message: 'Fail - postCtrl > update'
-			})
+			});
 			return;
 		}
 
@@ -219,7 +215,7 @@ export const update = async (ctx) => {
 			data: { id: id },
 			messagee: `Error - postCtrl > update: ${e.message}`
 		});
-	};
+	}
 };
 
 /**
@@ -269,7 +265,7 @@ export const deletePost = async (ctx) => {
 			data: { id: id },
 			message: `Error - postCtrl > deletePost: ${e.message}`
 		});
-	};
+	}
 };
 
 /**
@@ -292,7 +288,7 @@ export const prev = async (ctx) => {
 			data: { id: id },
 			message: `Error - postCtrl > prev: ${e.message}`
 		});
-	};
+	}
 };
 
 /**
@@ -315,9 +311,8 @@ export const next = async (ctx) => {
 			data: { id: id },
 			message: `Error - postCtrl > next: ${e.message}`
 		});
-	};
+	}
 };
-
 
 /**
  * @author 		minz-logger
@@ -328,13 +323,9 @@ export const search = async (ctx) => {
 	const { keyword } = ctx.request.body;
 
 	try {
-		const searchResult = await Post
-			.find({
-				$or: [
-					{ title: { $regex: `.*${keyword}.*` } },
-					{ tags: { $in: keyword } }
-				]
-			})
+		const searchResult = await Post.find({
+			$or: [ { title: { $regex: `.*${keyword}.*` } }, { tags: { $in: keyword } } ]
+		})
 			.sort({ _id: -1 })
 			.lean();
 
@@ -358,5 +349,5 @@ export const search = async (ctx) => {
 			data: { keyword: keyword },
 			message: `Error - postCtrl > search: ${e.message}`
 		});
-	};
+	}
 };

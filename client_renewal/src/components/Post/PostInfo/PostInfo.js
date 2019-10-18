@@ -21,7 +21,7 @@ const hitStyle = {
 	fontSize: '1rem'
 };
 
-const PostInfo = ({ id, title, writer, tags, hit, like, commentCount, publishedDate }) => (
+const PostInfo = ({ user, id, title, writer, tags, hit, like, commentCount, publishedDate, onOpen }) => (
 	<Wrapper className={cx('post-info-wrapper')}>
 		{tags.map((tag, index) => (
 			<Tag key={index} to={`/search/${tag}`}>
@@ -45,12 +45,16 @@ const PostInfo = ({ id, title, writer, tags, hit, like, commentCount, publishedD
 				<FaEye style={hitStyle} />
 			</Count>
 
-			<ButtonWrapper>
-				<Button key="modify" to={`/editor?postId=${id}`} theme="green">
-					수정
-				</Button>
-				<Button key="remove">삭제</Button>
-			</ButtonWrapper>
+			{user === writer && (
+				<ButtonWrapper>
+					<Button key="modify" to={`/editor?postId=${id}`} theme="green">
+						수정
+					</Button>
+					<Button key="remove" onClick={() => onOpen('askRemove')}>
+						삭제
+					</Button>
+				</ButtonWrapper>
+			)}
 		</div>
 	</Wrapper>
 );

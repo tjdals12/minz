@@ -5,13 +5,17 @@ import * as api from 'lib/api';
 
 const GET_POSTS = 'post/GET_POSTS';
 const GET_POST = 'post/GET_POST';
+const DELETE_POST = 'post/DELETE_POST';
 
 export const getPosts = createAction(GET_POSTS, api.getPosts);
 export const getPost = createAction(GET_POST, api.getPost);
+export const deletePost = createAction(DELETE_POST, api.deletePost);
 
 const initialState = Map({
 	posts: List(),
 	post: Map(),
+	commentCount: 0,
+	commentLastPage: 1,
 	lastPage: 1
 });
 
@@ -30,9 +34,17 @@ export default handleActions(
 			type: GET_POST,
 			onSuccess: (state, action) => {
 				const { data: post } = action.payload.data;
+				const commentCount = action.payload.headers['comment-count'];
+				const lastPage = action.payload.headers['last-page'];
 
-				return state.set('post', fromJS(post));
+				return state
+					.set('post', fromJS(post))
+					.set('comment-count', parseInt(commentCount || 1, 10))
+					.set('commentLastPage', parseInt(lastPage || 1, 10));
 			}
+		}),
+		...pender({
+			type: DELETE_POST
 		})
 	},
 	initialState

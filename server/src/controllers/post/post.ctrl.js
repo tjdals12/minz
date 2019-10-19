@@ -277,10 +277,12 @@ export const prev = async (ctx) => {
 	const { id } = ctx.params;
 
 	try {
-		const prevPost = await Post.findOne({ _id: { $lt: id } });
+		const prevPost = await Post.find({ _id: { $lt: id } }, { title: 1, publishedDate: 1 })
+			.sort({ _id: -1 })
+			.limit(1);
 
 		ctx.res.ok({
-			data: prevPost,
+			data: prevPost[0],
 			message: 'Success - postCtrl > prev'
 		});
 	} catch (e) {
@@ -300,10 +302,12 @@ export const next = async (ctx) => {
 	const { id } = ctx.params;
 
 	try {
-		const nextPost = await Post.findOne({ _id: { $gt: id } });
+		const nextPost = await Post.find({ _id: { $gt: id } }, { title: 1, publishedDate: 1 })
+			.sort({ _id: -1 })
+			.limit(1);
 
 		ctx.res.ok({
-			data: nextPost,
+			data: nextPost[0],
 			message: 'Success - postCtrl > next'
 		});
 	} catch (e) {

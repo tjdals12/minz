@@ -13,9 +13,7 @@ const PostNavigation = ({ id, title, isNext, onPrev, onNext, loading }) => (
 		<MdKeyboardArrowLeft size={25} className={cx('direction prev')} onClick={onPrev} />
 
 		<CSSTransition in={!loading} timeout={300} classNames={'navigation'}>
-			<div className={cx('preview')}>
-				<Link to={`/post/${id}`}>{title}</Link>
-			</div>
+			<div className={cx('preview')}>{isNext ? <Link to={`/post/${id}`}>{title}</Link> : title}</div>
 		</CSSTransition>
 
 		<MdKeyboardArrowRight className={cx('direction next')} onClick={onNext} />
@@ -32,8 +30,7 @@ PostNavigation.propTypes = {
 };
 
 PostNavigation.defaultProps = {
-	title:
-		'Phasellus ac velit at quam interdum sagittis ut at felis. Nulla eget pharetra purus. Maecenas vel suscipit ante. Mauris mollis est id felis interdum elementum non non sapien. Donec dignissim placerat faucibus. Vestibulum facilisis odio vel eros fermentum, vel rutrum neque tristique. Ut sollicitudin, libero ut malesuada dapibus, magna mi tincidunt turpis, sed laoreet nulla nibh eu dolor. Sed a mollis dui. Phasellus consectetur suscipit lectus quis ultrices. Pellentesque egestas ullamcorper quam, eget iaculis diam laoreet at.',
+	title: '',
 	isNext: false,
 	onPrev: () => console.warn('Warning: onPrev is not defined'),
 	onNext: () => console.warn('Warning: onNext is not defined'),

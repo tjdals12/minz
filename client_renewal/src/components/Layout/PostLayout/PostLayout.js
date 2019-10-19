@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import styles from './PostLayout.scss';
 import SidebarContainer from 'containers/Layout/SidebarContainer';
 import HeaderContainer from 'containers/Layout/HeaderContainer';
-import PostNavigation from 'components/Layout/PostNavigation';
+import PostNavigationContainer from 'containers/Layout/PostNavigationContainer';
 import RegisterModalContainer from 'containers/Modal/RegisterModalContainer';
 import WelcomeModalContainer from 'containers/Modal/WelcomeModalContainer';
 
@@ -14,7 +14,7 @@ const PostLayout = ({ children }) => (
 		<SidebarContainer />
 		<HeaderContainer />
 		<main>{children}</main>
-		<PostNavigation />
+		<PostNavigationContainer />
 
 		<RegisterModalContainer />
 		<WelcomeModalContainer />

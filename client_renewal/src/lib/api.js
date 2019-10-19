@@ -13,6 +13,8 @@ export const getBlog = () => axios.get('/api/blogs');
 export const getPosts = (page) => axios.get(`/api/posts?page=${page}`);
 export const getPost = (id) => axios.get(`/api/posts/${id}`);
 export const deletePost = (id) => axios.delete(`/api/posts/${id}`);
+export const getPrevPost = (id) => axios.get(`/api/posts/${id}/prev`);
+export const getNextPost = (id) => axios.get(`/api/posts/${id}/next`);
 
 /** Comment */
 export const getComments = (id, page) => axios.get(`/api/comments/${id}/list?page=${page}`);

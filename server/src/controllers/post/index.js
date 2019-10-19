@@ -243,7 +243,7 @@ post.delete('/:id', commonCtrl.checkObjectId, postCtrl.deletePost);
 
 /**
  * @swagger
- * /api/posts/prev/{id}:
+ * /api/posts/{id}/prev:
  *  get:
  *      tags:
  *          - Post
@@ -266,11 +266,11 @@ post.delete('/:id', commonCtrl.checkObjectId, postCtrl.deletePost);
  *              schema:
  *                  $ref: '#/definitions/post'
  */
-post.get('/prev/:id', commonCtrl.checkObjectId, postCtrl.prev);
+post.get('/:id/prev', commonCtrl.checkObjectId, postCtrl.prev);
 
 /**
  * @swagger
- * /api/posts/next/{id}:
+ * /api/posts/{id}/next:
  *  get:
  *      tags:
  *          - Post
@@ -293,7 +293,7 @@ post.get('/prev/:id', commonCtrl.checkObjectId, postCtrl.prev);
  *              schema:
  *                  $ref: '#/definitions/post'
  */
-post.get('/next/:id', commonCtrl.checkObjectId, postCtrl.next);
+post.get('/:id/next', commonCtrl.checkObjectId, postCtrl.next);
 
 /**
  * @swagger

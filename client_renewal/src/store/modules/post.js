@@ -5,12 +5,14 @@ import * as api from 'lib/api';
 
 const GET_POSTS = 'post/GET_POSTS';
 const GET_POST = 'post/GET_POST';
+const WRITE_POST = 'post/WRITE_POST';
 const DELETE_POST = 'post/DELETE_POST';
 const GET_PREV_POST = 'post/GET_PREV_POST';
 const GET_NEXT_POST = 'post/GET_NEXT_POST';
 
 export const getPosts = createAction(GET_POSTS, api.getPosts);
 export const getPost = createAction(GET_POST, api.getPost);
+export const writePost = createAction(WRITE_POST, api.writePost);
 export const deletePost = createAction(DELETE_POST, api.deletePost);
 export const getPrevPost = createAction(GET_PREV_POST, api.getPrevPost);
 export const getNextPost = createAction(GET_NEXT_POST, api.getNextPost);
@@ -48,6 +50,9 @@ export default handleActions(
 					.set('comment-count', parseInt(commentCount || 1, 10))
 					.set('commentLastPage', parseInt(lastPage || 1, 10));
 			}
+		}),
+		...pender({
+			type: WRITE_POST
 		}),
 		...pender({
 			type: DELETE_POST

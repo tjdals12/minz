@@ -4,9 +4,14 @@ import comment from './comment';
 import series from './series';
 import auth from './auth';
 import blog from './blog';
+import upload from '../upload';
 
 const api = new Router();
 
+api.post('/upload', upload.single('imgUploader'), (ctx) => {
+	let imgFile = ctx.req.file;
+	ctx.body = imgFile.location;
+});
 api.use('/posts', post.routes());
 api.use('/comments', comment.routes());
 api.use('/series', series.routes());

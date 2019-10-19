@@ -78,7 +78,7 @@ class EditorPane extends Component {
 				<div className={cx('code-mirror')} ref={(ref) => (this.editor = ref)} />
 				<div className={cx('tags')}>
 					<div className={cx('description')}>태그</div>
-					<input name="tags" placeholder="태그를 입력해주세요." value={tags} onChange={handleChange} />
+					<input name="tags" placeholder="태그를 입력해주세요. (쉼표로 구분)" value={tags} onChange={handleChange} />
 				</div>
 			</div>
 		);
@@ -86,7 +86,9 @@ class EditorPane extends Component {
 }
 
 EditorPane.propTypes = {
+	title: PropTypes.string,
 	markdown: PropTypes.string,
+	tags: PropTypes.string,
 	onChange: PropTypes.func
 };
 

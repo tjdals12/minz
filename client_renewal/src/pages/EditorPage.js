@@ -1,11 +1,18 @@
 import React from 'react';
 import ScrollToTop from 'components/common/ScrollToTop';
-import { EditorTemplate, EditorToolbar, EditorPane, PreviewPane } from 'components/Editor';
+import EditorTemplate from 'components/Editor/EditorTemplate';
+import EditorToolbarContainer from 'containers/Editor/EditorToolbarContainer';
+import EditorPaneContainer from 'containers/Editor/EditorPaneContainer';
+import PreviewPaneContainer from 'containers/Editor/PreviewPaneContainer';
 
 const EditorPage = () => {
 	return (
 		<ScrollToTop>
-			<EditorTemplate toolbar={<EditorToolbar />} editor={<EditorPane />} preview={<PreviewPane />} />
+			<EditorTemplate
+				toolbar={<EditorToolbarContainer />}
+				editor={<EditorPaneContainer />}
+				preview={<PreviewPaneContainer />}
+			/>
 		</ScrollToTop>
 	);
 };

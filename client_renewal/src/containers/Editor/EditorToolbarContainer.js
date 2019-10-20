@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import EditorToolbar from 'components/Editor/EditorToolbar';
 import { useSelector, useDispatch } from 'react-redux';
-import { onChange } from 'store/modules/editor';
-import { writePost } from 'store/modules/post';
+import { getPost, onChange } from 'store/modules/editor';
+import { writePost, editPost } from 'store/modules/post';
 import axios from 'axios';
+import queryString from 'query-string';
 
-const EditorToolbarContainer = ({ history }) => {
+const EditorToolbarContainer = ({ history, location }) => {
 	const title = useSelector((state) => state.editor.get('title'), []);
 	const markdown = useSelector((state) => state.editor.get('markdown'), []);
 	const tags = useSelector((state) => state.editor.get('tags'), []);
@@ -17,6 +18,14 @@ const EditorToolbarContainer = ({ history }) => {
 	};
 
 	const handleSubmit = async () => {
+		const { postId } = queryString.parse(location.search);
+
+		if (postId) {
+			await dispatch(editPost(postId, { title, body: markdown, tags: tags ? tags.split(',') : [] }));
+			history.push(`/post/${postId}`);
+			return;
+		}
+
 		await dispatch(writePost({ title, body: markdown, tags: tags ? tags.split(',') : [] })).then((response) => {
 			history.push(`/post/${response.data.data._id}`);
 		});
@@ -40,6 +49,15 @@ const EditorToolbarContainer = ({ history }) => {
 			);
 		});
 	};
+
+	useEffect(
+		() => {
+			const { postId } = queryString.parse(location.search);
+
+			dispatch(getPost(postId));
+		},
+		[ location, dispatch ]
+	);
 
 	return <EditorToolbar onGoBack={handleGoBack} onSubmit={handleSubmit} onUpload={handleUpload} />;
 };

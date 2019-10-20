@@ -176,12 +176,33 @@ export const read = async (ctx) => {
 
 /**
  * @author 		minz-logger
+ * @date 		2019. 10. 20
+ * @description 포스트 조회 for edit
+ */
+export const readForEdit = async (ctx) => {
+	const { id } = ctx.params;
+
+	try {
+		const post = await Post.findById(id, { title: 1, body: 1, tags: 1 });
+
+		ctx.res.ok({
+			data: post,
+			message: 'Success - postCtrl > readForEdit'
+		});
+	} catch (e) {
+		ctx.res.internalServerError({
+			data: { id: id },
+			message: `Error - postCtrl > readForEdit: ${e.message}`
+		});
+	}
+};
+
+/**
+ * @author 		minz-logger
  * @date 		2019. 09. 09
  * @description 포스트 수정
  */
 export const update = async (ctx) => {
-	const { id } = ctx.params;
-
 	const user = ctx.request.user;
 
 	if (!user) {
@@ -189,14 +210,47 @@ export const update = async (ctx) => {
 			data: { user: user },
 			message: 'Fail - postCtrl > update'
 		});
+
+		return;
+	}
+
+	let { id } = ctx.params;
+	let { title, body, tags } = ctx.request.body;
+
+	let schema = Joi.object().keys({
+		title: Joi.string().required(),
+		body: Joi.string().required(),
+		tags: Joi.array().items(Joi.string()).optional()
+	});
+
+	let result = Joi.validate(ctx.request.body, schema);
+
+	if (result.error) {
+		ctx.res.badRequest({
+			data: result.error,
+			message: 'Fail - postCtrl > update'
+		});
+
 		return;
 	}
 
 	try {
 		const { username: writer } = user.profile;
-		const post = await Post.findOneAndUpdate({ _id: id, writer: writer }, ctx.request.body, {
-			new: true
-		});
+		const post = await Post.findOneAndUpdate(
+			{
+				$and: [ { _id: id }, { writer: writer } ]
+			},
+			{
+				$set: {
+					title,
+					body,
+					tags
+				}
+			},
+			{
+				new: true
+			}
+		);
 
 		if (!post) {
 			ctx.res.notFound({

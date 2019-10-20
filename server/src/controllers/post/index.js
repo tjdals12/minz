@@ -173,6 +173,40 @@ post.get('/:id', commonCtrl.checkObjectId, postCtrl.read);
 
 /**
  * @swagger
+ * /api/posts/{id}/foredit:
+ *  get:
+ *      tags:
+ *          - Post
+ *      summary: 포스트 조회 for edit
+ *      description: 포스트 조회 for edit
+ *      produces:
+ *          - application/json
+ *      parameters: 
+ *          - in: path
+ *            name: id
+ *            description: post id
+ *            required: true
+ *            type: string
+ *            example: 5ca8a145bbcec50c06e9ed2d
+ *      responses:
+ *          200:
+ *              description: Successful operation
+ *              schema:
+ *                  type: object
+ *                  properties:
+ *                      _id:
+ *                          type: string
+ *                      title:
+ *                          type: string
+ *                      body:
+ *                          type: string
+ *                      tags:
+ *                          type: string
+ */
+post.get('/:id/foredit', commonCtrl.checkObjectId, postCtrl.readForEdit);
+
+/**
+ * @swagger
  * /api/posts/{id}:
  *  patch:
  *      tags:

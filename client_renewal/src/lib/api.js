@@ -12,7 +12,9 @@ export const getBlog = () => axios.get('/api/blogs');
 /** Post */
 export const getPosts = (page) => axios.get(`/api/posts?page=${page}`);
 export const getPost = (id) => axios.get(`/api/posts/${id}`);
+export const getPostForEdit = (id) => axios.get(`/api/posts/${id}/foredit`);
 export const writePost = (param) => axios.post('/api/posts', { ...param });
+export const editPost = (id, param) => axios.patch(`/api/posts/${id}`, { ...param });
 export const deletePost = (id) => axios.delete(`/api/posts/${id}`);
 export const getPrevPost = (id) => axios.get(`/api/posts/${id}/prev`);
 export const getNextPost = (id) => axios.get(`/api/posts/${id}/next`);

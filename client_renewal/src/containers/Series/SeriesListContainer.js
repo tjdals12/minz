@@ -1,18 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import SeriesList from 'components/Series/SeriesList';
-import { useSelector, useDispatch } from 'react-redux';
-import { getSeriesList } from 'store/modules/series';
+import { useSelector } from 'react-redux';
 
 const SeriesListContainer = () => {
 	const seriesList = useSelector((state) => state.series.get('seriesList').toJS(), []);
-	const dispatch = useDispatch();
-
-	useEffect(
-		() => {
-			dispatch(getSeriesList());
-		},
-		[ dispatch ]
-	);
 
 	return <SeriesList series={seriesList} />;
 };

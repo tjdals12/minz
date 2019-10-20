@@ -11,7 +11,8 @@ export const createSeries = createAction(CREATE_SERIES, api.createSeries);
 
 const initialState = Map({
 	seriesList: List(),
-	series: Map()
+	series: Map(),
+	lastPage: 1
 });
 
 export default handleActions(
@@ -20,8 +21,9 @@ export default handleActions(
 			type: GET_SERIES_LIST,
 			onSuccess: (state, action) => {
 				const { data: seriesList } = action.payload.data;
+				const lastPage = action.payload.headers['last-page'];
 
-				return state.set('seriesList', fromJS(seriesList));
+				return state.set('seriesList', fromJS(seriesList)).set('lastPage', parseInt(lastPage || 1, 10));
 			}
 		}),
 		...pender({

@@ -5,10 +5,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getPosts } from 'store/modules/post';
 import queryString from 'query-string';
 
-const PaginationContainer = ({ history, location }) => {
+const PaginationContainer = ({ type, history, location }) => {
 	const [ currentPage, setCurrentPage ] = useState(1);
 	const dispatch = useDispatch();
-	const lastPage = useSelector((state) => state.post.get('lastPage'));
+	const lastPage = useSelector((state) => (type === 'post' ? state.post.get('lastPage') : 1));
 
 	const handlePage = useCallback(
 		(page) => {

@@ -7,7 +7,7 @@ const ListPage = () => {
 	return (
 		<ScrollToTop>
 			<PostListContainer />
-			<PaginationContainer />
+			<PaginationContainer type="post" />
 		</ScrollToTop>
 	);
 };

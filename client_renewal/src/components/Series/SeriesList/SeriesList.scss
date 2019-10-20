@@ -1,0 +1,45 @@
+@import 'utils';
+
+.series-list {
+	margin-top: 2rem;
+	margin-bottom: 2rem;
+
+	.series-item {
+		height: 20rem;
+		display: flex;
+		align-items: center;
+		padding: 1rem;
+		border-bottom: 1px solid #ddd;
+		transition: all .15s ease-in;
+
+		.description {
+			flex: 1;
+			padding-left: 2rem;
+
+			.author {
+				margin-top: 1.5rem;
+				color: $oc-gray-6;
+				font-family: 'Gothic A1', sans-serif;
+				font-style: italic;
+
+				.author-name {
+					font-size: 1rem;
+					margin: 0;
+				}
+
+				.series-count {
+					font-size: .75rem;
+					margin-top: 1rem;
+
+					span {
+						margin-right: 1rem;
+					}
+				}
+			}
+		}
+
+		&:hover {
+			background: rgba(#ddd, 0.2);
+		}
+	}
+}

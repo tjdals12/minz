@@ -13,6 +13,7 @@ const initialState = Map({
 	register: false,
 	welcome: false,
 	askRemove: false,
+	seriesCreate: false,
 	type: ''
 });
 

@@ -1,0 +1,110 @@
+@import 'utils';
+
+.series-modal {
+	width: 45rem;
+	height: 25rem;
+	display: flex;
+	align-items: center;
+	position: relative;
+	padding: 1rem;
+
+	.series-thumb {
+		margin-right: 1rem;
+
+		.thumb-upload {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 100%;
+			height: 100%;
+			cursor: pointer;
+		}
+
+		.thumb-input {
+			display: none;
+		}
+
+		.thumb-alert {
+			font-family: 'Do Hyeon', sans-serif;
+			text-align: center;
+			color: $oc-red-6;
+		}
+
+		&:hover {
+			@include material-shadow(3, 0.5);
+		}
+	}
+
+	.button-wrapper {
+		position: absolute;
+		bottom: 1rem;
+		right: 1rem;
+	}
+
+	.series-desc {
+		flex: 1;
+
+		.input-wrapper {
+			display: flex;
+			align-items: flex-start;
+			flex-direction: column;
+
+			.title {
+				width: 100%;
+				height: 3rem;
+				padding-left: .5rem;
+				font-family: 'Do Hyeon', sans-serif;
+				font-size: 1.5rem;
+				border: none;
+				border-bottom: 1px solid #ddd;
+				outline: none;
+
+				&::placeholder {
+					font-style: italic;
+					color: rgba(100, 100, 100, 0.3);
+				}
+			}
+
+			.description {
+				width: 100%;
+				height: 8rem;
+				margin-top: .5rem;
+				margin-bottom: 1rem;
+				padding: .5rem;
+				font-family: 'Gothic A1', sans-serif;
+				border-color: #ddd;
+				font-size: 1rem;
+				outline: none;
+				resize: none;
+
+				&::placeholder {
+					font-style: italic;
+					color: rgba(100, 100, 100, 0.5);
+				}
+			}
+
+			.keyword {
+				width: 100%;
+				height: 1.5rem;
+				padding-left: .5rem;
+				border: none;
+				border-bottom: 1px solid #ddd;
+				outline: none;
+
+				&::placeholder {
+					font-style: italic;
+					font-size: 1rem;
+					color: rgba(100, 100, 100, 0.3);
+				}
+			}
+		}
+
+		.author {
+			margin-top: 1.5rem;
+			color: $oc-gray-6;
+			font-family: 'Gothic A1', sans-serif;
+			font-style: italic;
+			font-size: 1rem;
+		}
+	}
+}

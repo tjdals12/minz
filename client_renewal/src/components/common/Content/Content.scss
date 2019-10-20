@@ -76,7 +76,8 @@
 	}
 
 	&.series {
-		height: 8rem;
+		max-height: 8rem;
+		overflow: hidden;
 		margin-bottom: 1.5rem;
 
 		.title {

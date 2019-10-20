@@ -23,3 +23,7 @@ export const getNextPost = (id) => axios.get(`/api/posts/${id}/next`);
 export const getComments = (id, page) => axios.get(`/api/comments/${id}/list?page=${page}`);
 export const writeComment = (param) => axios.post('/api/comments', { ...param });
 export const deleteComment = (id) => axios.delete(`/api/comments/${id}`);
+
+/** Series */
+export const getSeriesList = (page) => axios.get(`/api/series?page=${page}`);
+export const createSeries = (param) => axios.post('/api/series', { ...param });

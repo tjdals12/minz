@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { EditorPane } from 'components/Editor';
 import { useSelector, useDispatch } from 'react-redux';
 import { onChange, initialize } from 'store/modules/editor';
@@ -16,9 +16,12 @@ const EditorPaneContainer = () => {
 		[ dispatch ]
 	);
 
-	const handleChange = ({ name, value }) => {
-		dispatch(onChange({ name, value }));
-	};
+	const handleChange = useCallback(
+		({ name, value }) => {
+			dispatch(onChange({ name, value }));
+		},
+		[ dispatch ]
+	);
 
 	return <EditorPane title={title} markdown={markdown} tags={tags} onChange={handleChange} />;
 };

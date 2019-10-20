@@ -7,15 +7,13 @@ const cx = classNames.bind(styles);
 const Content = ({ title, description, type }) => (
 	<div className={cx('content', type)}>
 		<h1 className={cx('title')}>{title}</h1>
-		<div>
-			{description && type === 'introduction' ? (
-				description.split('\n').map((value, index) => {
-					return <p key={index}>{value}</p>;
-				})
-			) : (
-				<p>{description}</p>
-			)}
-		</div>
+		{description && type === 'introduction' ? (
+			description.split('\n').map((value, index) => {
+				return <p key={index}>{value}</p>;
+			})
+		) : (
+			<p>{description}</p>
+		)}
 	</div>
 );
 

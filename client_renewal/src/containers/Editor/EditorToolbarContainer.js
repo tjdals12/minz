@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import EditorToolbar from 'components/Editor/EditorToolbar';
 import { useSelector, useDispatch } from 'react-redux';
@@ -13,42 +13,51 @@ const EditorToolbarContainer = ({ history, location }) => {
 	const tags = useSelector((state) => state.editor.get('tags'), []);
 	const dispatch = useDispatch();
 
-	const handleGoBack = () => {
-		history.goBack();
-	};
+	const handleGoBack = useCallback(
+		() => {
+			history.goBack();
+		},
+		[ history ]
+	);
 
-	const handleSubmit = async () => {
-		const { postId } = queryString.parse(location.search);
+	const handleSubmit = useCallback(
+		async () => {
+			const { postId } = queryString.parse(location.search);
 
-		if (postId) {
-			await dispatch(editPost(postId, { title, body: markdown, tags: tags ? tags.split(',') : [] }));
-			history.push(`/post/${postId}`);
-			return;
-		}
+			if (postId) {
+				await dispatch(editPost(postId, { title, body: markdown, tags: tags ? tags.split(',') : [] }));
+				history.push(`/post/${postId}`);
+				return;
+			}
 
-		await dispatch(writePost({ title, body: markdown, tags: tags ? tags.split(',') : [] })).then((response) => {
-			history.push(`/post/${response.data.data._id}`);
-		});
-	};
+			await dispatch(writePost({ title, body: markdown, tags: tags ? tags.split(',') : [] })).then((response) => {
+				history.push(`/post/${response.data.data._id}`);
+			});
+		},
+		[ dispatch, history, location, title, markdown, tags ]
+	);
 
-	const handleUpload = async (file) => {
-		var formData = new FormData();
-		formData.append('imgUploader', file);
+	const handleUpload = useCallback(
+		async (file) => {
+			let formData = new FormData();
+			formData.append('imgUploader', file);
 
-		await axios({
-			method: 'POST',
-			url: '/api/upload',
-			data: formData,
-			config: { headers: { 'Content-Type': 'multipart/form-data' } }
-		}).then((response) => {
-			dispatch(
-				onChange({
-					name: 'markdown',
-					value: markdown + '\n![](' + response.data + ')\n'
-				})
-			);
-		});
-	};
+			await axios({
+				method: 'POST',
+				url: '/api/upload',
+				data: formData,
+				config: { headers: { 'Content-Type': 'multipart/form-data' } }
+			}).then((response) => {
+				dispatch(
+					onChange({
+						name: 'markdown',
+						value: markdown + '\n![](' + response.data + ')\n'
+					})
+				);
+			});
+		},
+		[ dispatch, markdown ]
+	);
 
 	useEffect(
 		() => {

@@ -4,6 +4,8 @@ const { dbUri, dbUser, dbPass } = config;
 import { Schema, model, createConnection } from 'mongoose';
 import sequence from 'mongoose-sequence';
 import leanGetters from 'mongoose-lean-getters';
+import Post from 'models/post';
+import Account from 'models/account';
 import DEFINE from 'models/common';
 
 const connection = createConnection(dbUri, { user: dbUser, pass: dbPass });
@@ -61,6 +63,60 @@ SeriesSchema.statics.createSeries = function(params) {
 	const series = new this({ thumbnail, name, keyword, description, writer });
 
 	return series.save();
+};
+
+/**
+ * @author 		minz-logger
+ * @date 		2019. 10. 21
+ * @description 시리즈에 포스트 작성
+ * @param		{Object} params
+ */
+SeriesSchema.statics.writePost = async function(params) {
+	let { id, seq, writer, title, body, tags } = params;
+
+	const lastPostInSeries = await Post.findOne({ 'series.seq': seq }, { _id: false, 'series.subSeq': true })
+		.sort({ 'series.subSeq': -1 })
+		.limit(1);
+
+	let subSeq = null;
+	if (lastPostInSeries) {
+		subSeq = lastPostInSeries.series.subSeq;
+	} else {
+		subSeq = 0;
+	}
+
+	const post = new Post({
+		writer,
+		title,
+		body,
+		tags,
+		series: {
+			seq: seq,
+			subSeq: ++subSeq
+		}
+	});
+
+	const { id: postId } = await post.save();
+
+	const postInSeries = await this.findOneAndUpdate(
+		{ seq: seq },
+		{ $push: { post: postId } },
+		{
+			new: true
+		}
+	);
+
+	await Account.findByIdAndUpdate(
+		{ _id: id },
+		{
+			$set: {
+				$push: { myposts: postId },
+				$inc: { thoughCount: 1 }
+			}
+		}
+	);
+
+	return postInSeries;
 };
 
 export default model('Series', SeriesSchema);

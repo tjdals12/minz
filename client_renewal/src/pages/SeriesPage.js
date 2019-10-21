@@ -1,19 +1,13 @@
 import React from 'react';
 import ScrollToTop from 'components/common/ScrollToTop';
-import SeriesToolbarContainer from 'containers/Series/SeriesToolbarContainer';
-import SeriesListContainer from 'containers/Series/SeriesListContainer';
-import PaginationContainer from 'containers/PaginationContainer';
-import SeriesCreateModalContainer from 'containers/Modal/SeriesCreateModalContainer';
+import SeriesInfoContainer from 'containers/Series/SeriesInfoContainer';
+import SeriesPostsContainer from 'containers/Series/SeriesPostsContainer';
 
-const SeriesPage = () => {
-	return (
-		<ScrollToTop>
-			<SeriesToolbarContainer />
-			<SeriesListContainer />
-			<PaginationContainer type="series" />
-			<SeriesCreateModalContainer />
-		</ScrollToTop>
-	);
-};
+const SeriesPage = () => (
+	<ScrollToTop>
+		<SeriesInfoContainer />
+		<SeriesPostsContainer />
+	</ScrollToTop>
+);
 
 export default SeriesPage;

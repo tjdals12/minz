@@ -106,10 +106,78 @@ series.get('/', seriesCtrl.list);
  */
 series.post('/', seriesCtrl.create);
 
-series.patch('/:seq', seriesCtrl.update);
-series.post('/:seq', seriesCtrl.write);
-series.get('/count', seriesCtrl.count);
+/**
+ * @swagger
+ * /api/series/{seq}:
+ *  get:
+ *      tags:
+ *          - Series
+ *      summary: 시리즈 조회
+ *      description: 시리즈 조회
+ *      produces:
+ *          - application/json
+ *      parameters:
+ *          - in: path
+ *            name: seq
+ *            description: series seq
+ *            required: true
+ *            type: number
+ *            example: 1
+ *      responses:
+ *          200:
+ *              description: Successful operation
+ *              schema:
+ *                  $ref: '#/definitions/series'
+ */
 series.get('/:seq', seriesCtrl.read);
+
+/**
+ * @swagger
+ * /api/series/{seq}:
+ *  post:
+ *      tags:
+ *          - Series
+ *      summary: 시리즈에 포스트 작성
+ *      description: 시리즈에 포스트 작성
+ *      consumes:
+ *          - application/json
+ *      produces:
+ *          - application/json
+ *      parameters:
+ *          - in: path
+ *            name: seq
+ *            description: series seq
+ *            required: true
+ *            type: number
+ *            example: 1
+ *          - in: body
+ *            name: body
+ *            description: post parameters
+ *            required: true
+ *            schema:
+ *              type: object
+ *              properties:
+ *                  title:
+ *                      type: string
+ *                      example: ''
+ *                  body:
+ *                      type: string
+ *                      example: ''
+ *                  tags:
+ *                      type: array
+ *                      items:
+ *                          type: string
+ *      responses:
+ *          200:
+ *              description: Successful operation
+ *              schema:
+ *                  $ref: '#/definitions/post'
+ */
+series.post('/:seq', seriesCtrl.write);
+
+series.patch('/:seq', seriesCtrl.update);
+
+series.get('/count', seriesCtrl.count);
 series.patch('/toggle/:seq', seriesCtrl.hide);
 
 export default series;

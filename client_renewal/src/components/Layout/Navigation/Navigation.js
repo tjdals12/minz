@@ -16,10 +16,10 @@ const Navigation = ({ postCount, seriesCount, current }) => (
 				<Link to="/" key="intro" className={cx('intro', current === '' && 'current')}>
 					블로그 소개
 				</Link>,
-				<Link to="/list" key="list" className={cx('list', current === 'list' && 'current')}>
+				<Link to="/list" key="list" className={cx('list', current.includes('list') && 'current')}>
 					글 {postCount}
 				</Link>,
-				<Link to="/series" key="series" className={cx('series', current === 'series' && 'current')}>
+				<Link to="/series" key="series" className={cx('series', current.includes('series') && 'current')}>
 					시리즈 {seriesCount}
 				</Link>
 			]

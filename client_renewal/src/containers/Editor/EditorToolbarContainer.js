@@ -4,6 +4,7 @@ import EditorToolbar from 'components/Editor/EditorToolbar';
 import { useSelector, useDispatch } from 'react-redux';
 import { getPost, onChange } from 'store/modules/editor';
 import { writePost, editPost } from 'store/modules/post';
+import { writePostInSeries } from 'store/modules/series';
 import axios from 'axios';
 import queryString from 'query-string';
 
@@ -22,11 +23,17 @@ const EditorToolbarContainer = ({ history, location }) => {
 
 	const handleSubmit = useCallback(
 		async () => {
-			const { postId } = queryString.parse(location.search);
+			const { postId, series } = queryString.parse(location.search);
 
 			if (postId) {
 				await dispatch(editPost(postId, { title, body: markdown, tags: tags ? tags.split(',') : [] }));
 				history.push(`/post/${postId}`);
+				return;
+			}
+
+			if (series) {
+				await dispatch(writePostInSeries(series, { title, body: markdown, tags: tags ? tags.split(',') : [] }));
+				history.push(`/series/${series}`);
 				return;
 			}
 
@@ -63,7 +70,7 @@ const EditorToolbarContainer = ({ history, location }) => {
 		() => {
 			const { postId } = queryString.parse(location.search);
 
-			dispatch(getPost(postId));
+			postId && dispatch(getPost(postId));
 		},
 		[ location, dispatch ]
 	);

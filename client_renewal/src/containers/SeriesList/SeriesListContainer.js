@@ -1,5 +1,5 @@
 import React from 'react';
-import SeriesList from 'components/Series/SeriesList';
+import SeriesList from 'components/SeriesList';
 import { useSelector } from 'react-redux';
 
 const SeriesListContainer = () => {

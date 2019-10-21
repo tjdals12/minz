@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import SeriesToolbar from 'components/Series/SeriesToolbar';
+import SeriesToolbar from 'components/SeriesList/SeriesToolbar';
 import { useDispatch } from 'react-redux';
 import { open } from 'store/modules/modal';
 

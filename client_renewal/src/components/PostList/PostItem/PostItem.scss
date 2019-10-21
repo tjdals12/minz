@@ -3,7 +3,8 @@
 .post-item {
 	width: 100%;
 	height: 15rem;
-	margin-bottom: 1rem;
+	padding: 1rem;
+	border-bottom: 1px solid #ddd;
 	transition: all .15s ease-in;
 
 	.post-count {

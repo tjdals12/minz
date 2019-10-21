@@ -12,9 +12,9 @@ export const create = async (ctx) => {
 	const user = ctx.request.user;
 
 	if (!user) {
-		ctx.res.badRequest({
-			data: user,
-			message: 'Fail - commentCtrl > writeComment'
+		ctx.res.unauthorized({
+			data: { user: user },
+			message: 'unauthorized'
 		});
 
 		return;
@@ -85,7 +85,6 @@ export const list = async (ctx) => {
 			description: s.description.length < 125 ? s.description : `${s.description.slice(0, 125)}...`
 		});
 
-		ctx.set('last-page', Math.ceil(seriesCount / 5));
 		ctx.res.ok({
 			data: series.map(limitBodyLength),
 			message: 'Success - seriesCtrl > list'
@@ -94,6 +93,108 @@ export const list = async (ctx) => {
 		ctx.res.internalServerError({
 			data: [],
 			message: `Error - seriesCtrl > list: ${e.message}`
+		});
+	}
+};
+
+/**
+ * @author minz-logger
+ * @date 2019. 10. 21
+ * @description 시리즈 조회
+ */
+export const read = async (ctx) => {
+	let { seq } = ctx.params;
+
+	if (!seq) {
+		ctx.res.badRequest({
+			data: { seq: seq },
+			message: 'Fail - seriesCtrl > read'
+		});
+
+		return;
+	}
+
+	try {
+		const series = await Series.findOne({ seq: seq })
+			.populate({ path: 'post', options: { sort: { _id: -1 } } })
+			.lean({ getters: true });
+
+		const limitBodyLength = (post) => ({
+			...post,
+			title: post.title.length < 50 ? post.title : `${post.title.slice(0, 50)}...`,
+			body: post.body.length < 200 ? post.body : `${post.body.slice(0, 200)}...`,
+			comments: post.comments.length
+		});
+
+		ctx.set('Last-Page', Math.ceil(series.post.length / 5));
+
+		ctx.res.ok({
+			data: {
+				...series,
+				post: series.post.map(limitBodyLength)
+			},
+			message: 'Success - seriesCtrl > read'
+		});
+	} catch (e) {
+		ctx.res.internalServerError({
+			data: { seq: seq },
+			message: `Error - seriesCtrl > read: ${e.message}`
+		});
+	}
+};
+
+/**
+ * @author 		minz-logger
+ * @date 		2019. 10. 21
+ * @description 시리즈에 포스트 작성
+ */
+export const write = async (ctx) => {
+	const user = ctx.request.user;
+
+	if (!user) {
+		ctx.res.unauthorized({
+			data: { user: user },
+			message: 'unauthorized'
+		});
+
+		return;
+	}
+
+	const userInfo = await Account.findByUsername(user.profile.username);
+	const { id } = userInfo;
+	const { username: writer } = userInfo.profile;
+
+	let { seq } = ctx.params;
+	let { title, body, tags } = ctx.request.body;
+
+	const schema = Joi.object().keys({
+		title: Joi.string().required(),
+		body: Joi.string().required(),
+		tags: Joi.array().items(Joi.string()).required()
+	});
+
+	const result = Joi.validate(ctx.request.body, schema);
+
+	if (result.error) {
+		ctx.res.badRequest({
+			data: { user, title, body, tags },
+			message: result.error
+		});
+
+		return;
+	}
+
+	try {
+		const post = await Series.writePost({ id, seq, writer, title, body, tags });
+
+		ctx.res.ok({
+			data: post,
+			message: 'Success - seriesCtrl > write'
+		});
+	} catch (e) {
+		ctx.res.internalServerError({
+			data: ctx.request.body,
+			message: `Error - seriesCtrl > write: ${e.message}`
 		});
 	}
 };
@@ -137,28 +238,6 @@ export const count = async (ctx) => {
 	}
 };
 
-export const read = async (ctx) => {
-	const { seq } = ctx.params;
-
-	try {
-		const series = await Series.findOne({ seq: seq }).exec();
-
-		const inSeries = await Post.find({ _id: { $in: series.post } }).sort({ 'series.subSeq': -1 }).exec();
-
-		if (!series) {
-			ctx.status = 404;
-			return;
-		}
-
-		ctx.body = {
-			series: series,
-			inSeries: inSeries
-		};
-	} catch (e) {
-		ctx.throw(e, 500);
-	}
-};
-
 export const hide = async (ctx) => {
 	const { seq } = ctx.params;
 
@@ -177,67 +256,6 @@ export const hide = async (ctx) => {
 		}
 
 		ctx.body = series;
-	} catch (e) {
-		ctx.throw(e, 500);
-	}
-};
-
-export const write = async (ctx) => {
-	const { seq } = ctx.params;
-
-	const { title, body, tags } = ctx.request.body;
-
-	const user = ctx.request.user;
-
-	const userInfo = await Account.findByUsername(user.profile.username);
-	const { id } = userInfo;
-	const { username: writer } = userInfo.profile;
-
-	try {
-		const curSubSeq = await Post.findOne({ 'series.seq': seq }, { _id: false, 'series.subSeq': true })
-			.sort({ 'series.subSeq': -1 })
-			.limit(1)
-			.exec();
-
-		let subSeq = null;
-		if (curSubSeq) {
-			subSeq = curSubSeq.series.subSeq;
-		} else {
-			subSeq = 0;
-		}
-
-		const post = new Post({
-			writer,
-			title,
-			body,
-			tags,
-			series: {
-				seq: seq,
-				subSeq: subSeq + 1
-			}
-		});
-
-		const { id: postId } = await post.save();
-
-		const postInSeries = await Series.findOneAndUpdate(
-			{ seq: seq },
-			{ $push: { post: postId } },
-			{
-				new: true
-			}
-		);
-
-		const updateObj = {
-			$push: { myposts: postId },
-			$inc: { thoughCount: 1 }
-		};
-
-		await Account.findByIdAndUpdate({ _id: id }, updateObj);
-
-		ctx.body = {
-			_id: postId,
-			series: postInSeries
-		};
 	} catch (e) {
 		ctx.throw(e, 500);
 	}

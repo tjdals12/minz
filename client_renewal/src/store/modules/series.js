@@ -5,13 +5,18 @@ import { pender } from 'redux-pender';
 
 const GET_SERIES_LIST = 'series/GET_SERIES_LIST';
 const CREATE_SERIES = 'series/CREATE_SERIES';
+const GET_SERIES = 'series/GET_SERIES';
+const WRITE_POST_IN_SERIES = 'series/WRITE_POST_IN_SERIES';
 
 export const getSeriesList = createAction(GET_SERIES_LIST, api.getSeriesList);
 export const createSeries = createAction(CREATE_SERIES, api.createSeries);
+export const getSeries = createAction(GET_SERIES, api.getSeries);
+export const writePostInSeries = createAction(WRITE_POST_IN_SERIES, api.writePostInSeries);
 
 const initialState = Map({
 	seriesList: List(),
 	series: Map(),
+	posts: List(),
 	lastPage: 1
 });
 
@@ -32,6 +37,22 @@ export default handleActions(
 				const { data: series } = action.payload.data;
 
 				return state.set('series', fromJS(series));
+			}
+		}),
+		...pender({
+			type: GET_SERIES,
+			onSuccess: (state, action) => {
+				const { data: series } = action.payload.data;
+
+				return state.set('series', fromJS(series)).set('posts', fromJS(series.post));
+			}
+		}),
+		...pender({
+			type: WRITE_POST_IN_SERIES,
+			onSuccess: (state, action) => {
+				const { data: post } = action.payload.data;
+
+				return state.set('result', fromJS(post));
 			}
 		})
 	},

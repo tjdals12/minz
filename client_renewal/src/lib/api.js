@@ -27,3 +27,5 @@ export const deleteComment = (id) => axios.delete(`/api/comments/${id}`);
 /** Series */
 export const getSeriesList = (page) => axios.get(`/api/series?page=${page}`);
 export const createSeries = (param) => axios.post('/api/series', { ...param });
+export const getSeries = (seq) => axios.get(`/api/series/${seq}`);
+export const writePostInSeries = (seq, param) => axios.post(`/api/series/${seq}`, { ...param });

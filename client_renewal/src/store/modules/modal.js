@@ -14,6 +14,7 @@ const initialState = Map({
 	welcome: false,
 	askRemove: false,
 	seriesCreate: false,
+	seriesEdit: false,
 	type: ''
 });
 

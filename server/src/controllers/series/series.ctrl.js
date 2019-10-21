@@ -78,8 +78,6 @@ export const list = async (ctx) => {
 	try {
 		const series = await Series.find({ dispGb: '01' }).sort({ seq: -1 }).limit(5 * page).lean({ getters: true });
 
-		const seriesCount = await Series.countDocuments({ dispGb: '01' });
-
 		const limitBodyLength = (s) => ({
 			...s,
 			description: s.description.length < 125 ? s.description : `${s.description.slice(0, 125)}...`
@@ -118,15 +116,6 @@ export const read = async (ctx) => {
 		const series = await Series.findOne({ seq: seq })
 			.populate({ path: 'post', options: { sort: { _id: -1 } } })
 			.lean({ getters: true });
-
-		const limitBodyLength = (post) => ({
-			...post,
-			title: post.title.length < 50 ? post.title : `${post.title.slice(0, 50)}...`,
-			body: post.body.length < 200 ? post.body : `${post.body.slice(0, 200)}...`,
-			comments: post.comments.length
-		});
-
-		ctx.set('Last-Page', Math.ceil(series.post.length / 5));
 
 		ctx.res.ok({
 			data: {
@@ -199,32 +188,107 @@ export const write = async (ctx) => {
 	}
 };
 
+/**
+ * @author 		minz-logger
+ * @date 		2019. 10. 21
+ * @description 시리즈 수정
+ */
 export const update = async (ctx) => {
-	const { seq } = ctx.params;
-
 	const user = ctx.request.user;
 
 	if (!user) {
-		ctx.status = 403;
+		ctx.res.unauthorized({
+			data: { user: user },
+			message: 'unauthorized'
+		});
+
 		return;
 	}
 
 	const userInfo = await Account.findByUsername(user.profile.username);
 	const { username: writer } = userInfo.profile;
 
-	try {
-		const updateSeries = await Series.findOneAndUpdate({ seq: seq, writer: writer }, ctx.request.body, {
-			new: true
+	let { seq } = ctx.params;
+	let { thumbnail, name, description, keyword } = ctx.request.body;
+
+	const schema = Joi.object().keys({
+		thumbnail: Joi.string().optional(),
+		name: Joi.string().required(),
+		keyword: Joi.array().items(Joi.string()).required(),
+		description: Joi.string().required()
+	});
+
+	const result = Joi.validate(ctx.request.body, schema);
+
+	if (result.error) {
+		ctx.res.badRequest({
+			data: result.error,
+			message: 'Fail - seriesCtrl > update'
 		});
 
-		const inSeries = await Post.find({ _id: { $in: updateSeries.post } }).sort({ 'series.subSeq': -1 }).exec();
+		return;
+	}
 
-		ctx.body = {
-			series: updateSeries,
-			inSeries: inSeries
-		};
+	try {
+		const series = await Series.updateSeries({ seq, thumbnail, name, description, keyword });
+
+		ctx.res.ok({
+			data: {
+				...series,
+				post: series.post
+			}
+		});
 	} catch (e) {
-		ctx.throw(500, e);
+		ctx.res.internalServerError({
+			data: ctx.request.body,
+			message: `Error - seriesCtrl > update: ${e.message}`
+		});
+	}
+};
+
+/**
+ * @author 		minz-logger
+ * @date 		2019. 10. 21
+ * @description 공개 / 비공개
+ */
+export const toggleDispGb = async (ctx) => {
+	const user = ctx.request.user;
+
+	if (!user) {
+		ctx.res.unauthorized({
+			data: { user: user },
+			message: 'unauthorized'
+		});
+
+		return;
+	}
+
+	const { seq } = ctx.params;
+
+	if (!seq) {
+		ctx.res.badRequest({
+			data: { seq: seq },
+			message: 'Fail - seriesCtrl > toggleDispGb'
+		});
+
+		return;
+	}
+
+	try {
+		const series = await Series.toggleDispGb(seq);
+
+		ctx.res.ok({
+			data: {
+				...series,
+				post: series.post.map(limitBodyLength)
+			},
+			message: 'Success- - seriesCtrl > toggleDispGb'
+		});
+	} catch (e) {
+		ctx.res.internalServerError({
+			data: { seq: seq },
+			message: `Error - seriesCtrl > toggleDispGb: ${e.message}`
+		});
 	}
 };
 
@@ -238,25 +302,9 @@ export const count = async (ctx) => {
 	}
 };
 
-export const hide = async (ctx) => {
-	const { seq } = ctx.params;
-
-	try {
-		const series = await Series.findOneAndUpdate(
-			{ seq: seq },
-			{ dispGb: '02' },
-			{
-				new: true
-			}
-		);
-		1;
-		if (!series) {
-			ctx.status = 404;
-			return;
-		}
-
-		ctx.body = series;
-	} catch (e) {
-		ctx.throw(e, 500);
-	}
-};
+const limitBodyLength = (post) => ({
+	...post,
+	title: post.title.length < 50 ? post.title : `${post.title.slice(0, 50)}...`,
+	body: post.body.length < 200 ? post.body : `${post.body.slice(0, 200)}...`,
+	comments: post.comments.length
+});

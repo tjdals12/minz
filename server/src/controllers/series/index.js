@@ -175,9 +175,78 @@ series.get('/:seq', seriesCtrl.read);
  */
 series.post('/:seq', seriesCtrl.write);
 
+/**
+ * @swagger
+ * /api/series/{seq}:
+ *  patch:
+ *      tags:
+ *          - Series
+ *      summary: 시리즈 수정
+ *      description: 시리즈 수정
+ *      consumes:
+ *          - application/json
+ *      produces:
+ *          - application/json
+ *      parameters:
+ *          - in: path
+ *            name: seq
+ *            description: series seq
+ *            required: true
+ *            type: number
+ *            example: 1
+ *          - in: body
+ *            name: body
+ *            description: edit parameters
+ *            required: true
+ *            schema:
+ *              type: object
+ *              properties:       
+ *                  thumbnail:
+ *                      type: string
+ *                      example: ''
+ *                  name:
+ *                      type: string
+ *                      example: ''
+ *                  description:
+ *                      type: string
+ *                      example: ''
+ *                  keyword:
+ *                      type: array
+ *                      items:
+ *                          type: string
+ *      responses:
+ *          200:
+ *              description: Successful operation
+ *              schema:
+ *                  $ref: '#/definitions/series'
+ */
 series.patch('/:seq', seriesCtrl.update);
 
+/**
+ * @swagger
+ * /api/series/{seq}/toggle:
+ *  patch:
+ *      tags:
+ *          - Series
+ *      summary: 시리즈 공개 / 비공개
+ *      description: 시리즈 공개 / 비공개
+ *      produces:
+ *          - application/json
+ *      parameters:
+ *          - in: path
+ *            name: seq
+ *            description: series seq
+ *            required: true
+ *            type: number
+ *            example: 1
+ *      responses:
+ *          200:
+ *              description: Successful operation
+ *              schema:
+ *                  $ref: '#/definitions/series'
+ */
+series.patch('/:seq/toggle', seriesCtrl.toggleDispGb);
+
 series.get('/count', seriesCtrl.count);
-series.patch('/toggle/:seq', seriesCtrl.hide);
 
 export default series;

@@ -11,6 +11,11 @@ import DEFINE from 'models/common';
 const connection = createConnection(dbUri, { user: dbUser, pass: dbPass });
 const AutoIncrement = sequence(connection);
 
+/**
+ * @author 		minz-logger
+ * @date 		2019. 10. 19
+ * @description 시리즈 스키마
+ */
 const SeriesSchema = new Schema({
 	seq: Number,
 	thumbnail: {
@@ -117,6 +122,57 @@ SeriesSchema.statics.writePost = async function(params) {
 	);
 
 	return postInSeries;
+};
+
+/**
+ * @author 		minz-logger
+ * @date 		2019. 10. 21
+ * @description 시리즈 수정
+ * @param		{Object} params
+ */
+SeriesSchema.statics.updateSeries = function(params) {
+	let { seq, thumbnail, name, description, keyword } = params;
+
+	return this.findOneAndUpdate(
+		{ seq: seq },
+		{
+			$set: {
+				thumbnail,
+				name,
+				description,
+				keyword
+			}
+		},
+		{
+			new: true
+		}
+	)
+		.populate({ path: 'post', options: { sort: { _id: -1 } } })
+		.lean({ getters: true });
+};
+
+/**
+ * @author 		minz-logger
+ * @date 		2019. 10. 21
+ * @description 공개 / 비공개
+ * @param		{Number} seq
+ */
+SeriesSchema.statics.toggleDispGb = async function(seq) {
+	const { dispGb } = await this.findOne({ seq: seq });
+
+	return await this.findOneAndUpdate(
+		{ seq: seq },
+		{
+			$set: {
+				dispGb: dispGb === '01' ? '02' : '01'
+			}
+		},
+		{
+			new: true
+		}
+	)
+		.populate({ path: 'post', options: { sort: { _id: -1 } } })
+		.lean({ getters: true });
 };
 
 export default model('Series', SeriesSchema);

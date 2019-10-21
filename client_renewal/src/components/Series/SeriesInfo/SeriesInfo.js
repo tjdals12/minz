@@ -7,12 +7,26 @@ import PropTypes from 'prop-types';
 
 const cx = classNames.bind(styles);
 
-const SeriesInfo = ({ username, writer, name, description, post, finishGb, dispGb, keyword, publishedDate }) => (
+const SeriesInfo = ({
+	username,
+	writer,
+	name,
+	description,
+	post,
+	finishGb,
+	dispGb,
+	keyword,
+	publishedDate,
+	onToggle,
+	onOpen
+}) => (
 	<Wrapper className={cx('series-info')}>
 		{username === writer && (
 			<ButtonWrapper>
-				<Button theme="small">공개</Button>
-				<Button theme="small">수정</Button>
+				<Button theme="small" onClick={onToggle}>
+					{dispGb === '01' ? '비공개' : '공개'}
+				</Button>
+				<Button theme="small" onClick={() => onOpen('seriesEdit')}>수정</Button>
 			</ButtonWrapper>
 		)}
 
@@ -48,18 +62,17 @@ SeriesInfo.propTypes = {
 	finishGb: PropTypes.string,
 	dispGb: PropTypes.string,
 	keyword: PropTypes.array,
-	publishedDate: PropTypes.string
+	publishedDate: PropTypes.string,
+	onToggle: PropTypes.func,
+	onOpen: PropTypes.func
 };
 
 SeriesInfo.defaultProps = {
-	name: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-	description:
-		'Nam vitae sapien id velit molestie accumsan ut a metus. Curabitur dapibus ipsum sed lacus facilisis, in cursus dui hendrerit. Aenean vel iaculis quam, et sollicitudin augue. In hac habitasse platea dictumst. Curabitur pellentesque justo quis neque venenatis viverra. Vivamus sodales leo vitae interdum consectetur.',
-	post: [ { title: '1' }, { title: '2' }, { title: '3' } ],
-	finishGb: '연재중',
-	dispGb: '공개',
-	keyword: [ 'Docker', 'Container', 'Deploy' ],
-	publishedDate: '2019-10-23  09:57:14'
+	post: [],
+	keyword: [],
+	publishedDate: '2019-10-23',
+	onToggle: () => console.warn('Warning: onToggle is not defined'),
+	onOpen: () => console.warn('Warning: onOpen is not defined')
 };
 
 export default SeriesInfo;

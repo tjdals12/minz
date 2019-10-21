@@ -2,6 +2,11 @@ import { Schema, model } from 'mongoose';
 import Account from 'models/account';
 import DEFINE from 'models/common';
 
+/**
+ * @author 		minz-logger
+ * @date 		2019. 09. 09
+ * @description 포스트 스키마
+ */
 const PostSchema = new Schema({
 	thumbnail: {
 		type: String,

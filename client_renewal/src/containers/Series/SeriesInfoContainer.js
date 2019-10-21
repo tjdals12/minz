@@ -1,16 +1,31 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import SeriesInfo from 'components/Series/SeriesInfo';
 import { useSelector, useDispatch } from 'react-redux';
-import { getSeries } from 'store/modules/series';
+import { getSeries, toggleDispGb } from 'store/modules/series';
+import { open } from 'store/modules/modal';
 
 const SeriesInfoContainer = ({ match }) => {
-	const { writer, name, description, post, finishGb, dispGb, keyword, publishedDate } = useSelector(
+	const { seq, writer, name, description, post, finishGb, dispGb, keyword, publishedDate } = useSelector(
 		(state) => state.series.get('series').toJS(),
 		[]
 	);
 	const username = useSelector((state) => state.auth.getIn([ 'userInfo', 'profile', 'username' ]), []);
 	const dispatch = useDispatch();
+
+	const handleToggle = useCallback(
+		() => {
+			dispatch(toggleDispGb(seq));
+		},
+		[ seq, dispatch ]
+	);
+
+	const handleOpen = useCallback(
+		(name) => {
+			dispatch(open(name));
+		},
+		[ dispatch ]
+	);
 
 	useEffect(
 		() => {
@@ -31,6 +46,8 @@ const SeriesInfoContainer = ({ match }) => {
 			dispGb={dispGb}
 			keyword={keyword}
 			publishedDate={publishedDate}
+			onToggle={handleToggle}
+			onOpen={handleOpen}
 		/>
 	);
 };

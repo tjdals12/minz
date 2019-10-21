@@ -29,3 +29,5 @@ export const getSeriesList = (page) => axios.get(`/api/series?page=${page}`);
 export const createSeries = (param) => axios.post('/api/series', { ...param });
 export const getSeries = (seq) => axios.get(`/api/series/${seq}`);
 export const writePostInSeries = (seq, param) => axios.post(`/api/series/${seq}`, { ...param });
+export const updateSeries = (seq, param) => axios.patch(`/api/series/${seq}`, { ...param });
+export const toggleDispGb = (seq) => axios.patch(`/api/series/${seq}/toggle`);

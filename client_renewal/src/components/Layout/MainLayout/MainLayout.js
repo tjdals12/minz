@@ -7,6 +7,7 @@ import NavigationContainer from 'containers/Layout/NavigationContainer';
 import SidebarContainer from 'containers/Layout/SidebarContainer';
 import RegisterModalContainer from 'containers/Modal/RegisterModalContainer';
 import WelcomeModalContainer from 'containers/Modal/WelcomeModalContainer';
+import BlogConfigModalContainer from 'containers/Modal/BlogConfigModalContainer';
 
 const cx = classNames.bind(styles);
 
@@ -21,6 +22,7 @@ const MainLayout = ({ children }) => {
 
 			<RegisterModalContainer />
 			<WelcomeModalContainer />
+			<BlogConfigModalContainer />
 		</div>
 	);
 };

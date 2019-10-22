@@ -8,6 +8,7 @@ export const logout = () => axios.post('/api/auth/logout');
 
 /** Blog */
 export const getBlog = () => axios.get('/api/blogs');
+export const editBlog = (param) => axios.patch('/api/blogs', { ...param });
 
 /** Post */
 export const getPosts = (page) => axios.get(`/api/posts?page=${page}`);

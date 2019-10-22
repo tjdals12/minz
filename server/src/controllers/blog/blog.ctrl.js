@@ -1,7 +1,13 @@
 import Blog from 'models/blog';
 import Post from 'models/post';
 import Series from 'models/series';
+import Joi from 'joi';
 
+/**
+ * @author 		minz-logger
+ * @date 		2019. 10. 22
+ * @description 블로그 정보 조회
+ */
 export const getInfo = async (ctx) => {
 	const user = 'Minz-logger';
 
@@ -33,53 +39,78 @@ export const getInfo = async (ctx) => {
 	}
 };
 
+/**
+ * @author 		minz-logger
+ * @date 		2019. 10. 22
+ * @description 블로그 정보 수정
+ */
 export const edit = async (ctx) => {
 	const { user } = ctx.request;
 
 	if (!user) {
-		ctx.status = 403;
+		ctx.res.unauthorized({
+			data: { user: user },
+			message: 'unauthorized'
+		});
+
 		return;
 	}
 
-	const data = {};
+	let { background, title, thumbnail, name, description, info, tags } = ctx.request.body;
 
-	const { background, thumbnail, title, name, description, info, tags } = ctx.request.body;
+	const schema = Joi.object().keys({
+		background: Joi.string().allow('').optional(),
+		title: Joi.string().required(),
+		thumbnail: Joi.string().allow('').optional(),
+		name: Joi.string().required(),
+		description: Joi.string().required(),
+		info: Joi.string().required(),
+		tags: Joi.array().items(Joi.string()).required()
+	});
 
-	if (background !== null) {
+	const result = Joi.validate(ctx.request.body, schema);
+
+	if (result.error) {
+		ctx.res.badRequest({
+			data: result.error,
+			message: 'Fail - blogCtrl > edit'
+		});
+
+		return;
+	}
+
+	let data = {};
+
+	if (background) {
 		data.background = background;
 	}
 
-	if (background !== null) {
+	if (thumbnail) {
 		data.thumbnail = thumbnail;
 	}
 
-	if (title !== null) {
-		data.title = title;
-	}
-
-	if (name !== null) {
-		data.name = name;
-	}
-
-	if (description !== null) {
-		data.description = description;
-	}
-
-	if (info !== '') {
-		data.info = info;
-	}
-
-	if (tags.length !== 0 || tags.length >= 1) {
-		data.tags = tags;
-	}
+	data = {
+		...data,
+		title,
+		name,
+		description,
+		info,
+		tags
+	};
 
 	try {
 		const result = await Blog.findOneAndUpdate({ user: user.profile.username }, data, {
 			new: true
 		});
 
-		ctx.body = result;
+		ctx.res.ok({
+			data: result,
+			message: 'Success - blogCtrl > edit'
+		});
 	} catch (e) {
-		ctx.throw(500, e);
+		ctx.res.internalServerError({
+			data: ctx.request.body,
+			message: `Error -  blogCtrl > edit: ${e.message}`
+		});
 	}
 };

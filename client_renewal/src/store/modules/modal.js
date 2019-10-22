@@ -15,6 +15,7 @@ const initialState = Map({
 	askRemove: false,
 	seriesCreate: false,
 	seriesEdit: false,
+	blogConfig: false,
 	type: ''
 });
 

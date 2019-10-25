@@ -1,70 +1,52 @@
-import React, { Component } from 'react';
-import AskRemoveModal from 'components/modal/AskRemoveModal';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import * as modalActions from 'store/modules/modal';
-import * as commentActions from 'store/modules/comment';
+import React, { useCallback } from 'react';
 import { withRouter } from 'react-router-dom';
+import AskRemoveModal from 'components/Modal/AskRemoveModal';
+import { useSelector, useDispatch } from 'react-redux';
+import { close } from 'store/modules/modal';
+import { deletePost } from 'store/modules/post';
+import { getComments, deleteComment } from 'store/modules/comment';
 
-class AskRemoveModalContainer extends Component{
-    handleHideModal = () => {
-        const { ModalActions } = this.props;
-        ModalActions.hideModal({
-            modal : 'remove'
-        });
-    }
+const AskRemoveModalContainer = ({ history }) => {
+	const isOpen = useSelector((state) => state.modal.get('askRemove'), []);
+	const modalType = useSelector((state) => state.modal.get('type'), []);
+	const postId = useSelector((state) => state.post.getIn([ 'post', '_id' ]), []);
+	const commentId = useSelector((state) => state.comment.get('target'), []);
+	const dispatch = useDispatch();
 
-    handlePostRemove = async () => {
-        const { ModalActions, id, history } = this.props;
+	const handleClose = useCallback(
+		(name) => {
+			dispatch(close(name));
+		},
+		[ dispatch ]
+	);
 
-        try{
-            await ModalActions.deletePost(id);
-            ModalActions.hideModal({
-                modal : 'remove'
-            })
-            history.push('/list');
-        }catch(e){
-            console.error(e);
-        }
-    }
+	const handlePostRemove = useCallback(
+		() => {
+			dispatch(deletePost(postId));
+			handleClose('askRemove');
+			history.goBack();
+		},
+		[ dispatch, postId, handleClose, history ]
+	);
 
-    handleCommentRemove = async () => {
-        const { ModalActions, CommentActions, id, target } = this.props;
+	const handleCommentRemove = useCallback(
+		() => {
+			dispatch(deleteComment(commentId));
+			dispatch(getComments(postId));
+			handleClose('askRemove');
+		},
+		[ dispatch, commentId, postId, handleClose ]
+	);
 
-        try{
-            await CommentActions.deleteComment({target, id});
-            ModalActions.hideModal({
-                modal : 'remove'
-            });
-            CommentActions.getCommentList({id});
-        }catch(e){
-            console.error(e);
-        }
-    }
+	return (
+		<AskRemoveModal
+			visible={isOpen}
+			type={modalType}
+			onClose={handleClose}
+			onCommentRemove={handleCommentRemove}
+			onPostRemove={handlePostRemove}
+		/>
+	);
+};
 
-    render(){
-        const { handleHideModal, handlePostRemove, handleCommentRemove } = this;
-        const { visible, type } = this.props;
-
-        return(
-            <AskRemoveModal
-                onHide={handleHideModal}
-                onPostRemove={handlePostRemove}
-                onCommentRemove={handleCommentRemove}
-                visible={visible}
-                type={type} />
-        )
-    }
-}
-
-export default connect(
-    (state) => ({
-        visible : state.modal.getIn(['modal', 'remove']),
-        type : state.modal.get('type'),
-        target : state.comment.get('target')
-    }),
-    (dispatch) => ({
-        CommentActions : bindActionCreators(commentActions, dispatch),
-        ModalActions : bindActionCreators(modalActions, dispatch)
-    })
-)(withRouter(AskRemoveModalContainer));
+export default withRouter(AskRemoveModalContainer);

@@ -1,46 +1,35 @@
 import axios from 'axios';
-import queryString from 'query-string';
-
-/** POST */
-export const writePost = ({ title, body, tags }) => axios.post(`/api/post`, { title, body, tags });
-export const editPost = ({ postId, title, body, tags }) => axios.patch(`/api/post/${postId}`, { title, body, tags });
-export const getPost = (id) => axios.get(`/api/post/${id}`);
-export const getPrevPost = (id) => axios.get(`/api/post/prev/${id}`);
-export const getNextPost = (id) => axios.get(`/api/post/next/${id}`);
-export const getPostCount = () => axios.get(`/api/post/count`);
-export const deletePost = (id) => axios.delete(`/api/post/${id}`);
-export const getPostList = ({ tag, page }) => axios.get(`/api/post?${queryString.stringify({ tag, page })}`);
-export const getSearchList = (keyword) => axios.post(`/api/post/search`, { keyword });
-
-/** Comment */
-export const writeComment = ({ content, postId }) => axios.post(`/api/comment`, { content, postId });
-export const deleteComment = ({ target, id }) => axios.delete(`/api/comment/${target}?postId=${id}`);
-export const getCommentList = ({ id, page }) => axios.get(`/api/comment?${queryString.stringify({ id, page })}`);
-
-/** Series */
-export const createSeries = ({ thumb, name, description, keyword }) =>
-	axios.post(`/api/series`, { thumb, name, description, keyword });
-export const updateSeries = ({ series, thumb, name, description, keyword }) =>
-	axios.patch(`/api/series/${series}`, { thumb, name, description, keyword });
-export const toggleSeries = ({ seq, dispGb }) => axios.patch(`/api/series/toggle/${seq}`, { dispGb });
-export const writeInSeries = ({ series, title, body, tags }) =>
-	axios.post(`/api/series/${series}`, { title, body, tags });
-export const getSeriesList = ({ page }) => axios.get(`/api/series?${queryString.stringify({ page })}`);
-export const getSeries = (seq) => axios.get(`/api/series/${seq}`);
-export const getSeriesCount = () => axios.get(`/api/series/count`);
 
 /** Auth */
-export const registerLocal = ({ email, password, username }) =>
-	axios.post(`/api/auth/register/local`, { email, password, username });
-export const loginLocal = (email, password) => axios.post(`/api/auth/login/local`, { email, password });
-export const logout = () => axios.post(`/api/auth/logout`);
-export const loginCheck = () => axios.get(`/api/auth/check`);
-export const loginSocial = ({ provider, accessToken }) =>
-	axios.post(`/api/auth/login/${provider}/social`, { accessToken });
-export const registerSocial = ({ provider, username, accessToken }) =>
-	axios.post(`/api/auth/register/${provider}/social`, { username, accessToken });
+export const localRegister = (param) => axios.post('/api/auth/register/local', { ...param });
+export const localLogin = (param) => axios.post('/api/auth/login/local', { ...param });
+export const checkLogin = () => axios.get('/api/auth/check');
+export const logout = () => axios.post('/api/auth/logout');
 
 /** Blog */
-export const getBlogInfo = () => axios.get(`/api/blog`);
-export const editBlogInfo = ({ background, thumbnail, title, name, description, info, tags }) =>
-	axios.patch(`/api/blog`, { background, thumbnail, title, name, description, info, tags });
+export const getBlog = () => axios.get('/api/blogs');
+export const editBlog = (param) => axios.patch('/api/blogs', { ...param });
+
+/** Post */
+export const getPosts = (page) => axios.get(`/api/posts?page=${page}`);
+export const getPost = (id) => axios.get(`/api/posts/${id}`);
+export const getPostForEdit = (id) => axios.get(`/api/posts/${id}/foredit`);
+export const writePost = (param) => axios.post('/api/posts', { ...param });
+export const editPost = (id, param) => axios.patch(`/api/posts/${id}`, { ...param });
+export const deletePost = (id) => axios.delete(`/api/posts/${id}`);
+export const getPrevPost = (id) => axios.get(`/api/posts/${id}/prev`);
+export const getNextPost = (id) => axios.get(`/api/posts/${id}/next`);
+export const searchPosts = (page, keyword) => axios.post(`/api/posts/search?page=${page}`, keyword);
+
+/** Comment */
+export const getComments = (id, page) => axios.get(`/api/comments/${id}/list?page=${page}`);
+export const writeComment = (param) => axios.post('/api/comments', { ...param });
+export const deleteComment = (id) => axios.delete(`/api/comments/${id}`);
+
+/** Series */
+export const getSeriesList = (page) => axios.get(`/api/series?page=${page}`);
+export const createSeries = (param) => axios.post('/api/series', { ...param });
+export const getSeries = (seq) => axios.get(`/api/series/${seq}`);
+export const writePostInSeries = (seq, param) => axios.post(`/api/series/${seq}`, { ...param });
+export const updateSeries = (seq, param) => axios.patch(`/api/series/${seq}`, { ...param });
+export const toggleDispGb = (seq) => axios.patch(`/api/series/${seq}/toggle`);

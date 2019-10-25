@@ -1,59 +1,38 @@
-import { createAction, handleActions } from 'redux-actions';
 import { Map } from 'immutable';
+import { createAction, handleActions } from 'redux-actions';
 import { pender } from 'redux-pender';
 import * as api from 'lib/api';
 
-const INITIALIZE = 'editor/INITIALIZE';
-const CHANGE_INPUT = 'editor/CHANGE_INPUT';
-const WRITE_POST = 'editor/WRITE_POST';
 const GET_POST = 'editor/GET_POST';
-const EDIT_POST = 'editor/EDIT_POST';
-const SERIES_POST = 'editor/SERIES_POST';
+const ON_CHANGE = 'editor/ON_CHANGE';
+const INITIALIZE = 'editor/INITIALIZE';
 
+export const getPost = createAction(GET_POST, api.getPostForEdit);
+export const onChange = createAction(ON_CHANGE);
 export const initialize = createAction(INITIALIZE);
-export const changeInput = createAction(CHANGE_INPUT);
-export const writePost = createAction(WRITE_POST, api.writePost);
-export const getPost = createAction(GET_POST, api.getPost);
-export const editPost = createAction(EDIT_POST, api.editPost);
-export const seriesPost = createAction(SERIES_POST, api.writeInSeries);
 
 const initialState = Map({
-    title : '',
-    markdown : '',
-    tags : '',
-    writer : '',
-    postId : null
-})
+	title: '',
+	markdown: '',
+	tags: ''
+});
 
-export default handleActions({
-    [INITIALIZE] : (state, action) => initialState,
-    [CHANGE_INPUT] : (state, action) => {
-        const { name, value } = action.payload;
-        return state.set(name, value);
-    },
-    ...pender({
-        type : WRITE_POST,
-        onSuccess : (state, action) => {
-            const { _id } = action.payload.data;
-            return state.set('postId', _id);
-        }
-    }),
-    ...pender({
-        type : SERIES_POST,
-        onSuccess : (state, action) => {
-            const { _id } = action.payload.data;
-            return state.set('postId', _id);
-        }
-    }),
-    ...pender({
-        type : GET_POST,
-        onSuccess : (state, action) => {
-            const { title, body, tags, writer } = action.payload.data;
+export default handleActions(
+	{
+		...pender({
+			type: GET_POST,
+			onSuccess: (state, action) => {
+				const { data: post } = action.payload.data;
 
-            return state.set('title', title)
-                        .set('markdown', body)
-                        .set('tags', tags.join(', '))
-                        .set('writer', writer);
-        }
-    })
-}, initialState);
+				return state.set('title', post.title).set('markdown', post.body).set('tags', post.tags.join(','));
+			}
+		}),
+		[ON_CHANGE]: (state, action) => {
+			const { name, value } = action.payload;
+
+			return state.set(name, value);
+		},
+		[INITIALIZE]: (state, action) => initialState
+	},
+	initialState
+);

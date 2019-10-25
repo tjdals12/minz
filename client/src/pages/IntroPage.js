@@ -1,18 +1,13 @@
 import React from 'react';
-import PageTemplate from 'components/common/PageTemplate';
-import InfoContainer from 'containers/common/InfoContainer';
-import IntroductionWrapper from 'components/introduction/IntroductionWrapper';
-import IntroductionContainer from 'containers/introduction/IntroductionContainer';
-import Website from 'components/introduction/Website';
+import ScrollToTop from 'components/common/ScrollToTop';
+import IntroductionContainer from 'containers/IntroductionContainer';
 
-const IntroPage = () => (
-    <PageTemplate>
-        <InfoContainer current="intro"/>
-        <IntroductionWrapper>
-            <IntroductionContainer />
-            <Website />
-        </IntroductionWrapper>
-    </PageTemplate>
-)
+const IntroPage = () => {
+	return (
+		<ScrollToTop>
+			<IntroductionContainer />
+		</ScrollToTop>
+	);
+};
 
 export default IntroPage;

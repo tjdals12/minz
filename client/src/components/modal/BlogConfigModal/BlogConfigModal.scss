@@ -1,65 +1,62 @@
 @import 'utils';
 
-.blog-config-modal{
-    width : 30rem;
-    padding-top : .25rem;
-    padding : 1rem;
+.blog-config-modal {
+	width: 30rem;
+	padding: 1rem;
 
-    .title-wrapper{
-        .blog-input-title{
-            font-size : 1.75rem;
-        }
-    }
+	.title {
+		font-size: 1.75rem;
+		text-align: center;
+	}
 
-    .input-wrapper{
-        .label{
-            margin-top : 1rem;
-            margin-bottom : .25rem;
-            padding-left : .3rem;
-            font-family: 'Gothic A1', sans-serif;
-            font-size : 1rem;
-            letter-spacing : 1px;
-            color : $oc-gray-6;
-        } 
+	.input-wrapper {
+		margin-bottom: 1rem;
 
-        .blog-input{
-            width : 100%;
-            height : 2.5rem;
-            padding-left : 1rem;
-            padding-right : 1rem;
-            border : none;
-            outline : none;
-            background : $oc-gray-1;
-            border-radius : 1rem;
-            font-family: 'Gothic A1', sans-serif;
-            font-size : .75rem;
-            font-weight : 600;
-            letter-spacing : 2px;
-    
-            &::placeholder{
-                color : rgba($oc-gray-6, 0.75);
-            }
-        }
+		.label {
+			margin-top: 1rem;
+			margin-bottom: .25rem;
+			padding-left: .3rem;
+			font-family: 'Gothic A1', sans-serif;
+			font-size: 1rem;
+			letter-spacing: 1px;
+			color: $oc-gray-6;
+		}
 
-        .file-input{
-            display : flex;
-            align-items : center;
-            justify-content : flex-start;
-        }
+		.blog-input {
+			width: 100%;
+			height: 2.5rem;
+			padding-left: 1rem;
+			padding-right: 1rem;
+			border: none;
+			outline: none;
+			background: $oc-gray-1;
+			border-radius: 1rem;
+			font-family: 'Gothic A1', sans-serif;
+			font-size: .75rem;
+			font-weight: 600;
+			letter-spacing: 2px;
 
-        .blog-textarea{
-            width : 100%;
-            height : 10rem;
-            resize: none;
-            padding-top : 1rem;
-            padding-bottom : 1rem;
-        }
-    }
+			&::placeholder {
+				color: rgba($oc-gray-6, 0.75);
+			}
+		}
 
-    .button-wrapper{
-        margin-top : 1rem;
-        display : flex;
-        align-items : center;
-        justify-content : flex-end;
-    }
+		.file-input {
+			display: flex;
+			align-items: center;
+			justify-content: flex-start;
+		}
+
+		.blog-textarea {
+			width: 100%;
+			height: 10rem;
+			resize: none;
+			padding-top: 1rem;
+			padding-bottom: 1rem;
+		}
+	}
+
+	.button-wrapper {
+		justify-content: flex-end;
+	}
 }

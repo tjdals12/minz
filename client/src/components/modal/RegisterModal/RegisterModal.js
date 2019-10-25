@@ -1,48 +1,90 @@
 import React from 'react';
+import classNames from 'classnames';
 import styles from './RegisterModal.scss';
-import classNames from 'classnames/bind';
-import ModalWrapper from 'components/modal/ModalWrapper';
-import Button from 'components/common/Button';
-import Thumbnail from 'components/common/Thumbnail';
-import InputError from 'components/common/InputError';
+import ModalWrapper from 'components/Modal/ModalWrapper';
+import { Thumbnail, LabelInput, InputError, ButtonWrapper, Button } from 'components/common';
+import PropTypes from 'prop-types';
 
 const cx = classNames.bind(styles);
 
-const RegisterModal = ({visible, onHideModal, onChangeInput, onRegisterLocal, emailError, passwordError, usernameError, failError}) => {
-    return(
-        <ModalWrapper visible={visible}>
-            <div className={cx('local-register')}>
-                <div className={cx('input-wrapper')}>
-                    <div className={cx('left-wrapper')}>
-                        <Thumbnail url={require('asset/img/register-logo.png')} type='register-logo' />
-                    </div>
+const RegisterModal = ({ errors, visible, onClose, onChange, onRegister }) => {
+	return (
+		<ModalWrapper visible={visible}>
+			<div className={cx('local-register')}>
+				<div className={cx('input-wrapper')}>
+					<div className={cx('left-wrapper')}>
+						<Thumbnail url={require('assets/img/register-logo.png')} type="register-logo" />
+					</div>
 
-                    <div className={cx('right-wrapper')}>
-                        <h1 className={cx('register-title')}>Register</h1>
-                        <div className={cx('register-form')}>
-                            <div className={cx('form-wrapper')}>
-                                <p className={cx('label')}>Email</p>
-                                <input type='text' name='email' className={cx('login-input')} placeholder='Your email' onChange={(e) => onChangeInput(e)}/>
-                                <InputError error={emailError} />
-                                <p className={cx('label')}>Password</p>
-                                <input type='password' name='password' className={cx('login-input')} placeholder='Password' onChange={(e) => onChangeInput(e)}/>
-                                <InputError error={passwordError} />
-                                <p className={cx('label')}>Username</p>
-                                <input type='text' name='username' className={cx('login-input')} placeholder='Name (Nickname)' onChange={(e) => onChangeInput(e)}/>
-                                <InputError error={usernameError} />
-                                <InputError error={failError} />
-                            </div>
-                        </div>
+					<div className={cx('right-wrapper')}>
+						<h1 className={cx('register-title')}>Register</h1>
+						<div className={cx('register-form')}>
+							<div className={cx('form-wrapper')}>
+								<LabelInput
+									label="Email"
+									type="text"
+									name="email"
+									placeholder="Your email"
+									onChange={onChange}
+									error={errors.emailError}
+								/>
 
-                        <div className={cx('local-button')}>
-                            <Button theme='register' onClick={onRegisterLocal}>Register</Button>
-                            <Button theme='register' onClick={onHideModal}>Cancel</Button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </ModalWrapper>
-    )
-}
+								<LabelInput
+									label="Password"
+									type="password"
+									name="password"
+									placeholder="Password"
+									onChange={onChange}
+									error={errors.passwordError}
+								/>
+
+								<LabelInput
+									label="Username"
+									type="text"
+									name="username"
+									placeholder="Name (Nickname)"
+									onChange={onChange}
+									error={errors.usernameError}
+								/>
+
+								<InputError error={errors.failError} />
+							</div>
+						</div>
+
+						<ButtonWrapper direction="vertical">
+							<Button theme="register" onClick={onRegister}>
+								Register
+							</Button>
+							<Button theme="register" onClick={() => onClose('register')}>
+								Cancel
+							</Button>
+						</ButtonWrapper>
+					</div>
+				</div>
+			</div>
+		</ModalWrapper>
+	);
+};
+
+RegisterModal.propTypes = {
+	errors: PropTypes.object,
+	visible: PropTypes.bool,
+	onClose: PropTypes.func,
+	onChange: PropTypes.func,
+	onRegister: PropTypes.func
+};
+
+RegisterModal.defaultProps = {
+	errors: {
+		emailError: '',
+		passwordError: '',
+		usernameError: '',
+		failError: ''
+	},
+	visible: false,
+	onClose: () => console.warn('Warning: onClose not defined'),
+	onChange: () => console.warn('Warning: onChange not defined'),
+	onRegister: () => console.warn('Warning: onRegister not defined')
+};
 
 export default RegisterModal;

@@ -1,70 +1,83 @@
 import React from 'react';
+import classNames from 'classnames';
 import styles from './PostInfo.scss';
-import classNames from 'classnames/bind';
-import moment from 'moment';
-import Content from 'components/common/Content';
-import Tag from 'components/common/Tag';
-import Count from 'components/common/Count';
-import FaHeart from 'react-icons/lib/fa/heart';
-import FaComment from 'react-icons/lib/fa/comment';
-import FaEye from 'react-icons/lib/fa/eye';
-import Button from 'components/common/Button';
+import { Count, Wrapper, Tag, Content, ButtonWrapper, Button } from 'components/common';
+import { FaHeart, FaComment, FaEye } from 'react-icons/fa';
+import PropTypes from 'prop-types';
 
 const cx = classNames.bind(styles);
 
-const PostInfo = ({ id, title, writer, tags, hit, like, commentCount, publishedDate, onShow, user }) => {
+const likeStyle = {
+	color: '#e64980',
+	fontSize: '1.25rem'
+};
 
-    const likeStyle = {
-        color : "#e64980",
-        fontSize : "1.25rem"
-    }
+const commentStyle = {
+	color: '#228be6',
+	fontSize: '1rem'
+};
 
-    const commentStyle = {
-        color : "#228be6",
-        fontSize : "1rem"
-    }
+const hitStyle = {
+	fontSize: '1rem'
+};
 
-    const hitStyle = {
-        fontSize : "1rem"
-    }
+const PostInfo = ({ user, id, title, writer, tags, hit, like, commentCount, publishedDate, onOpen }) => (
+	<Wrapper className={cx('post-info-wrapper')}>
+		{tags.map((tag, index) => (
+			<Tag key={index} to={`/search?keyword${tag}`}>
+				{tag}
+			</Tag>
+		))}
 
-    return(
-        <div className={cx('post-info-wrapper')}>
-            <div className={cx('info')}>
-                <div className={cx('tags')}>
-                    {
-                        tags && tags.map(
-                            tag => <Tag key={tag} to={`/search/${tag}`}>{tag}</Tag>
-                        )
-                    }
-                </div>
-                
-                <Content
-                    title={title}
-                    description={moment(publishedDate).format('LLLL')}
-                    type="post-info" />
-                <p className={cx('post-writer')}>write by. <b>{writer}</b></p>
+		<Content title={title} description={publishedDate} type="post-info" />
+		<p className={cx('post-writer')}>
+			write by. <b>{writer}</b>
+		</p>
 
-                <div className={cx('info-bottom')}>
-                    <div className={cx('count-info')}>
-                        <Count count={like} post-like ><FaHeart style={likeStyle}/></Count>
-                        <Count count={commentCount} post-comment><FaComment style={commentStyle}/></Count>
-                        <Count count={hit} post-hit><FaEye style={hitStyle}/></Count>
-                    </div>
+		<div className={cx('post-info-bottom')}>
+			<Count count={like} post-like>
+				<FaHeart style={likeStyle} />
+			</Count>
+			<Count count={commentCount} post-comment>
+				<FaComment style={commentStyle} />
+			</Count>
+			<Count count={hit} post-hit>
+				<FaEye style={hitStyle} />
+			</Count>
 
-                    <div className={cx('button-wrapper')}>
-                        {
-                            user === writer && 
-                            [
-                                <Button key="modify" to={`/editor?postId=${id}`} theme="green" >수정</Button>,
-                                <Button key="remove" onClick={onShow} >삭제</Button>
-                            ]
-                        }
-                    </div>
-                </div>
-            </div>
-        </div>
-    )
-}
+			{user === writer && (
+				<ButtonWrapper>
+					<Button key="modify" to={`/editor?postId=${id}`} theme="green">
+						수정
+					</Button>
+					<Button key="remove" onClick={() => onOpen('askRemove')}>
+						삭제
+					</Button>
+				</ButtonWrapper>
+			)}
+		</div>
+	</Wrapper>
+);
+
+PostInfo.propTypes = {
+	id: PropTypes.string,
+	title: PropTypes.string,
+	writer: PropTypes.string,
+	tags: PropTypes.array,
+	hit: PropTypes.number,
+	like: PropTypes.number,
+	commentCount: PropTypes.number,
+	publishedDate: PropTypes.string
+};
+
+PostInfo.defaultProps = {
+	title: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+	writer: 'minz',
+	tags: [ 'Javascript', 'Mongo' ],
+	hit: 0,
+	like: 0,
+	commentCount: 0,
+	publishedDate: 'Saturday, April 6, 2019 9:57 PM'
+};
 
 export default PostInfo;

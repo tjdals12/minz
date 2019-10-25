@@ -1,39 +1,62 @@
+import { Map, fromJS } from 'immutable';
 import { createAction, handleActions } from 'redux-actions';
-import { Map } from 'immutable';
 import { pender } from 'redux-pender';
 import * as api from 'lib/api';
 
-const CHANGE_INPUT = 'blog/CHANGE_INPUT';
-const GET_BLOG_INFO = 'blog/GET_BLOG_INFO';
-const EDIT_BLOG_INFO = 'blog/EDIT_BLOG_INFO';
+const GET_BLOG = 'blog/GET_BLOG';
+const EDIT_BLOG = 'blog/EDIT_BLOG';
+const ON_CHANGE = 'blog/ON_CHANGE';
 
-export const changeInput = createAction(CHANGE_INPUT);
-export const getBlogInfo = createAction(GET_BLOG_INFO, api.getBlogInfo);
-export const editBlogInfo = createAction(EDIT_BLOG_INFO, api.editBlogInfo);
+export const getBlog = createAction(GET_BLOG, api.getBlog);
+export const editBlog = createAction(EDIT_BLOG, api.editBlog);
+export const onChange = createAction(ON_CHANGE);
 
 const initialState = Map({
-    blog: Map({}),
-    editInput: Map({
-        background: null,
-        thumbnail: null,
-        title: null,
-        name: null,
-        description: null,
-        info: null,
-        tags: null
-    }),
-})
+	info: Map({}),
+	edit: Map({
+		title: '',
+		name: '',
+		description: '',
+		info: '',
+		tags: ''
+	})
+});
 
-export default handleActions({
-    [CHANGE_INPUT] : (state, action) => {
-        const { name, value } = action.payload;
-        return state.setIn(['editInput', name], value);
-    },
-    ...pender({
-        type: GET_BLOG_INFO,
-        onSuccess: (state, action) => {
-            const { data: result } = action.payload;
-            return state.set('blog', result);
-        }
-    })
-}, initialState);
+export default handleActions(
+	{
+		...pender({
+			type: GET_BLOG,
+			onSuccess: (state, action) => {
+				const { data: blog } = action.payload.data;
+
+				return state
+					.set('info', fromJS(blog))
+					.setIn([ 'edit', 'title' ], blog.title)
+					.setIn([ 'edit', 'name' ], blog.name)
+					.setIn([ 'edit', 'description' ], blog.description)
+					.setIn([ 'edit', 'info' ], blog.info)
+					.setIn([ 'edit', 'tags' ], blog.tags.join(','));
+			}
+		}),
+		...pender({
+			type: EDIT_BLOG,
+			onSuccess: (state, action) => {
+				const { data: blog } = action.payload.data;
+
+				return state
+					.set('info', fromJS(blog))
+					.setIn([ 'edit', 'title' ], blog.title)
+					.setIn([ 'edit', 'name' ], blog.name)
+					.setIn([ 'edit', 'description' ], blog.description)
+					.setIn([ 'edit', 'info' ], blog.info)
+					.setIn([ 'edit', 'tags' ], blog.tags.join(','));
+			}
+		}),
+		[ON_CHANGE]: (state, action) => {
+			const { target, name, value } = action.payload;
+
+			return target ? state.setIn([ target, name ], value) : state.set(name, value);
+		}
+	},
+	initialState
+);

@@ -1,279 +1,283 @@
 @import 'utils';
 
-.button{
-    padding-left : 1rem;
-    padding-right : 1rem;
-    padding-top : .5rem;
-    padding-bottom : .5rem;
-    font-size : .85rem;
-    font-weight : 300;
-    color : $oc-gray-5;
-    cursor : pointer;
-    user-select : none;
-    border-radius : 10px 10px;
-    text-align: center;
+.button {
+	padding-left: 1rem;
+	padding-right: 1rem;
+	padding-top: .5rem;
+	padding-bottom: .5rem;
+	font-size: .85rem;
+	font-weight: 300;
+	color: $oc-gray-5;
+	cursor: pointer;
+	user-select: none;
+	border-radius: 10px 10px;
+	text-align: center;
 
-    &.default{
-        border : 1px solid $oc-gray-4;
-    }
+	&.default {
+		border: 1px solid $oc-gray-4;
+	}
 
-    &.green{
-        border : 1px solid $oc-cyan-4;
-        color : $oc-cyan-4;
-    }
+	&.green {
+		border: 1px solid $oc-cyan-4;
+		color: $oc-cyan-4;
+	}
 
-    &.white{
-        padding-left : 3rem;
-        padding-right : 3rem;
-        border : 1px solid white;
-        color : white;
-        transition : all .15s ease-in;
-        font-weight : 300;
+	&.white {
+		padding-left: 3rem;
+		padding-right: 3rem;
+		border: 1px solid white;
+		color: white;
+		transition: all .15s ease-in;
+		font-weight: 300;
 
-        &:hover{
-            background : white;
-            color : $oc-gray-6;
-        }
+		&:hover {
+			background: white;
+			color: $oc-gray-6;
+		}
 
-        &:active{
-            background : rgba(255, 255, 255, 0.75);
-            color : rgba(255, 255, 255, 0.75);
-        }
-    }
+		&:active {
+			background: rgba(255, 255, 255, 0.75);
+			color: rgba(255, 255, 255, 0.75);
+		}
+	}
 
-    &.editor{
-        width : 50px;
-        height : 50px;
-        border : 2px solid $oc-gray-4;
-        border-radius : 50%;
-        position : relative;
-        overflow : hidden;
+	&.editor {
+		width: 50px;
+		height: 50px;
+		border: 2px solid $oc-gray-4;
+		border-radius: 50%;
+		position: relative;
+		overflow: hidden;
 
-        &::before{
-            content : "";
-            position : absolute;
-            width : 120%;
-            height: 120%;
-            background : $oc-blue-6;
-            transform : rotate(45deg);
-            top : 110%;
-            left : 90%;
-        }
+		&::before {
+			content: "";
+			position: absolute;
+			width: 120%;
+			height: 120%;
+			background: $oc-blue-6;
+			transform: rotate(45deg);
+			top: 110%;
+			left: 90%;
+		}
 
-        &:hover::before{
-            animation : effect .7s 1;
-            left : -10%;
-            top : -10%;
-        }
+		&:hover::before {
+			animation: effect .7s 1;
+			left: -10%;
+			top: -10%;
+		}
 
-        @keyframes effect{
-            0%{
-                top : 110%;
-                left : 90%;
-            }
-            50%{
-                left : 10%;
-                top : -30%;
-            }
-            100%{
-                left : -10%;
-                top : -10%;
-            }
-        }
+		@keyframes effect {
+			0% {
+				top: 110%;
+				left: 90%;
+			}
+			50% {
+				left: 10%;
+				top: -30%;
+			}
+			100% {
+				left: -10%;
+				top: -10%;
+			}
+		}
 
-        &:hover{
-            color : white;
-            border-color : white;
-        }
+		&:hover {
+			color: white;
+			border-color: white;
+		}
 
-        svg {
-            position : absolute;
-            font-size : 1.5rem;
-            top : 50%;
-            left : 50%;
-            transform : translate(-50%, -50%);
-        }
-    }
+		svg {
+			position: absolute;
+			font-size: 1.5rem;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+		}
+	}
 
-    &.warning{
-        color : red;
-        border-color : red;
-    }
+	&.warning {
+		color: red;
+		border-color: red;
+	}
 
-    &.icon{
-        width : 35px;
-        height : 35px;
-        border : 1px solid $oc-gray-4;
-        border-radius : 50%;
-        position : relative;
-        overflow : hidden;
+	&.icon {
+		width: 35px;
+		height: 35px;
+		border: 1px solid $oc-gray-4;
+		border-radius: 50%;
+		position: relative;
+		overflow: hidden;
 
-        &::before{
-            content : "";
-            position : absolute;
-            width : 120%;
-            height: 120%;
-            background : $oc-blue-6;
-            transform : rotate(45deg);
-            top : 110%;
-            left : 90%;
-        }
+		&::before {
+			content: "";
+			position: absolute;
+			width: 120%;
+			height: 120%;
+			background: $oc-blue-6;
+			transform: rotate(45deg);
+			top: 110%;
+			left: 90%;
+		}
 
-        &:hover::before{
-            animation : effect .7s 1;
-            left : -10%;
-            top : -10%;
-        }
+		&:hover::before {
+			animation: effect .7s 1;
+			left: -10%;
+			top: -10%;
+		}
 
-        @keyframes effect{
-            0%{
-                top : 110%;
-                left : 90%;
-            }
-            50%{
-                left : 10%;
-                top : -30%;
-            }
-            100%{
-                left : -10%;
-                top : -10%;
-            }
-        }
+		@keyframes effect {
+			0% {
+				top: 110%;
+				left: 90%;
+			}
+			50% {
+				left: 10%;
+				top: -30%;
+			}
+			100% {
+				left: -10%;
+				top: -10%;
+			}
+		}
 
-        &:hover{
-            color : white;
-            border-color : white;
-        }
+		&:hover {
+			color: white;
+			border-color: white;
+		}
 
-        svg {
-            position : absolute;
-            font-size : 1rem;
-            top : 50%;
-            left : 50%;
-            transform : translate(-50%, -50%);
-        }
-    }
+		svg {
+			position: absolute;
+			font-size: 1rem;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+		}
+	}
 
-    &.small{
-        padding-left : .8rem;
-        padding-right : .8rem;
-        padding-top : .25rem;
-        padding-bottom : .25rem;
-        border : 1px solid $oc-gray-4;
-        color : $oc-gray-4;
-        border-radius : 20px 20px;
-        transition : all .15s ease;
+	&.small {
+		padding-left: .8rem;
+		padding-right: .8rem;
+		padding-top: .25rem;
+		padding-bottom: .25rem;
+		border: 1px solid $oc-gray-4;
+		color: $oc-gray-4;
+		border-radius: 20px 20px;
+		transition: all .15s ease;
 
-        &:hover{
-            border-color : $oc-gray-9;
-            color : $oc-gray-9;
-        }
+		&:hover {
+			border-color: $oc-gray-9;
+			color: $oc-gray-9;
+		}
 
-        &:active{
-            border-color : rgba($oc-gray-9, 0.5);
-            color : rgba($oc-gray-9, 0.5);
-        }
-    }
+		&:active {
+			border-color: rgba($oc-gray-9, 0.5);
+			color: rgba($oc-gray-9, 0.5);
+		}
+	}
 
-    &.line{
-        border-bottom : 1px solid $oc-gray-4;
-        border-radius : 0;
-        padding-left : .1rem;
-        padding-right : .1rem;
-        padding-top : 0.1rem;
-        padding-bottom : 0.1rem;
-        transition : all .15s ease-in;
-        font-size : .6rem;
+	&.line {
+		border-bottom: 1px solid $oc-gray-4;
+		border-radius: 0;
+		padding-left: .1rem;
+		padding-right: .1rem;
+		padding-top: 0.1rem;
+		padding-bottom: 0.1rem;
+		transition: all .15s ease-in;
+		font-size: .6rem;
 
-        &:hover{
-            padding-left : .3rem;
-            padding-right : .3rem;
-            border-bottom : 1px solid $oc-red-4;
-            color : $oc-red-4;
-            box-shadow : none;
-        }
-    }
+		&:hover {
+			padding-left: .3rem;
+			padding-right: .3rem;
+			border-bottom: 1px solid $oc-red-4;
+			color: $oc-red-4;
+			box-shadow: none;
+		}
+	}
 
-    &.facebook{
-        width : 6.5rem;
-        border-radius : 1.5rem;
-        color : white;
-        background : $oc-blue-6;
-        font-size : .55rem;
-        text-align : center;
-        transition : all .15s ease-in;
+	&.facebook {
+		width: 6.5rem;
+		border-radius: 1.5rem;
+		color: white;
+		background: $oc-blue-6;
+		font-size: .55rem;
+		text-align: center;
+		transition: all .15s ease-in;
 
-        svg{
-            font-size : 1.25rem;
-        }
+		svg {
+			font-size: 1.25rem;
+		}
 
-        &:hover{
-            background : rgba($oc-blue-6, 0.8);
-        }
+		&:hover {
+			background: rgba($oc-blue-6, 0.8);
+		}
 
-        &:active{
-            background : rgba($oc-blue-6, 0.3);
-        }
-    }
+		&:active {
+			background: rgba($oc-blue-6, 0.3);
+		}
+	}
 
-    &.google{
-        width : 6.5rem;
-        border-radius : 1.5rem;
-        color : white;
-        background : $oc-red-6;
-        font-size : .75rem;
-        text-align : center;
+	&.google {
+		width: 6.5rem;
+		border-radius: 1.5rem;
+		color: white;
+		background: $oc-red-6;
+		font-size: .75rem;
+		text-align: center;
 
-        transition : all .15s ease-in;
+		transition: all .15s ease-in;
 
-        svg{
-            font-size : 1.25rem;
-        }
+		svg {
+			font-size: 1.25rem;
+		}
 
-        &:hover{
-            background : rgba($oc-red-6, 0.8);
-        }
+		&:hover {
+			background: rgba($oc-red-6, 0.8);
+		}
 
-        &:active{
-            background : rgba($oc-red-6, 0.3);
-        }
-    }
+		&:active {
+			background: rgba($oc-red-6, 0.3);
+		}
+	}
 
-    &:hover{
-        @include material-shadow(1, 0.3);
-    }
+	&:hover {
+		@include material-shadow(1, 0.3);
+	}
 
-    & + &{
-        margin-left : .5rem;
-    }
+	& + & {
+		margin-left: .5rem;
+	}
 
-    &.login{
-        margin : 0;
-        margin-top : .5rem;
-        width : 8rem;
-        border : 1px solid $oc-gray-4;
-        padding-top : .25rem;
-        padding-bottom : .25rem;
-        text-align : center;
-    }
+	&.login {
+		margin: 0;
+		margin-top: .5rem;
+		width: 8rem;
+		border: 1px solid $oc-gray-4;
+		padding-top: .25rem;
+		padding-bottom: .25rem;
+		text-align: center;
+	}
 
-    &.register{
-        margin : 0;
-        margin-top : .5rem;
-        padding-top : .25rem;
-        padding-bottom : .1rem;
-        text-align : center;
-        font-size : .75rem;
-        border-radius : 0;
-        transition : all .3s ease;
-        border-bottom : 1px solid transparent;
+	&.register {
+		margin: 0;
+		margin-top: .5rem;
+		padding-top: .25rem;
+		padding-bottom: .1rem;
+		text-align: center;
+		font-size: .75rem;
+		border-radius: 0;
+		transition: all .3s ease;
+		border-bottom: 1px solid transparent;
 
-        &:hover{
-            padding-left : 1.5rem;
-            padding-right : 1.5rem;
-            border-bottom : 1px solid $oc-red-4;
-            box-shadow : none;
-            color : $oc-red-4;
-        }
-    }
+		&:hover {
+			padding-left: 1.5rem;
+			padding-right: 1.5rem;
+			border-bottom: 1px solid $oc-red-4;
+			box-shadow: none;
+			color: $oc-red-4;
+		}
+	}
+
+	&.w-100 {
+		width: 100%;
+	}
 }

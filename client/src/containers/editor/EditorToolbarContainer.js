@@ -1,108 +1,81 @@
-import React, { Component } from 'react';
-import EditorToolbar from 'components/editor/EditorToolbar';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import * as editorActions from 'store/modules/editor';
+import React, { useCallback, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
+import EditorToolbar from 'components/Editor/EditorToolbar';
+import { useSelector, useDispatch } from 'react-redux';
+import { getPost, onChange } from 'store/modules/editor';
+import { writePost, editPost } from 'store/modules/post';
+import { writePostInSeries } from 'store/modules/series';
 import axios from 'axios';
 import queryString from 'query-string';
 
-class EditorToolbarContainer extends Component{
+const EditorToolbarContainer = ({ history, location }) => {
+	const title = useSelector((state) => state.editor.get('title'), []);
+	const markdown = useSelector((state) => state.editor.get('markdown'), []);
+	const tags = useSelector((state) => state.editor.get('tags'), []);
+	const dispatch = useDispatch();
 
-    componentDidMount(){
-        const { EditorActions, location } = this.props;
+	const handleGoBack = useCallback(
+		() => {
+			history.goBack();
+		},
+		[ history ]
+	);
 
-        const { postId } = queryString.parse(location.search);
+	const handleSubmit = useCallback(
+		async () => {
+			const { postId, series } = queryString.parse(location.search);
 
-        try{
-            if(postId){
-                EditorActions.getPost(postId);
-            }
-        }catch(e){
-            console.error(e);
-        }
-    }
+			if (postId) {
+				await dispatch(editPost(postId, { title, body: markdown, tags: tags ? tags.split(',') : [] }));
+				history.push(`/post/${postId}`);
+				return;
+			}
 
-    handleSubmit = async () => {
-        const { title, markdown, tags, EditorActions, history, location } = this.props;
+			if (series) {
+				await dispatch(writePostInSeries(series, { title, body: markdown, tags: tags ? tags.split(',') : [] }));
+				history.push(`/series/${series}`);
+				return;
+			}
 
-        const post = {
-            title,
-            body : markdown,
-            tags : tags === "" ? [] : [...new Set(tags.split(',').map(tag => tag.trim()))]
-        }
+			await dispatch(writePost({ title, body: markdown, tags: tags ? tags.split(',') : [] })).then((response) => {
+				history.push(`/post/${response.data.data._id}`);
+			});
+		},
+		[ dispatch, history, location, title, markdown, tags ]
+	);
 
-        try{
+	const handleUpload = useCallback(
+		async (file) => {
+			let formData = new FormData();
+			formData.append('imgUploader', file);
 
-            const { postId } = queryString.parse(location.search);
+			await axios({
+				method: 'POST',
+				url: '/api/upload',
+				data: formData,
+				config: { headers: { 'Content-Type': 'multipart/form-data' } }
+			}).then((response) => {
+				dispatch(
+					onChange({
+						name: 'markdown',
+						value: markdown + '\n![](' + response.data + ')\n'
+					})
+				);
+			});
+		},
+		[ dispatch, markdown ]
+	);
 
-            if(postId){
-                await EditorActions.editPost({postId, ...post});
-                history.push(`/post/${postId}`);
-                return;
-            }
+	useEffect(
+		() => {
+			const { postId } = queryString.parse(location.search);
 
-            const { series } = queryString.parse(location.search);
+			postId && dispatch(getPost(postId));
+		},
+		[ location, dispatch ]
+	);
 
-            if(series){
-                await EditorActions.seriesPost({series, ...post});
-                history.push(`/post/${this.props.postId}`);
-                return;
-            }
+	return <EditorToolbar onGoBack={handleGoBack} onSubmit={handleSubmit} onUpload={handleUpload} />;
+};
 
-            await EditorActions.writePost(post);
-            history.push(`/post/${this.props.postId}`);
-        }catch(e){
-            console.error(e);
-        }
-    }
-
-    handleUpload = async (file) => {
-        const { EditorActions, markdown } = this.props;
-
-        var formData = new FormData();
-        formData.append("imgUploader", file);
-
-        await axios({
-            method: "POST",
-            url: "/upload",
-            data: formData,
-            config: { headers: {'Content-Type': 'multipart/form-data' }}
-        }).then((response) => {
-            EditorActions.changeInput({
-                name : "markdown",
-                value : markdown + "\n![](" + response.data + ")\n"
-            })
-        });
-    }
-
-    handleGoBack = () => {
-        const { history } = this.props;
-        history.goBack();
-    }
-
-    render(){
-        const { handleGoBack, handleSubmit, handleUpload } = this;
-        const { postId } = queryString.parse(this.props.location.search);
-
-        return(
-            <EditorToolbar
-                onGoBack={handleGoBack}
-                onSubmit={handleSubmit}
-                onUpload={handleUpload}
-                isEdit={postId ? true : false} />
-        )
-    }
-}
-
-export default connect(
-    (state) => ({
-        title : state.editor.get('title'),
-        markdown : state.editor.get('markdown'),
-        tags : state.editor.get('tags'),
-        postId : state.editor.get('postId')
-    }),
-    (dispatch) => ({
-        EditorActions : bindActionCreators(editorActions, dispatch)
-    })
-)(withRouter(EditorToolbarContainer));
+export default withRouter(EditorToolbarContainer);

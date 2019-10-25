@@ -1,23 +1,13 @@
-import React, { Component } from 'react';
-import PageTemplate from 'components/common/PageTemplate';
-import InfoContainer from 'containers/common/InfoContainer';
-import ListWrapper from 'components/list/ListWrapper';
-import SearchListContainer from 'containers/list/SearchListContainer';
+import React from 'react';
+import ScrollToTop from 'components/common/ScrollToTop';
+import PostListContainer from 'containers/PostListContainer';
+import PaginationContainer from 'containers/PaginationContainer';
 
-class SearchPage extends Component{
-    render(){
-        const { match } = this.props;
-        const { keyword } = match.params;
-
-        return(
-            <PageTemplate>
-                <InfoContainer current="search"/>
-                <ListWrapper>
-                    <SearchListContainer keyword={keyword}/>
-                </ListWrapper>
-            </PageTemplate>
-        )
-    }
-}
+const SearchPage = () => (
+	<ScrollToTop>
+		<PostListContainer />
+		<PaginationContainer type="search" />
+	</ScrollToTop>
+);
 
 export default SearchPage;

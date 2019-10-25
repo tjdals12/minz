@@ -1,34 +1,15 @@
-import React, { Component } from 'react';
-import PageTemplate from 'components/common/PageTemplate';
-import PostWrapper from 'components/post/PostWrapper';
-import PostInfoContainer from 'containers/post/PostInfoContainer';
-import PostNavContainer from 'containers/post/PostNavContainer';
-import PostCommentContainer from 'containers/post/PostCommentContainer';
-import AskRemoveModalContainer from 'containers/modal/AskRemoveModalContainer';
+import React from 'react';
+import ScrollToTop from 'components/common/ScrollToTop';
+import PostContainer from 'containers/PostContainer';
+import PostCommentContainer from 'containers/PostCommentContainer';
+import AskRemoveModalContainer from 'containers/Modal/AskRemoveModalContainer';
 
-class PostPage extends Component{
-
-    componentDidMount(){
-        window.scrollTo(0, 0);
-    }
-
-    render(){
-        const { match } = this.props;
-        const { id } = match.params;
-
-        return(
-            <PageTemplate>
-                <AskRemoveModalContainer id={id} />
-
-                <PostWrapper>
-                    <PostInfoContainer id={id}/>
-                    <PostCommentContainer id={id} />
-
-                    <PostNavContainer id={id}/>
-                </PostWrapper>
-            </PageTemplate>
-        )
-    }
-}
+const PostPage = () => (
+	<ScrollToTop>
+		<PostContainer />
+		<PostCommentContainer />
+		<AskRemoveModalContainer />
+	</ScrollToTop>
+);
 
 export default PostPage;

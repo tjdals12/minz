@@ -1,26 +1,29 @@
-import React, { Component } from 'react';
+import React from 'react';
+import classNames from 'classnames';
 import styles from './ModalWrapper.scss';
-import classNames from 'classnames/bind';
+import PropTypes from 'prop-types';
 
 const cx = classNames.bind(styles);
 
-class ModalWrapper extends Component {
-    render(){
-        const { children, visible } = this.props;
+const ModalWrapper = ({ visible, children }) => {
+	return !visible ? null : (
+		<div>
+			<div className={cx('overlay')} />
+			<div className={cx('modal-wrapper')}>
+				<div className={cx('modal')}>{children}</div>
+			</div>
+		</div>
+	);
+};
 
-        if(!visible) return null;
+ModalWrapper.propTypes = {
+	visible: PropTypes.bool,
+	children: PropTypes.oneOfType([ PropTypes.string, PropTypes.func, PropTypes.node ])
+};
 
-        return(
-            <div>
-                <div className={cx('overlay')} />
-                <div className={cx('modal-wrapper')}>
-                    <div className={cx('modal')}>
-                        {children}
-                    </div>
-                </div>
-            </div>
-        )
-    }
-}
+ModalWrapper.defaultProps = {
+	visible: false,
+	children: 'Modal'
+};
 
 export default ModalWrapper;

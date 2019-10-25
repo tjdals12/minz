@@ -1,19 +1,19 @@
 @import 'utils';
 
-.post-body{
-    color : $oc-gray-7;
-    font-family: 'Gothic A1', sans-serif;
-    font-size : 1.25rem;
-    font-weight : 100;
-    line-height : 2rem;
-    padding-top : 3rem;
-    padding-bottom : 3rem;
+.post-body {
+	color: $oc-gray-7;
+	font-family: 'Gothic A1', sans-serif;
+	font-size: 1.25rem;
+	font-weight: 100;
+	line-height: 2rem;
+	padding-top: 3rem;
+	padding-bottom: 3rem;
 
-    @include media('<large'){
-        padding-top : 1.5rem;
-        padding-bottom : 1.5rem;
-        padding-left : 1rem;
-        padding-right : 1rem;
-        font-size : 0.85rem;
-    }
+	@include media('<large') {
+		padding-top: 1.5rem;
+		padding-bottom: 1.5rem;
+		padding-left: 1rem;
+		padding-right: 1rem;
+		font-size: 0.85rem;
+	}
 }

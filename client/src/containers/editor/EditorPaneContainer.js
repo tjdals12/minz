@@ -1,41 +1,29 @@
-import React, { Component } from 'react';
-import EditorPane from 'components/editor/EditorPane';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import * as editorActions from 'store/modules/editor';
+import React, { useCallback, useEffect } from 'react';
+import { EditorPane } from 'components/Editor';
+import { useSelector, useDispatch } from 'react-redux';
+import { onChange, initialize } from 'store/modules/editor';
 
-class EditorPaneContainer extends Component{
-    componentDidMount(){
-        const { EditorActions } = this.props;
-        EditorActions.initialize();
-    }
+const EditorPaneContainer = () => {
+	const title = useSelector((state) => state.editor.get('title'), []);
+	const markdown = useSelector((state) => state.editor.get('markdown'), []);
+	const tags = useSelector((state) => state.editor.get('tags'), []);
+	const dispatch = useDispatch();
 
-    handleChangeInput = ({name, value}) => {
-        const { EditorActions } = this.props;
-        EditorActions.changeInput({name, value});
-    }
+	useEffect(
+		() => {
+			dispatch(initialize());
+		},
+		[ dispatch ]
+	);
 
-    render(){
-        const { handleChangeInput } = this;
-        const { title, markdown, tags } = this.props;
+	const handleChange = useCallback(
+		({ name, value }) => {
+			dispatch(onChange({ name, value }));
+		},
+		[ dispatch ]
+	);
 
-        return(
-            <EditorPane
-                title={title}
-                markdown={markdown}
-                tags={tags}
-                onChange={handleChangeInput} />
-        )
-    }
-}
+	return <EditorPane title={title} markdown={markdown} tags={tags} onChange={handleChange} />;
+};
 
-export default connect(
-    (state) => ({
-        title : state.editor.get('title'),
-        markdown : state.editor.get('markdown'),
-        tags : state.editor.get('tags')
-    }),
-    (dispatch) => ({
-        EditorActions : bindActionCreators(editorActions, dispatch)
-    })
-)(EditorPaneContainer);
+export default EditorPaneContainer;

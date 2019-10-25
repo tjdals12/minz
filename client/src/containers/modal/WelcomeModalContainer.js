@@ -1,33 +1,20 @@
-import React, { Component } from 'react';
-import WelcomeModal from 'components/modal/WelcomeModal';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import * as modalActions from 'store/modules/modal';
+import React, { useCallback } from 'react';
+import WelcomeModal from 'components/Modal/WelcomeModal';
+import { useSelector, useDispatch } from 'react-redux';
+import { close } from 'store/modules/modal';
 
-class WelcomeModalContainer extends Component{
-    handleHide = () => {
-        const { ModalActions } = this.props;
-        ModalActions.hideModal({
-            modal: 'welcome'
-        })
-    }
+const WelcomeModalContainer = () => {
+	const isOpen = useSelector((state) => state.modal.get('welcome'), []);
+	const dispatch = useDispatch();
 
-    render(){
-        const { visible } = this.props;
-        const { handleHide } = this;
-        return(
-                <WelcomeModal
-                    visible={visible}
-                    onHide={handleHide} />
-        )
-    }
-}
+	const handleClose = useCallback(
+		(name) => {
+			dispatch(close(name));
+		},
+		[ dispatch ]
+	);
 
-export default connect(
-    (state) => ({
-        visible : state.modal.getIn(['modal', 'welcome'])
-    }),
-    (dispatch) => ({
-        ModalActions : bindActionCreators(modalActions, dispatch)
-    })
-)(WelcomeModalContainer);
+	return <WelcomeModal visible={isOpen} onClose={handleClose} />;
+};
+
+export default WelcomeModalContainer;

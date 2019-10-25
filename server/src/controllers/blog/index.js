@@ -43,6 +43,56 @@ const blog = new Router();
  */
 
 /**
+  * @swagger
+  * /api/blogs:
+  *     post:
+  *         tags:
+  *             - Blog
+  *         summary: 블로그 정보 저장
+  *         description: 블로그 정보 저장
+  *         consumes:
+  *             - application/json
+  *         produces:
+  *             - application/json
+  *         parameters:
+  *             - in: body
+  *               name: body
+  *               description: blog parameters
+  *               required: true
+  *               schema:
+  *                 type: object
+  *                 properties:
+  *                     background:
+  *                         type: string
+  *                         example: 'http://backgroundurl.com'
+  *                     thumbnail:
+  *                         type: string
+  *                         exaple: 'http://thumbnailurl.com'
+  *                     title:
+  *                         type: string
+  *                         example: ''
+  *                     name:
+  *                         type: string
+  *                         example: ''
+  *                     info:
+  *                         type: string
+  *                         example: ''
+  *                     description:
+  *                         type: string
+  *                         example: ''
+  *                     tags:
+  *                         type: array
+  *                         items:
+  *                             type: string
+  *         responses:
+  *             200:
+  *                 description: Successful operation
+  *                 schema:
+  *                     $ref: '#/definitions/blog'
+  */
+blog.post('/', blogCtrl.create);
+
+/**
  * @swagger
  * /api/blogs:
  *  get:

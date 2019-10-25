@@ -230,12 +230,20 @@ export const update = async (ctx) => {
 	}
 
 	try {
-		const series = await Series.updateSeries({ seq, thumbnail, name, description, keyword });
+		const series = await Series.updateSeries({ seq, writer, thumbnail, name, description, keyword });
+
+		if (!series) {
+			ctx.res.notFound({
+				data: {},
+				message: 'Fail - seriesCtrl > update'
+			});
+			return;
+		}
 
 		ctx.res.ok({
 			data: {
 				...series,
-				post: series.post
+				post: series.post.map(limitBodyLength)
 			}
 		});
 	} catch (e) {

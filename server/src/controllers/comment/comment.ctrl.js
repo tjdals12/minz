@@ -98,9 +98,9 @@ export const commentList = async (ctx) => {
 		const comments = await Comment.find({ postId: postId })
 			.sort({ publishedDate: -1 })
 			.skip((page - 1) * 5)
-			.limit(5)
-			.exec();
-		const commentCount = await Comment.countDocuments({ postId: postId }).exec();
+			.limit(5);
+
+		const commentCount = await Comment.countDocuments({ postId: postId });
 
 		ctx.set('Comment-Count', Math.ceil(commentCount));
 		ctx.set('Last-Page', Math.ceil(commentCount / 5));
@@ -126,7 +126,7 @@ export const readComment = async (ctx) => {
 	const { id } = ctx.params;
 
 	try {
-		const comment = await Comment.findById(id).exec();
+		const comment = await Comment.findById(id);
 
 		ctx.res.ok({
 			data: comment,
@@ -150,7 +150,7 @@ export const deleteComment = async (ctx) => {
 	const postId = ctx.query.postId;
 
 	try {
-		await Comment.findByIdAndRemove(id).exec();
+		await Comment.findByIdAndRemove(id);
 
 		const post = await Post.findByIdAndUpdate(
 			postId,

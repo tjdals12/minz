@@ -5,6 +5,70 @@ import Joi from 'joi';
 
 /**
  * @author 		minz-logger
+ * @date 		2019. 10. 25
+ * @description 블로그 정보 생성
+ */
+export const create = async (ctx) => {
+	const user = ctx.request.user;
+
+	if (!user) {
+		ctx.res.unauthorized({
+			data: { user: user },
+			message: 'unauthorized'
+		});
+
+		return;
+	}
+
+	let { background, thumbnail, title, name, description, info, tags } = ctx.request.body;
+
+	const schema = Joi.object().keys({
+		background: Joi.string().required(),
+		thumbnail: Joi.string().required(),
+		title: Joi.string().required(),
+		name: Joi.string().required(),
+		description: Joi.string().required(),
+		info: Joi.string().required(),
+		tags: Joi.array().items(Joi.string()).required()
+	});
+
+	const result = Joi.validate(ctx.request.body, schema);
+
+	if (result.error) {
+		ctx.res.badRequest({
+			data: result.error,
+			message: 'Fail - blogCtrl > write'
+		});
+
+		return;
+	}
+
+	try {
+		const blog = await Blog.saveBlog({
+			user: user.profile.username,
+			background,
+			thumbnail,
+			title,
+			name,
+			description,
+			info,
+			tags
+		});
+
+		ctx.res.ok({
+			data: blog,
+			message: 'Success - blogCtrl > write'
+		});
+	} catch (e) {
+		ctx.res.internalServerError({
+			data: ctx.request.body,
+			message: `Error - blogCtrl > write: ${e.message}`
+		});
+	}
+};
+
+/**
+ * @author 		minz-logger
  * @date 		2019. 10. 22
  * @description 블로그 정보 조회
  */
@@ -34,7 +98,7 @@ export const getInfo = async (ctx) => {
 		});
 	} catch (e) {
 		ctx.res.internalServerError({
-			message: `Error: ${e.message}`
+			message: `Error - blogCtrl > getInfo: ${e.message}`
 		});
 	}
 };

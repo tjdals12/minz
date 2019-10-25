@@ -35,7 +35,7 @@
 	"scripts": {
 		"server": "NODE_PATH=src NODE_ENV=production npx babel-node src/server.js",
 		"dev": "NODE_PATH=src NODE_ENV=development nodemon --watch src/ src/server.js --exec babel-node",
-		"test": "env NODE_ENV=development NODE_PATH=$NODE_PATH:$PWD/src mocha --timeout 30000 --require @babel/register $(find src/controllers/ -name *.spec.js) --exit",
+		"test": "env NODE_ENV=test NODE_PATH=$NODE_PATH:$PWD/src mocha --timeout 30000 --require @babel/register $(find src/controllers/ -name *.spec.js) --exit",
 		"pm2": "NODE_PATH=src pm2 start src/index.js"
 	},
 	"devDependencies": {
@@ -44,6 +44,8 @@
 		"@babel/node": "^7.6.1",
 		"@babel/polyfill": "^7.6.0",
 		"@babel/preset-env": "^7.6.0",
+		"@types/chai": "^4.2.4",
+		"@types/mocha": "^5.2.7",
 		"chai": "^4.2.0",
 		"cli-color": "^1.4.0",
 		"koa-convert": "^1.2.0",

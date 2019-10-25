@@ -1,6 +1,6 @@
+import clc from 'cli-color';
 import * as db from 'models';
 import app from 'app';
-import clc from 'cli-color';
 import request from 'supertest';
 import { expect } from 'chai';
 
@@ -20,7 +20,8 @@ describe(clc.bgGreen(clc.black('[ Auth ]')), () => {
 	});
 
 	after((done) => {
-		db.close()
+		db
+			.close()
 			.then(() => {
 				server.close();
 				done();
@@ -31,16 +32,13 @@ describe(clc.bgGreen(clc.black('[ Auth ]')), () => {
 	});
 
 	it('로그인 전 로그인 확인', (done) => {
-		request(server)
-			.get('/api/auth/check')
-			.expect(200)
-			.end((err, ctx) => {
-				if (err) throw err;
+		request(server).get('/api/auth/check').expect(200).end((err, ctx) => {
+			if (err) throw err;
 
-				expect(ctx.body.data).to.be.empty;
-				done();
-			});
-	})
+			expect(ctx.body.data).is.null;
+			done();
+		});
+	});
 
 	it('로컬 회원가입', (done) => {
 		request(server)
@@ -77,25 +75,21 @@ describe(clc.bgGreen(clc.black('[ Auth ]')), () => {
 				expect(ctx.body.data).to.have.property('profile');
 				expect(ctx.body.data.profile).to.have.property('thumbnail');
 				expect(ctx.body.data.profile).to.have.property('username');
-				expect(ctx.body.data).to.have.property('thoughCount');
+				expect(ctx.body.data).to.have.property('count');
 				done();
 			});
 	});
 
 	it('로그인 후 로그인 확인', (done) => {
-		request(server)
-			.get('/api/auth/check')
-			.expect(200)
-			.set('Cookie', accessToken)
-			.end((err, ctx) => {
-				if (err) throw err;
+		request(server).get('/api/auth/check').expect(200).set('Cookie', accessToken).end((err, ctx) => {
+			if (err) throw err;
 
-				expect(ctx.body.data).to.have.property('id');
-				expect(ctx.body.data).to.have.property('profile');
-				expect(ctx.body.data.profile).to.have.property('thumbnail');
-				expect(ctx.body.data.profile).to.have.property('username');
-				expect(ctx.body.data).to.have.property('thoughCount');
-				done();
-			})
-	})
+			expect(ctx.body.data).to.have.property('id');
+			expect(ctx.body.data).to.have.property('profile');
+			expect(ctx.body.data.profile).to.have.property('thumbnail');
+			expect(ctx.body.data.profile).to.have.property('username');
+			expect(ctx.body.data).to.have.property('count');
+			done();
+		});
+	});
 });

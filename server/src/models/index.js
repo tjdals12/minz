@@ -48,7 +48,7 @@ export const connect = () => {
  * @description DB 연결 종료
  */
 export const close = () => {
-	if (process.env.NODE_ENV === 'development') new Mockgoose(mongoose).helper.reset();
+	if (process.env.NODE_ENV === 'test') new Mockgoose(mongoose).helper.reset();
 
 	return mongoose.disconnect();
 };

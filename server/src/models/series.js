@@ -131,10 +131,12 @@ SeriesSchema.statics.writePost = async function(params) {
  * @param		{Object} params
  */
 SeriesSchema.statics.updateSeries = function(params) {
-	let { seq, thumbnail, name, description, keyword } = params;
+	let { seq, writer, thumbnail, name, description, keyword } = params;
 
 	return this.findOneAndUpdate(
-		{ seq: seq },
+		{
+			$and: [ { seq: seq }, { writer: writer } ]
+		},
 		{
 			$set: {
 				thumbnail,

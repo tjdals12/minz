@@ -1,26 +1,24 @@
-# client
-client/
 # dependencies
-client_renewal/node_modules
-client_renewal/.pnp
-client_renewal/.pnp.js
+client/node_modules
+client/.pnp
+client/.pnp.js
 
 # testing
-client_renewal/coverage
+client/coverage
 
 # production
-client_renewal/build
+client/build
 
 # misc
-client_renewal/.DS_Store
-client_renewal/.env.local
-client_renewal/.env.development.local
-client_renewal/.env.test.local
-client_renewal/.env.production.local
+client/.DS_Store
+client/.env.local
+client/.env.development.local
+client/.env.test.local
+client/.env.production.local
 
-client_renewal/npm-debug.log*
-client_renewal/yarn-debug.log*
-client_renewal/yarn-error.log*
+client/npm-debug.log*
+client/yarn-debug.log*
+client/yarn-error.log*
 
 
 # server

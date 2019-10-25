@@ -1,0 +1,14 @@
+@import 'utils';
+
+.wrapper {
+	width: 768px;
+	margin: 0 auto;
+
+	@include media('<medium') {
+		width: 512px;
+	}
+
+	@include media('<small') {
+		width: calc(100% - 4rem);
+	}
+}

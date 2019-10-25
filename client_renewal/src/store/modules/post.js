@@ -10,6 +10,7 @@ const EDIT_POST = 'post/EDIT_POST';
 const DELETE_POST = 'post/DELETE_POST';
 const GET_PREV_POST = 'post/GET_PREV_POST';
 const GET_NEXT_POST = 'post/GET_NEXT_POST';
+const SEARCH_POSTS = 'post/SEARCH_POSTS';
 
 export const getPosts = createAction(GET_POSTS, api.getPosts);
 export const getPost = createAction(GET_POST, api.getPost);
@@ -18,6 +19,7 @@ export const editPost = createAction(EDIT_POST, api.editPost);
 export const deletePost = createAction(DELETE_POST, api.deletePost);
 export const getPrevPost = createAction(GET_PREV_POST, api.getPrevPost);
 export const getNextPost = createAction(GET_NEXT_POST, api.getNextPost);
+export const searchPosts = createAction(SEARCH_POSTS, api.searchPosts);
 
 const initialState = Map({
 	posts: List(),
@@ -25,7 +27,8 @@ const initialState = Map({
 	navPost: Map(),
 	commentCount: 0,
 	commentLastPage: 1,
-	lastPage: 1
+	lastPage: 1,
+	postCount: 0
 });
 
 export default handleActions(
@@ -80,6 +83,18 @@ export default handleActions(
 				return nextPost
 					? state.set('navPost', fromJS(nextPost))
 					: state.setIn([ 'navPost', 'title' ], '다음글이 없습니다.').setIn([ 'navPost', 'publishedDate' ], null);
+			}
+		}),
+		...pender({
+			type: SEARCH_POSTS,
+			onSuccess: (state, action) => {
+				const { searchPosts, count } = action.payload.data.data;
+				const lastPage = action.payload.headers['last-page'];
+
+				return state
+					.set('posts', fromJS(searchPosts))
+					.set('postCount', count)
+					.set('lastPage', parseInt(lastPage, 10));
 			}
 		})
 	},

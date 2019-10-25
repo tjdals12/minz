@@ -12,7 +12,7 @@ const Introduction = ({ info, tags }) => (
 		<Content title="소개" description={info} type="introduction" />
 		{tags &&
 			tags.map((tag) => (
-				<Tag key={tag} to={`/search/${tag}`}>
+				<Tag key={tag} to={`/search?keyword=${tag}`}>
 					{tag}
 				</Tag>
 			))}

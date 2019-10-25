@@ -7,10 +7,10 @@ import PropTypes from 'prop-types';
 
 const cx = classNames.bind(styles);
 
-const Navigation = ({ postCount, seriesCount, current }) => (
+const Navigation = ({ searchPostCount, postCount, seriesCount, current }) => (
 	<Wrapper className={cx('navigation')}>
 		{current === 'search' ? (
-			<div className={cx('search-result')}>검색결과</div>
+			<div className={cx('search-result')}>검색결과 {searchPostCount}</div>
 		) : (
 			[
 				<Link to="/" key="intro" className={cx('intro', current === '' && 'current')}>

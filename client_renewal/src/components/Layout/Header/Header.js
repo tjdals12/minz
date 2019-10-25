@@ -18,14 +18,14 @@ const HeaderTitle = ({ title }) => (
 	</div>
 );
 
-const Header = ({ background, thumbnail, title }) => {
+const Header = ({ background, thumbnail, title, onSearch }) => {
 	return (
-		<header className={cx('header')} style={{ backgroundImage: `url(${background})` }}>
+		<header className={cx('header')} style={{ backgroundImage: `url(${backgroundImg})` }}>
 			<div className={cx('header-content')}>
 				<Thumbnail url={thumbnail} type="user" />
 				<Brand />
-				<HeaderTitle title={title} />
-				<Search />
+				<HeaderTitle title={'Developer'} />
+				<Search onSearch={onSearch} />
 			</div>
 		</header>
 	);

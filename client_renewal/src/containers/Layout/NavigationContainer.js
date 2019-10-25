@@ -4,6 +4,7 @@ import Navigation from 'components/Layout/Navigation';
 import { useSelector } from 'react-redux';
 
 const NavigationContainer = ({ location }) => {
+	const searchPostCount = useSelector((state) => state.post.get('postCount'));
 	const postCount = useSelector((state) => state.blog.getIn([ 'info', 'postCount' ]));
 	const seriesCount = useSelector((state) => state.blog.getIn([ 'info', 'seriesCount' ]));
 	const [ current, setCurrent ] = useState('');
@@ -16,7 +17,14 @@ const NavigationContainer = ({ location }) => {
 		[ location, setCurrent ]
 	);
 
-	return <Navigation postCount={postCount} seriesCount={seriesCount} current={current} />;
+	return (
+		<Navigation
+			searchPostCount={searchPostCount}
+			postCount={postCount}
+			seriesCount={seriesCount}
+			current={current}
+		/>
+	);
 };
 
 export default withRouter(NavigationContainer);

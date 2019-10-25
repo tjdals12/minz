@@ -26,14 +26,16 @@ const SeriesInfo = ({
 				<Button theme="small" onClick={onToggle}>
 					{dispGb === '01' ? '비공개' : '공개'}
 				</Button>
-				<Button theme="small" onClick={() => onOpen('seriesEdit')}>수정</Button>
+				<Button theme="small" onClick={() => onOpen('seriesEdit')}>
+					수정
+				</Button>
 			</ButtonWrapper>
 		)}
 
 		<Content title={name} description={description} type="series-info" />
 
 		{keyword.map((item, index) => (
-			<Tag key={index} to={`/search/${item}`}>
+			<Tag key={index} to={`/search?keyword=${item}`}>
 				{item}
 			</Tag>
 		))}

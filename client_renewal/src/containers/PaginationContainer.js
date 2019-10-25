@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import Pagination from 'components/Pagination';
 import { useDispatch, useSelector } from 'react-redux';
-import { getPosts } from 'store/modules/post';
+import { getPosts, searchPosts } from 'store/modules/post';
 import { getSeriesList } from 'store/modules/series';
 import queryString from 'query-string';
 
@@ -10,24 +10,28 @@ const PaginationContainer = ({ type, history, location }) => {
 	const [ currentPage, setCurrentPage ] = useState(1);
 	const dispatch = useDispatch();
 	const lastPage = useSelector(
-		(state) => (type === 'post' ? state.post.get('lastPage') : state.series.get('lastPage'))
+		(state) => ([ 'post', 'search' ].includes(type) ? state.post.get('lastPage') : state.series.get('lastPage'))
 	);
 
 	const handlePage = useCallback(
 		(page) => {
 			const { pathname } = location;
-			history.push(`${pathname}?page=${page}`);
+			const { keyword } = queryString.parse(location.search);
+
+			history.push(`${pathname}?${type === 'search' && 'keyword=' + keyword + '&'}page=${page}`);
 		},
-		[ location, history ]
+		[ type, location, history ]
 	);
 
 	useEffect(
 		() => {
-			let { page } = queryString.parse(location.search);
+			let { page, keyword } = queryString.parse(location.search);
 			page = parseInt(page || 1, 10);
 			setCurrentPage(page);
 
-			type === 'post' ? dispatch(getPosts(page)) : dispatch(getSeriesList(page));
+			type === 'post'
+				? dispatch(getPosts(page))
+				: type === 'search' ? dispatch(searchPosts(page, { keyword })) : dispatch(getSeriesList(page));
 		},
 		[ location, type, dispatch ]
 	);

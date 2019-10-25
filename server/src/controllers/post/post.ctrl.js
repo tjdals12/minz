@@ -378,16 +378,30 @@ export const next = async (ctx) => {
  * @description 포스트 검색
  */
 export const search = async (ctx) => {
+	const page = parseInt(ctx.query.page || 1, 10);
+
+	if (page < 1) {
+		ctx.res.badRequest({
+			data: { page: page },
+			message: 'Fail - postCtrl > list'
+		});
+
+		return;
+	}
+
 	const { keyword } = ctx.request.body;
 
 	try {
 		const searchResult = await Post.find({
-			$or: [ { title: { $regex: `.*${keyword}.*` } }, { tags: { $in: keyword } } ]
+			$or: [ { title: { $regex: `${keyword}.*`, $options: 'i' } }, { tags: { $in: keyword } } ]
 		})
 			.sort({ _id: -1 })
+			.limit(5 * page)
 			.lean();
 
-		const postCount = await Post.countDocuments({ title: { $regex: `.*${keyword}.*` } });
+		const postCount = await Post.countDocuments({
+			$or: [ { title: { $regex: `${keyword}.*`, $options: 'i' } }, { tags: { $in: keyword } } ]
+		});
 
 		const limitBodyLength = (post) => ({
 			...post,
@@ -396,9 +410,11 @@ export const search = async (ctx) => {
 			comments: post.comments.length
 		});
 
+		ctx.set('Last-Page', Math.ceil(postCount / 5));
+
 		ctx.res.ok({
 			data: {
-				searchPost: searchResult.map(limitBodyLength),
+				searchPosts: searchResult.map(limitBodyLength),
 				count: postCount
 			}
 		});

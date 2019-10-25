@@ -19,6 +19,7 @@ export const editPost = (id, param) => axios.patch(`/api/posts/${id}`, { ...para
 export const deletePost = (id) => axios.delete(`/api/posts/${id}`);
 export const getPrevPost = (id) => axios.get(`/api/posts/${id}/prev`);
 export const getNextPost = (id) => axios.get(`/api/posts/${id}/next`);
+export const searchPosts = (page, keyword) => axios.post(`/api/posts/search?page=${page}`, keyword);
 
 /** Comment */
 export const getComments = (id, page) => axios.get(`/api/comments/${id}/list?page=${page}`);

@@ -4,3 +4,4 @@ export { default as ListPage } from './ListPage';
 export { default as PostPage } from './PostPage';
 export { default as SeriesListPage } from './SeriesListPage';
 export { default as SeriesPage } from './SeriesPage';
+export { default as SearchPage } from './SearchPage';

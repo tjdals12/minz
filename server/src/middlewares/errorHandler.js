@@ -10,6 +10,7 @@ const errorHandler = () => {
 				return Response.badRequest(ctx, UNKNOWN_ENDPOINT);
 			}
 		} catch (e) {
+			console.log(e.message);
 			return Response.internalServerError(ctx, UNKNOWN_ERROR);
 		}
 	};

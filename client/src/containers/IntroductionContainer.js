@@ -7,7 +7,7 @@ const IntroductionContainer = () => {
 	const tags = useSelector((state) => state.blog.getIn([ 'info', 'tags' ]), []);
 	const loading = useSelector((state) => state.pender.pending['blog/GET_BLOG'], []);
 
-	return loading || loading === undefined ? null : <Introduction info={info} tags={tags.toJS()} />;
+	return loading || loading === undefined ? null : <Introduction info={info} tags={tags ? tags.toJS() : tags} />;
 };
 
 export default IntroductionContainer;

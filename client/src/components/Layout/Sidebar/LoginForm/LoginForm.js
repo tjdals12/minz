@@ -10,14 +10,14 @@ const LoginForm = ({ errors, onChange, onSocialLogin, onLocalLogin, onOpen }) =>
 	<div className={cx('login-form')}>
 		<h3 className={cx('welcome-title')}>Welcome, developer</h3>
 
-		<ButtonWrapper direction="horizontal">
+		{/* <ButtonWrapper direction="horizontal">
 			<Button theme="facebook" onClick={() => onSocialLogin('facebook')}>
 				<FaFacebook size={15} /> Facebook
 			</Button>
 			<Button theme="google" onClick={() => onSocialLogin('google')}>
 				<FaGoogle size={15} /> Google
 			</Button>
-		</ButtonWrapper>
+		</ButtonWrapper> */}
 
 		<div className={cx('bottom-wrapper')}>
 			<div className={cx('form-wrapper')}>

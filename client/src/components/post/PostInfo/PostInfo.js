@@ -24,7 +24,7 @@ const hitStyle = {
 const PostInfo = ({ user, id, title, writer, tags, hit, like, commentCount, publishedDate, onOpen }) => (
 	<Wrapper className={cx('post-info-wrapper')}>
 		{tags.map((tag, index) => (
-			<Tag key={index} to={`/search?keyword${tag}`}>
+			<Tag key={index} to={`/search?keyword=${tag}`}>
 				{tag}
 			</Tag>
 		))}

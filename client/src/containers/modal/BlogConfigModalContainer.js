@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import BlogConfigModal from 'components/Modal/BlogConfigModal';
+import BlogConfigModal from 'components/modal/BlogConfigModal';
 import { useSelector, useDispatch } from 'react-redux';
 import { close } from 'store/modules/modal';
 import { editBlog, onChange } from 'store/modules/blog';

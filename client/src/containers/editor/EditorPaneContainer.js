@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
-import { EditorPane } from 'components/Editor';
+import { EditorPane } from 'components/editor';
 import { useSelector, useDispatch } from 'react-redux';
 import { onChange, initialize } from 'store/modules/editor';
 

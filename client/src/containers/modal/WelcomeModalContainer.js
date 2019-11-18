@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import WelcomeModal from 'components/Modal/WelcomeModal';
+import WelcomeModal from 'components/modal/WelcomeModal';
 import { useSelector, useDispatch } from 'react-redux';
 import { close } from 'store/modules/modal';
 

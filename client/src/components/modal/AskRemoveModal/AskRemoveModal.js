@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import styles from './AskRemoveModal.scss';
-import ModalWrapper from 'components/Modal/ModalWrapper';
+import ModalWrapper from 'components/modal/ModalWrapper';
 import { Button } from 'components/common';
 import { CSSTransition } from 'react-transition-group';
 import PropTypes from 'prop-types';

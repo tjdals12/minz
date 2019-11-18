@@ -1,9 +1,9 @@
 import React from 'react';
 import ScrollToTop from 'components/common/ScrollToTop';
-import EditorTemplate from 'components/Editor/EditorTemplate';
-import EditorToolbarContainer from 'containers/Editor/EditorToolbarContainer';
-import EditorPaneContainer from 'containers/Editor/EditorPaneContainer';
-import PreviewPaneContainer from 'containers/Editor/PreviewPaneContainer';
+import EditorTemplate from 'components/editor/EditorTemplate';
+import EditorToolbarContainer from 'containers/editor/EditorToolbarContainer';
+import EditorPaneContainer from 'containers/editor/EditorPaneContainer';
+import PreviewPaneContainer from 'containers/editor/PreviewPaneContainer';
 
 const EditorPage = () => {
 	return (

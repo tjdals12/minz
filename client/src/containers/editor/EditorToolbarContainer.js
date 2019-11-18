@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
-import EditorToolbar from 'components/Editor/EditorToolbar';
+import EditorToolbar from 'components/editor/EditorToolbar';
 import { useSelector, useDispatch } from 'react-redux';
 import { getPost, onChange } from 'store/modules/editor';
 import { writePost, editPost } from 'store/modules/post';

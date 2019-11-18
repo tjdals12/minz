@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import styles from './SeriesCreateModal.scss';
-import ModalWrapper from 'components/Modal/ModalWrapper';
+import ModalWrapper from 'components/modal/ModalWrapper';
 import { Thumbnail, ButtonWrapper, Button } from 'components/common';
 import PropTypes from 'prop-types';
 

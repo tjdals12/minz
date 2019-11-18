@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
-import { PostComment } from 'components/Post';
+import { PostComment } from 'components/post';
 import { useDispatch, useSelector } from 'react-redux';
 import { getComments, writeComment, setTarget } from 'store/modules/comment';
 import { open, setType } from 'store/modules/modal';

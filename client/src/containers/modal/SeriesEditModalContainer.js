@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import SeriesEditModal from 'components/Modal/SeriesEditModal';
+import SeriesEditModal from 'components/modal/SeriesEditModal';
 import { useSelector, useDispatch } from 'react-redux';
 import { close } from 'store/modules/modal';
 import { updateSeries, onChange } from 'store/modules/series';

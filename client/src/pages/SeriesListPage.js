@@ -3,7 +3,7 @@ import ScrollToTop from 'components/common/ScrollToTop';
 import SeriesToolbarContainer from 'containers/SeriesList/SeriesToolbarContainer';
 import SeriesListContainer from 'containers/SeriesList/SeriesListContainer';
 import PaginationContainer from 'containers/PaginationContainer';
-import SeriesCreateModalContainer from 'containers/Modal/SeriesCreateModalContainer';
+import SeriesCreateModalContainer from 'containers/modal/SeriesCreateModalContainer';
 
 const SeriesPage = () => {
 	return (

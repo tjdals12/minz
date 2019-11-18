@@ -1,5 +1,5 @@
 import React from 'react';
-import PreviewPane from 'components/Editor/PreviewPane';
+import PreviewPane from 'components/editor/PreviewPane';
 import { useSelector } from 'react-redux';
 
 const PreviewPaneContainer = () => {

@@ -4,8 +4,8 @@ import styles from './PostLayout.scss';
 import SidebarContainer from 'containers/Layout/SidebarContainer';
 import HeaderContainer from 'containers/Layout/HeaderContainer';
 import PostNavigationContainer from 'containers/Layout/PostNavigationContainer';
-import RegisterModalContainer from 'containers/Modal/RegisterModalContainer';
-import WelcomeModalContainer from 'containers/Modal/WelcomeModalContainer';
+import RegisterModalContainer from 'containers/modal/RegisterModalContainer';
+import WelcomeModalContainer from 'containers/modal/WelcomeModalContainer';
 
 const cx = classNames.bind(styles);
 

@@ -1,6 +1,6 @@
 import React, { useReducer, useCallback } from 'react';
 import { withRouter } from 'react-router-dom';
-import SeriesCreateModal from 'components/Modal/SeriesCreateModal';
+import SeriesCreateModal from 'components/modal/SeriesCreateModal';
 import { useSelector, useDispatch } from 'react-redux';
 import { close } from 'store/modules/modal';
 import { createSeries } from 'store/modules/series';

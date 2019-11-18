@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import RegisterModal from 'components/Modal/RegisterModal';
+import RegisterModal from 'components/modal/RegisterModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { open, close } from 'store/modules/modal';
 import { localRegister, onChange } from 'store/modules/auth';

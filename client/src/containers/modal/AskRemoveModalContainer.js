@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { withRouter } from 'react-router-dom';
-import AskRemoveModal from 'components/Modal/AskRemoveModal';
+import AskRemoveModal from 'components/modal/AskRemoveModal';
 import { useSelector, useDispatch } from 'react-redux';
 import { close } from 'store/modules/modal';
 import { deletePost } from 'store/modules/post';

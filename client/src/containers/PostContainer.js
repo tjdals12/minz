@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
-import { PostInfo, PostBody } from 'components/Post';
+import { PostInfo, PostBody } from 'components/post';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPost } from 'store/modules/post';
 import { open, setType } from 'store/modules/modal';

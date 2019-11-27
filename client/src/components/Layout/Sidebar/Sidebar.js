@@ -23,7 +23,7 @@ const Sidebar = ({ isLogin, userInfo, errors, onChange, onSocialLogin, onLocalLo
 			<FaAngleLeft className={cx('close-btn')} onClick={sidebarClose} />
 
 			{isLogin ? (
-				<Profile userInfo={userInfo} onLogout={onLogout} />
+				<Profile userInfo={userInfo} onLogout={onLogout} onOpen={onOpen}/>
 			) : (
 				<LoginForm
 					errors={errors}

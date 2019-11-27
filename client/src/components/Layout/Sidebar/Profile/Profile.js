@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 
 const cx = classNames.bind(styles);
 
-const Profile = ({ userInfo, onLogout }) => (
+const Profile = ({ userInfo, onLogout, onOpen }) => (
 	<div className={cx('user-profile')}>
 		<Thumbnail url={userInfo.profile.thumbnail} type="side-user" />
 		<div className={cx('description')}>
@@ -20,11 +20,18 @@ const Profile = ({ userInfo, onLogout }) => (
 			<Button theme="small" onClick={onLogout}>
 				로그아웃
 			</Button>
+			
 		</div>
 
 		<div className={cx('button-wrapper')}>
 			<Button theme="small" to="/editor">
 				새 포스트 작성
+			</Button>
+		</div>
+
+		<div className={cx('button-wrapper')}>
+			<Button theme="small" onClick={() => onOpen('linkAdd')}>
+				링크 추가
 			</Button>
 		</div>
 	</div>

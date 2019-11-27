@@ -16,6 +16,7 @@ const initialState = Map({
 	seriesCreate: false,
 	seriesEdit: false,
 	blogConfig: false,
+	linkAdd: false,
 	type: ''
 });
 

@@ -35,3 +35,9 @@ export const getSeries = (seq) => axios.get(`/api/series/${seq}`);
 export const writePostInSeries = (seq, param) => axios.post(`/api/series/${seq}`, { ...param });
 export const updateSeries = (seq, param) => axios.patch(`/api/series/${seq}`, { ...param });
 export const toggleDispGb = (seq) => axios.patch(`/api/series/${seq}/toggle`);
+
+/** Link */
+export const getLinks = (page) => axios.get(`/api/links?page=${page}`);
+export const getLinkCount = () => axios.get('/api/links/count');
+export const getLink = (id) => axios.get(`/api/links/${id}`);
+export const addLink = (param) => axios.post('/api/links', { ...param });

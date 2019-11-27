@@ -7,6 +7,7 @@ const NavigationContainer = ({ location }) => {
 	const searchPostCount = useSelector((state) => state.post.get('postCount'));
 	const postCount = useSelector((state) => state.blog.getIn([ 'info', 'postCount' ]));
 	const seriesCount = useSelector((state) => state.blog.getIn([ 'info', 'seriesCount' ]));
+	const linkCount = useSelector((state) => state.link.get('linkCount'));
 	const [ current, setCurrent ] = useState('');
 
 	useEffect(
@@ -22,6 +23,7 @@ const NavigationContainer = ({ location }) => {
 			searchPostCount={searchPostCount}
 			postCount={postCount}
 			seriesCount={seriesCount}
+			linkCount={linkCount}
 			current={current}
 		/>
 	);

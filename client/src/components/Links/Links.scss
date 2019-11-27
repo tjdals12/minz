@@ -1,0 +1,57 @@
+@import "utils";
+
+.links-wrapper {
+  &.default {
+    position: absolute;
+  }
+
+  &.fixed {
+    position: fixed;
+  }
+
+  top: 2rem;
+  right: 3%;
+  width: 20%;
+
+  .title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-right: 0.5rem;
+  }
+
+  .more-links {
+    cursor: pointer;
+    transition: all 0.1s ease-in;
+
+    &:hover {
+      color: $oc-gray-6;
+      font-size: 1.2rem;
+    }
+  }
+
+  .links {
+    list-style: none;
+    margin: 0;
+    margin-top: 1rem;
+    padding: 0;
+
+    .link {
+      margin-bottom: 0.5rem;
+      width: 100%;
+      font-size: 1rem;
+      color: $oc-blue-4;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      &:hover {
+        cursor: pointer;
+        text-decoration: underline;
+      }
+    }
+  }
+
+  @include media("<wide") {
+    display: none;
+  }
+}

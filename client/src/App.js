@@ -1,7 +1,16 @@
 import React from 'react';
 import { BrowserRouter, Switch } from 'react-router-dom';
 import { LayoutRoute, MainLayout, PostLayout } from 'components/Layout';
-import { IntroPage, ListPage, PostPage, SeriesListPage, SeriesPage, EditorPage, SearchPage } from 'pages';
+import { 
+	IntroPage, 
+	ListPage, 
+	PostPage, 
+	SeriesListPage, 
+	SeriesPage, 
+	EditorPage, 
+	SearchPage, 
+	LinkListPage
+} from 'pages';
 
 const App = () => (
 	<BrowserRouter>
@@ -13,6 +22,7 @@ const App = () => (
 			<LayoutRoute exact path="/post/:id" layout={PostLayout} component={PostPage} />
 			<LayoutRoute exact path="/editor" layout={'div'} component={EditorPage} />
 			<LayoutRoute exact path="/search" layout={MainLayout} component={SearchPage} />
+			<LayoutRoute exact path="/links" layout={MainLayout} component={LinkListPage} />
 		</Switch>
 	</BrowserRouter>
 );

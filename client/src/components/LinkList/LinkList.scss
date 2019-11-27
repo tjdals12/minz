@@ -1,0 +1,10 @@
+@import "utils";
+
+.link-list {
+    height: auto;
+    overflow: hidden;
+
+    .link-item:nth-child(odd) {
+        background: $oc-gray-1;
+    }
+}

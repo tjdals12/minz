@@ -3,6 +3,7 @@ import classNames from 'classnames/bind';
 import styles from './Tags.scss';
 import { getScrollTop } from 'lib/common';
 import { Tag } from 'components/common';
+import PropTypes from 'prop-types';
 
 const cx = classNames.bind(styles);
 
@@ -41,6 +42,14 @@ class Tags extends React.Component {
             </div>
         )
     }
+}
+
+Tags.propTypes = {
+    tags: PropTypes.array
+};
+
+Tags.defaultProps = {
+    tags: []
 }
 
 export default Tags;

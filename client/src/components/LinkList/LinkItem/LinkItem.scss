@@ -1,0 +1,27 @@
+@import "utils";
+
+.link-item {
+  display: flex;
+  border-bottom: 1px solid $oc-gray-3;
+  padding: 1rem 0.5rem;
+
+  .link {
+    flex: 0.8;
+    font-size: 1rem;
+    color: $oc-blue-4;
+
+    &:hover {
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  }
+
+  .date {
+    flex: 0.2;
+    text-align: right;
+    font-family: 'Gothic A1', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: $oc-gray-6;
+  }
+}

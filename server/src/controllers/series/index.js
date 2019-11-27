@@ -66,6 +66,27 @@ series.get('/', seriesCtrl.list);
 
 /**
  * @swagger
+ * /api/series/keywords:
+ *  get:
+ *      tags:
+ *          - Series
+ *      summary: 모든 키워드 조회
+ *      description: 모든 키워드 조회
+ *      produces:
+ *          - application/json
+ *      responses:
+ *          200:
+ *              description: Successful operation
+ *              schema:
+ *                  type: array
+ *                  example: ['First', 'Second']
+ *                  items:
+ *                      type: string
+ */
+series.get('/keywords', seriesCtrl.keywords);
+
+/**
+ * @swagger
  * /api/series:
  *  post:
  *      tags:

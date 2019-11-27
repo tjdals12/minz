@@ -123,6 +123,27 @@ post.get('/', postCtrl.list);
 
 /**
  * @swagger
+ * /api/posts/tags:
+ *  get:
+ *      tags:
+ *          - Post
+ *      summary: 모든 태그 조회
+ *      description: 모든 태그 조회
+ *      produces:
+ *          - application/json
+ *      responses:
+ *          200:
+ *              description: Successful operation
+ *              schema:
+ *                  type: array
+ *                  example: ['First', 'Second']
+ *                  items:
+ *                      type: string
+ */
+post.get('/tags', postCtrl.tags);
+
+/**
+ * @swagger
  * /api/posts/count:
  *  get:
  *      tags:  

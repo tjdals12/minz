@@ -12,6 +12,7 @@ export const editBlog = (param) => axios.patch('/api/blogs', { ...param });
 
 /** Post */
 export const getPosts = (page) => axios.get(`/api/posts?page=${page}`);
+export const getTags = () => axios.get('/api/posts/tags');
 export const getPost = (id) => axios.get(`/api/posts/${id}`);
 export const getPostForEdit = (id) => axios.get(`/api/posts/${id}/foredit`);
 export const writePost = (param) => axios.post('/api/posts', { ...param });
@@ -28,6 +29,7 @@ export const deleteComment = (id) => axios.delete(`/api/comments/${id}`);
 
 /** Series */
 export const getSeriesList = (page) => axios.get(`/api/series?page=${page}`);
+export const getKeywords = () => axios.get('/api/series/keywords');
 export const createSeries = (param) => axios.post('/api/series', { ...param });
 export const getSeries = (seq) => axios.get(`/api/series/${seq}`);
 export const writePostInSeries = (seq, param) => axios.post(`/api/series/${seq}`, { ...param });

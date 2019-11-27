@@ -1,0 +1,36 @@
+@import "utils";
+
+.tags {
+  &.default {
+    position: absolute;
+  }
+
+  &.fixed {
+    position: fixed;
+  }
+
+  top: 2rem;
+  left: 5%;
+  width: 20%;
+
+  .tag {
+    float: left;
+    margin-top: 0.5rem;
+    margin-left: 0rem;
+    margin-right: 1rem;
+    font-size: 1rem;
+    color: black;
+  }
+
+  @include media("<wide") {
+    width: 10%;
+
+    .tag {
+      font-size: 0.8rem;
+    }
+  }
+
+  @include media("<large") {
+    display: none;
+  }
+}

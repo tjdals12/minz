@@ -4,6 +4,7 @@ import { pender } from 'redux-pender';
 import * as api from 'lib/api';
 
 const GET_POSTS = 'post/GET_POSTS';
+const GET_TAGS = 'post/GET_TAGS';
 const GET_POST = 'post/GET_POST';
 const WRITE_POST = 'post/WRITE_POST';
 const EDIT_POST = 'post/EDIT_POST';
@@ -13,6 +14,7 @@ const GET_NEXT_POST = 'post/GET_NEXT_POST';
 const SEARCH_POSTS = 'post/SEARCH_POSTS';
 
 export const getPosts = createAction(GET_POSTS, api.getPosts);
+export const getTags = createAction(GET_TAGS, api.getTags);
 export const getPost = createAction(GET_POST, api.getPost);
 export const writePost = createAction(WRITE_POST, api.writePost);
 export const editPost = createAction(EDIT_POST, api.editPost);
@@ -23,6 +25,7 @@ export const searchPosts = createAction(SEARCH_POSTS, api.searchPosts);
 
 const initialState = Map({
 	posts: List(),
+	tags: List(),
 	post: Map(),
 	navPost: Map(),
 	commentCount: 0,
@@ -40,6 +43,14 @@ export default handleActions(
 				const lastPage = action.payload.headers['last-page'];
 
 				return state.set('posts', fromJS(posts)).set('lastPage', parseInt(lastPage, 10));
+			}
+		}),
+		...pender({
+			type: GET_TAGS,
+			onSuccess: (state, action) => {
+				const { data: tags } = action.payload.data;
+
+				return state.set('tags', fromJS(tags));
 			}
 		}),
 		...pender({

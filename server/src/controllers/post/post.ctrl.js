@@ -107,6 +107,26 @@ export const list = async (ctx) => {
 
 /**
  * @author 		minz-logger
+ * @date 		2019. 11. 26
+ * @description 태그 목록
+ */
+export const tags= async (ctx) => {
+	try{
+		const tags = await Post.distinct('tags');
+
+		ctx.res.ok({
+			data: tags,
+			message: 'Success - postCtrl > tags'
+		})
+	}catch(e){
+		ctx.res.internalServerError({
+			message: 'Error - postCtrl > tags'
+		});
+	}
+};
+
+/**
+ * @author 		minz-logger
  * @date 		2019. 09. 09
  * @description 포스트 카운트
  */

@@ -96,6 +96,26 @@ export const list = async (ctx) => {
 };
 
 /**
+ * @author 		minz-logger
+ * @date 		2019. 11. 27
+ * @description 키워드 목록
+ */
+export const keywords = async (ctx) => {
+	try{
+		const keywords = await Series.distinct('keyword');
+
+		ctx.res.ok({
+			data: keywords,
+			message: 'Success - seriesCtrl > keywords'
+		})
+	}catch(e){
+		ctx.res.internalServerError({
+			message: 'Error - seriesCtrl > keywords'
+		});
+	}
+};
+
+/**
  * @author minz-logger
  * @date 2019. 10. 21
  * @description 시리즈 조회

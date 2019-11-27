@@ -4,6 +4,7 @@ import * as api from 'lib/api';
 import { pender } from 'redux-pender';
 
 const GET_SERIES_LIST = 'series/GET_SERIES_LIST';
+const GET_KEYWORDS = 'series/GET_KEYWORDS';
 const CREATE_SERIES = 'series/CREATE_SERIES';
 const GET_SERIES = 'series/GET_SERIES';
 const WRITE_POST_IN_SERIES = 'series/WRITE_POST_IN_SERIES';
@@ -12,6 +13,7 @@ const TOGGLE_DISP_GB = 'series/TOGGLE_DISP_GB';
 const ON_CHANGE = 'series/ON_CHANGE';
 
 export const getSeriesList = createAction(GET_SERIES_LIST, api.getSeriesList);
+export const getKeywords = createAction(GET_KEYWORDS, api.getKeywords);
 export const createSeries = createAction(CREATE_SERIES, api.createSeries);
 export const getSeries = createAction(GET_SERIES, api.getSeries);
 export const writePostInSeries = createAction(WRITE_POST_IN_SERIES, api.writePostInSeries);
@@ -21,6 +23,7 @@ export const onChange = createAction(ON_CHANGE);
 
 const initialState = Map({
 	seriesList: List(),
+	keywords: List(),
 	series: Map(),
 	posts: List(),
 	edit: Map({
@@ -42,6 +45,14 @@ export default handleActions(
 				const lastPage = action.payload.headers['last-page'];
 
 				return state.set('seriesList', fromJS(seriesList)).set('lastPage', parseInt(lastPage || 1, 10));
+			}
+		}),
+		...pender({
+			type: GET_KEYWORDS,
+			onSuccess: (state, action) => {
+				const { data: keywords } = action.payload.data;
+
+				return state.set('keywords', fromJS(keywords));
 			}
 		}),
 		...pender({

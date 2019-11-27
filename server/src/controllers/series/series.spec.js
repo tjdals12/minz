@@ -107,6 +107,15 @@ describe(clc.bgGreen(clc.black('[ Series ]')), () => {
 		});
 	});
 
+	it('모든 키워드 조회', (done) => {
+		request(server).get('/api/series/keywords').expect(200).end((err, ctx) => {
+			if(err) throw err;
+
+			expect(ctx.body.data).have.length(2);
+			done();
+		});
+	});
+
 	it('시리즈 생성 2', (done) => {
 		request(server)
 			.post('/api/series')

@@ -2,8 +2,8 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import Pagination from 'components/Pagination';
 import { useDispatch, useSelector } from 'react-redux';
-import { getPosts, searchPosts } from 'store/modules/post';
-import { getSeriesList } from 'store/modules/series';
+import { getPosts, getTags, searchPosts } from 'store/modules/post';
+import { getSeriesList, getKeywords } from 'store/modules/series';
 import queryString from 'query-string';
 
 const PaginationContainer = ({ type, history, location }) => {
@@ -29,9 +29,19 @@ const PaginationContainer = ({ type, history, location }) => {
 			page = parseInt(page || 1, 10);
 			setCurrentPage(page);
 
-			type === 'post'
-				? dispatch(getPosts(page))
-				: type === 'search' ? dispatch(searchPosts(page, { keyword })) : dispatch(getSeriesList(page));
+			switch(type) {
+				case 'post':
+					dispatch(getPosts(page));
+					dispatch(getTags());
+					break;
+				case 'series':
+					dispatch(getSeriesList(page));
+					dispatch(getKeywords());
+					break;
+				default:
+					dispatch(searchPosts(page, { keyword }))
+
+			}
 		},
 		[ location, type, dispatch ]
 	);

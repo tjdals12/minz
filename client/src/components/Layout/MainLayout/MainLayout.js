@@ -15,10 +15,14 @@ const MainLayout = ({ children }) => {
 	return (
 		<div className={cx('page-template')}>
 			<SidebarContainer />
+
 			<HeaderContainer />
 			<InfoContainer />
-			<NavigationContainer />
-			<main>{children}</main>
+			<NavigationContainer />			
+
+			<main style={{ position: 'relative' }}>
+				{children}
+			</main>
 
 			<RegisterModalContainer />
 			<WelcomeModalContainer />

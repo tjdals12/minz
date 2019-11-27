@@ -149,6 +149,16 @@ describe(clc.bgGreen(clc.black('[ Post ]')), () => {
 		});
 	});
 
+	it('모든 태그 조회', (done) => {
+		request(server).get('/api/posts/tags').expect(200).end((err, ctx) => {
+			if(err) throw err;
+
+			/** 중복을 제거하기 때문에 3 개 */
+			expect(ctx.body.data).have.length(3);
+			done();
+		})
+	})
+
 	it('포스트 카운트', (done) => {
 		request(server).get('/api/posts/count').expect(200).end((err, ctx) => {
 			if (err) throw err;

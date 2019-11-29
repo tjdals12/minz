@@ -16,7 +16,7 @@ export const addLink = createAction(ADD_LINK, api.addLink);
 const initialState = Map({
     links: List(),
     link: Map(),
-    lastPage: 1,
+    lastPage: 1, 
     linkCount: 0
 });
 
@@ -28,7 +28,7 @@ export default handleActions({
             const lastPage = action.payload.headers['last-page'];
 
             return state.set('links', fromJS(links))
-                        .set('lastPage', parseInt(lastPage || 1, 10));
+                        .set('lastPage', parseInt(lastPage, 10));
         }
     }),
     ...pender({
@@ -36,7 +36,7 @@ export default handleActions({
         onSuccess: (state, action) => {
             const { data: count } = action.payload.data;
 
-            return state.set('linkCount', parseInt(count || 1, 10));
+            return state.set('linkCount', parseInt(count, 10));
         }
     }),
     ...pender({

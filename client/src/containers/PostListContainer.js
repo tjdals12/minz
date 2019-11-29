@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 const PostListContainer = () => {
 	const posts = useSelector((state) => state.post.get('posts').toJS(), []);
 
-	return <PostList posts={posts} />;
+	return posts.length > 0 ? <PostList posts={posts} /> : null;
 };
 
 export default PostListContainer;

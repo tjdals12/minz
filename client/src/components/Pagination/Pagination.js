@@ -7,7 +7,7 @@ import { Wrapper, Button } from 'components/common';
 const cx = classNames.bind(styles);
 
 const Pagination = ({ page, lastPage, onPage }) => {
-	return page === lastPage ? null : (
+	return (page === lastPage || lastPage <= 0) ? null : (
 		<Wrapper className={cx('pagination')}>
 			<Button className={cx('w-100')} theme="green" onClick={() => onPage(page + 1)}>
 				더보기

@@ -1,40 +1,40 @@
-@import 'utils';
+@import "utils";
 
-.comment {
-	border-bottom: 1px solid #ddd;
-	padding-top: 1.25rem;
-	padding-bottom: 1.25rem;
-	position: relative;
+.comment-box {
+  border-bottom: 1px solid #ddd;
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+  position: relative;
 
-	.writer {
-		margin: 0;
-		font-family: 'Do Hyeon', sans-serif;
-		font-size: 1rem;
-	}
+  .writer {
+    margin: 0;
+    font-family: "Do Hyeon", sans-serif;
+    font-size: 1rem;
+  }
 
-	.content {
-		padding-top: 1rem;
-		padding-bottom: 1rem;
+  .content {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
 
-		p {
-			margin: 0;
-			line-height: 1.25rem;
-			font-family: 'Gothic A1', sans-serif;
-			font-size: .85rem;
-			font-weight: 100;
-		}
-	}
+    p {
+      margin: 0;
+      line-height: 1.25rem;
+      font-family: "Gothic A1", sans-serif;
+      font-size: 0.85rem;
+      font-weight: 100;
+    }
+  }
 
-	.date {
-		font-family: 'Gothic A1', sans-serif;
-		font-size: .75rem;
-		font-weight: 100;
-		color: $oc-gray-6;
-	}
+  .date {
+    font-family: "Gothic A1", sans-serif;
+    font-size: 0.75rem;
+    font-weight: 100;
+    color: $oc-gray-6;
+  }
 
-	.remove-btn {
-		position: absolute;
-		right: 1rem;
-		bottom: 1rem;
-	}
+  .remove-btn {
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+  }
 }

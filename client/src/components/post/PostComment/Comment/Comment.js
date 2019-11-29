@@ -1,5 +1,5 @@
 import React from 'react';
-import classNames from 'classnames';
+import classNames from 'classnames/bind';
 import styles from './Comment.scss';
 import { Button } from 'components/common';
 import PropTypes from 'prop-types';
@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 const cx = classNames.bind(styles);
 
 const Comment = React.memo(({ id, content, writer, isDelete, publishedDate, onTarget, onOpen }) => (
-	<div className={cx('comment')}>
+	<div className={cx('comment-box')}>
 		<p className={cx('writer')}>{writer}</p>
 		<div className={cx('content')}>
 			{content.split('\n').map((value, index) => {

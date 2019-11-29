@@ -1,5 +1,9 @@
-@import 'utils';
+@import "utils";
 
 .page-template {
-	margin-bottom: 3rem;
+  margin-bottom: 3rem;
+
+  main {
+    position: relative;
+  }
 }

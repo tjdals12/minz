@@ -1,46 +1,51 @@
-import React from 'react';
-import classNames from 'classnames';
-import styles from './Header.scss';
-import { Thumbnail } from 'components/common';
-import Brand from './Brand';
-import Search from './Search';
-import PropTypes from 'prop-types';
+import React from "react";
+import classNames from "classnames";
+import styles from "./Header.scss";
+import { Thumbnail } from "components/common";
+import Brand from "./Brand";
+import Search from "./Search";
+import PropTypes from "prop-types";
 
 // Temp
-import backgroundImg from 'assets/img/header_background.jpg';
-import thumbnailImg from 'assets/img/header_thumbnail.png';
+import backgroundImg from "assets/img/header_background.jpg";
+import thumbnailImg from "assets/img/header_thumbnail.png";
 
 const cx = classNames.bind(styles);
 
 const HeaderTitle = ({ title }) => (
-	<div className={cx('header-title')}>
-		<div>{title}</div>
-	</div>
+  <div className={cx("header-title")}>
+    <div>{title}</div>
+  </div>
 );
 
 const Header = ({ background, thumbnail, title, onSearch }) => {
-	return (
-		<header className={cx('header')} style={{ backgroundImage: `url(${backgroundImg})` }}>
-			<div className={cx('header-content')}>
-				<Thumbnail url={thumbnail} type="user" />
-				<Brand />
-				<HeaderTitle title={'Developer'} />
-				<Search onSearch={onSearch} />
-			</div>
-		</header>
-	);
+  return (
+    <header
+      className={cx("header")}
+      style={{
+        backgroundImage: `url(${background ? background : backgroundImg})`
+      }}
+    >
+      <div className={cx("header-content")}>
+        <Thumbnail url={thumbnail} type="user" />
+        <Brand />
+        <HeaderTitle title={title} />
+        <Search onSearch={onSearch} />
+      </div>
+    </header>
+  );
 };
 
 Header.propTypes = {
-	background: PropTypes.string,
-	thumbnail: PropTypes.string,
-	title: PropTypes.string
+  background: PropTypes.string,
+  thumbnail: PropTypes.string,
+  title: PropTypes.string
 };
 
 Header.defaultProps = {
-	background: backgroundImg,
-	thumbnail: thumbnailImg,
-	title: 'Minz log.'
+  background: backgroundImg,
+  thumbnail: thumbnailImg,
+  title: "Minz log."
 };
 
 export default Header;

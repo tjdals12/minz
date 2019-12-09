@@ -1,7 +1,23 @@
-@import 'utils';
+@import "utils";
 
 .introduction {
-	.tags {
-		margin-top: 1.25rem;
-	}
+  .tags {
+    margin-top: 1.25rem;
+  }
+
+  @include media("<small") {
+    .content {
+      p {
+        font-size: 0.85rem;
+      }
+    }
+
+    .website {
+      .wrapper {
+        width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+      }
+    }
+  }
 }

@@ -32,4 +32,18 @@
   @include media("<medium") {
     margin-bottom: 2rem;
   }
+
+  @include media("<small") {
+    height: 8rem;
+
+    .content {
+      h1 {
+        font-size: 1rem !important;
+      }
+
+      p {
+        display: none;
+      }
+    }
+  }
 }

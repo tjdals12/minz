@@ -5,4 +5,8 @@
   margin-top: 2rem;
   height: auto;
   overflow: hidden;
+
+  @include media("<medium") {
+    width: calc(100% - 4rem);
+  }
 }

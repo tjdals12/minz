@@ -1,169 +1,76 @@
-@import 'utils';
+@import "utils";
 
 .header {
-	background-repeat: no-repeat;
-	background-position: center center;
-	background-size: 100%;
-	z-index: 5;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
 
-	.header-content {
-		width: 100%;
-		height: 20rem;
-		margin: 0 auto;
-		display: flex;
-		align-items: center;
-		position: relative;
-		color: white;
+  .header-content {
+    width: 100%;
+    height: 20rem;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    position: relative;
+    color: white;
 
-		.header-title {
-			font-size: 2rem;
-			font-style: italic;
-			font-family: 'Black Han Sans', sans-serif;
-			flex: 1;
-			text-align: center;
-		}
+    .header-title {
+      font-size: 2rem;
+      font-style: italic;
+      font-family: "Black Han Sans", sans-serif;
+      flex: 1;
+      text-align: center;
+    }
 
-		@include media('<large') {
-			height: 5rem;
-			.header-title {
-				display: none;
-			}
-		}
+    @include media("<large") {
+      height: 5rem;
+      .header-title {
+        display: none;
+      }
+    }
 
-		@include media('<medium') {
-			width: 100%;
-		}
-	}
+    @include media("<medium") {
+      width: 100%;
+    }
+  }
 }
 
 .short-header {
-	position: fixed;
-	transition: all .5s ease-in;
-	top: 0;
-	left: 0;
-	background: rgba(255, 255, 255, 0.95);
-	width: 100%;
-	height: 5rem;
-	padding-left: 1rem;
-	padding-right: 1rem;
-	border-bottom: 1px solid #ddd;
-	z-index: 10;
+  transition: background 0.3s ease-in;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: white !important;
+  border-bottom: 1px solid $oc-gray-4;
+  width: 100%;
+  height: 5rem;
+  z-index: 5;
 
-	.header-content {
-		margin: 0 auto;
-		display: flex;
-		align-items: center;
-		position: relative;
+  .header-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-		.brand {
-			position: absolute;
-			top: 20px;
-			left: 0;
+    .header-title {
+      font-size: 1.25rem;
+      font-style: italic;
+      font-family: "Black Han Sans", sans-serif;
+      flex: 1;
+      text-align: center;
 
-			.side-menu-icon {
-				font-size: 1.5rem;
-				transition: all .15s ease-in;
-				&:hover {
-					color: rgba(0, 0, 0, 0.5);
-					cursor: pointer;
-				}
-			}
+      @include media("<large") {
+        display: none;
+      }
+    }
 
-			.home {
-				margin-left: 1rem;
-				font-size: 1.5rem;
-				font-family: 'Dancing Script', cursive;
-				position: relative;
-				transition: all .15s ease-in;
-				span {
-					position: absolute;
-					top: 5px;
-					font-size: .75rem;
-					letter-spacing: .15rem;
-					color: $oc-cyan-4;
-				}
-				&:hover {
-					color: rgba(0, 0, 0, 0.5);
-					text-decoration: underline;
-				}
-			}
-		}
-
-		.header-title {
-			position: relative;
-			margin: 0 auto;
-
-			h1 {
-				font-family: 'Gothic A1', sans-serif;
-				font-size: 1.25rem;
-				font-weight: 200;
-				margin: 0;
-				line-height: 5rem;
-			}
-		}
-
-		.search {
-			position: absolute;
-			top: 20px;
-			right: 0;
-			transition: all .15s ease-in;
-
-			.keyword {
-				padding: 0;
-				margin-right: 0.5rem;
-				width: 0rem;
-				height: 1.8rem;
-				border-radius: 1rem 1rem;
-				border: none;
-				outline: none;
-
-				background: $oc-gray-2;
-
-				&::placeholder {
-					color: rgba(100, 100, 100, 0.75);
-					font-style: italic;
-				}
-			}
-
-			.search-icon {
-				font-size: 1.5rem;
-			}
-
-			&:hover {
-				color: rgba(0, 0, 0, 0.5);
-				cursor: pointer;
-			}
-
-			.searchBar-enter {
-				width: 0;
-			}
-
-			.searchBar-enter-active {
-				width: 10rem;
-				padding-left: 1rem;
-				padding-right: 1rem;
-				transition: all 300ms ease-in-out;
-			}
-
-			.searchBar-enter-done {
-				padding-left: 1rem;
-				padding-right: 1rem;
-				width: 10rem;
-			}
-
-			.searchBar-exit {
-				width: 10rem;
-			}
-
-			.searchBar-exit-active {
-				width: 0rem;
-				transition: width 300ms ease-in-out;
-			}
-
-			.searchBar-exit-done {
-				width: 0rem;
-				opacity: 0;
-			}
-		}
-	}
+    .thumbnail {
+      display: none;
+    }
+  }
 }

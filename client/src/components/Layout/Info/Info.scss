@@ -1,28 +1,30 @@
-@import 'utils';
+@import "utils";
 
 .info-wrapper {
-	height: 15rem;
-	position: relative;
-	margin-top: 3rem;
+  height: 15rem;
+  position: relative;
+  margin-top: 20rem;
+  padding-top: 3rem;
 
-	.blog-info {
-		height: 5rem;
-		display: flex;
-		align-items: center;
-		margin-bottom: 5rem;
+  .blog-info {
+    height: 5rem;
+    display: flex;
+    align-items: center;
+    margin-bottom: 5rem;
 
-		.button-wrapper {
-			margin-left: auto;
-		}
-	}
+    .button-wrapper {
+      margin-left: auto;
+    }
+  }
 
-	@include media('<large') {
-		width: calc(100% - 4rem);
-	}
+  @include media("<large") {
+    margin-top: 3rem;
+    width: calc(100% - 4rem);
+  }
 
-	@include media('<medium') {
-		.button-wrapper {
-			display: none;
-		}
-	}
+  @include media("<medium") {
+    .button-wrapper {
+      display: none;
+    }
+  }
 }

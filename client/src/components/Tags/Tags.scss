@@ -3,13 +3,14 @@
 .tags {
   &.default {
     position: absolute;
+    top: 2rem;
   }
 
   &.fixed {
     position: fixed;
+    top: 5rem;
   }
 
-  top: 2rem;
   left: 5%;
   width: 20%;
 

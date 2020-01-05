@@ -73,4 +73,10 @@
       display: none;
     }
   }
+
+  .scroll-container {
+    > div {
+      top: 5rem !important;
+    }
+  }
 }

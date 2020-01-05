@@ -11,6 +11,9 @@ import PropTypes from "prop-types";
 import backgroundImg from "assets/img/header_background.jpg";
 import thumbnailImg from "assets/img/header_thumbnail.png";
 
+// Progress-bar
+import Progressbar from "react-scroll-progress-bar";
+
 const cx = classNames.bind(styles);
 
 const HeaderTitle = ({ title }) => (
@@ -33,7 +36,6 @@ class Header extends React.Component {
 
   onScroll = () => {
     const scrollTop = getScrollTop();
-    console.log(scrollTop, this.pos);
 
     const fixed = scrollTop >= this.pos;
     if (this.state.fixed !== fixed) {
@@ -66,6 +68,11 @@ class Header extends React.Component {
             onSearch={onSearch}
           />
         </div>
+        {fixed && (
+          <div className="scroll-container">
+            <Progressbar height="2px" bgcolor="#339af0" duration="1" />
+          </div>
+        )}
       </header>
     );
   }

@@ -10,6 +10,10 @@
     margin: 0;
     font-family: "Do Hyeon", sans-serif;
     font-size: 1rem;
+
+    @include media("<small") {
+      font-size: 0.85rem;
+    }
   }
 
   .content {
@@ -22,6 +26,10 @@
       font-family: "Gothic A1", sans-serif;
       font-size: 0.85rem;
       font-weight: 100;
+
+      @include media("<small") {
+        font-size: 0.6rem;
+      }
     }
   }
 
@@ -30,6 +38,10 @@
     font-size: 0.75rem;
     font-weight: 100;
     color: $oc-gray-6;
+
+    @include media("<small") {
+      font-size: 0.5rem;
+    }
   }
 
   .remove-btn {

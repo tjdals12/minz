@@ -32,7 +32,12 @@
   }
 
   @include media("<large") {
+    margin-top: 5em;
     padding-left: 1rem;
     padding-right: 1rem;
+
+    .post-info-bottom {
+      display: none;
+    }
   }
 }
